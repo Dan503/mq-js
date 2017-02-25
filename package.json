@@ -97,7 +97,7 @@
       "data": "_data"
     },
     "entries": {
-      "js": "*.js",
+      "js": "main.js",
       "css": "main**.{sass,scss}"
     }
   }
