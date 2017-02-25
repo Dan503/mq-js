@@ -67,10 +67,10 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
 
         let startTime = new Date().getTime();
 
-        if (!args.production) {
-          bundler.on('update', rebundle); // on any dep update, runs the bundler
-          bundler.on('log', plugins.util.log); // output build logs to terminal
-        }
+        // if (!args.production) {
+        //   bundler.on('update', gulp.series(taskName)); // on any dep update, runs the bundler
+        //   bundler.on('log', plugins.util.log); // output build logs to terminal
+        // }
 
         return bundler.bundle()
           .on('error', function(err) {
@@ -101,14 +101,12 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
               plugins.util.colors.cyan(entry)
               + ' was browserified: '
               + plugins.util.colors.magenta(time + 's'));
-            browserSync.reload('*.js');
             //done();
           });
       });
     });
 
-    return gulp.parallel(...browserify_launch_pad)(done);
-
+    done();
   };
 
   function copy_index_to_root(done){
@@ -121,9 +119,22 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
     }
   }
 
+  function rebundle_js (done) {
+    return gulp.parallel(...browserify_launch_pad)(done);
+  };
+
   // Browserify Task
   gulp.task('browserify', gulp.series(
+    (done)=>{
+      browserify_launch_pad = [];
+      done();
+    },
     generate_browserify_tasks,
+    rebundle_js,
+    (done)=>{
+      browserSync.reload('*.js');
+      done();
+    },
     copy_index_to_root
   ));
 }
