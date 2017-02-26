@@ -15,13 +15,6 @@ $(() => {
   tabs();
   codeLineNumbers();
 
-  window.onresize = debounce(resize, 200);
-
-  function resize(e) {
-    console.log('height', window.innerHeight);
-    console.log('width', window.innerWidth);
-  }
-
   $('.btn.-one').click(function(e){
     e.preventDefault();
 
@@ -114,5 +107,20 @@ $(() => {
       console.log(screen_width);
     })
   })
+
+  $('.btn.-ten').click(function(e){
+    e.preventDefault();
+  });
+
+  function toggleBtn(){
+    if (mq.inside('medium', 'small')){
+      $('.btn.-ten').addClass('-active');
+    } else {
+      $('.btn.-ten').removeClass('-active');
+    }
+  };
+
+  toggleBtn();
+  window.onresize = debounce(toggleBtn, 200);
 
 });

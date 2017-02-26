@@ -424,3 +424,42 @@ $('.btn.-nine').click(function(e){
   })
 })`,
     })
+
+    :markdown
+      ## Running on window resize
+
+      mq-js is just a simple function that checks the current window size when it is called. It doesn't do anything fancy when you resize the window. With a litle extra code though, you can easily make it run on window resize.
+
+      The following example uses [debounce](https://www.npmjs.com/package/debounce) to prevent the function from firing until the window has finished resizing. This improves performance and can avoid odd bugs from occurring.
+
+      The button will activate when the screen is at the correct width and deactivate when not. Clicking the buttton does nothing.
+
+    +demo({
+      html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-ten'})
+    | Activates at and between 980px and 601px screen width`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import debounce for better performance
+import debounce from 'debounce';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+function toggleBtn(){
+  if (mq.inside('medium', 'small')){
+    $('.btn.-ten').addClass('-active');
+  } else {
+    $('.btn.-ten').removeClass('-active');
+  }
+};
+toggleBtn();
+
+window.onresize = debounce(toggleBtn, 200);`,
+    })
+
