@@ -4,9 +4,21 @@
 'use strict';
 
 import $ from 'jquery';
-import Link from '../_modules/link/link';
+import debounce from 'debounce';
+import mq from './mq';
+
+import tabs from 'tabs/tabs';
+
+import codeLineNumbers from '~on-page-load-js/codeLineNumbers';
 
 $(() => {
-  new Link(); // Activate Link modules logic
-  console.log('Welcome to Yeogurt!');
+  tabs();
+  codeLineNumbers();
+
+  window.onresize = debounce(resize, 200);
+
+  function resize(e) {
+    console.log('height', window.innerHeight);
+    console.log('width', window.innerWidth);
+  }
 });

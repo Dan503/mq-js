@@ -1,6 +1,8 @@
 //- Custom Configuration
 block config
 
+block includes
+
 doctype html
 
 <!--[if lt IE 10]><html class='lt-ie10 no-js' lang='en'><![endif]-->
@@ -26,6 +28,10 @@ body
   block content
 
   block scripts
+    script(src='/assets/scripts/highlight.pack.js')
+    script(type='text/javascript').
+      hljs.initHighlightingOnLoad();
+
     script(src= '/assets/scripts/main.js')
 
 </html>

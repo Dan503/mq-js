@@ -26,6 +26,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
         //console.error(error.stack);
         return notifier.notify({title: 'Sass Error', message: `${path.basename(error.file)} line ${error.line}`, icon: notification_icon_location+'gulp-error.png'});
       }))
+      .pipe(plugins.wait(50))//Helps prevent odd file not found error
       .pipe(plugins.sourcemaps.init())
       .pipe(plugins.sass({
         outputStyle: 'expanded',
