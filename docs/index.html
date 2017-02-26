@@ -13,16 +13,472 @@
 </head>
 <body><!--[if lt IE 10]>
   <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
-  <div class="container">
-    <div class="yeogurt-info">
-      <h1>Welcome to Yeogurt!</h1>
-      <p>
-        Take a look at the
-        <a class="link" href="https://github.com/larsonjj/generator-yeogurt#yeogurt-generator---">documentation</a>
-        and start mixing up something awesome.
-      </p>
-      <p><img class="logo" src="/assets/images/yeogurt-swirl.png" width="75px"></p>
+  <div class="pageContainer">
+    <div class="pageContainer__width">
+      <header class="header">
+        <h1>mq-js</h1>
+        <p class="version">v1.0.0</p>
+        <pre class="no-lines"><code style="text-align: center">npm install mq-js --save</code></pre>
+      </header><p>This documentation is best viewed on a Desktop computer or laptop for the sake of viewing the examples at all screen sizes.</p>
+
+<p>This documentation also assumes that you have the ability to use ES6 JavaScript syntax in your project. Try looking into <a href="https://github.com/larsonjj/generator-yeogurt">Yeogurt</a> or <a href="https://babeljs.io/">Babel</a> if you aren&#39;t already using ES6 syntax in your JavaScript.</p>
+
+<p>mq-js was inspired by the <a href="https://www.npmjs.com/package/mq-js">mq-scss</a> Sass mixin. I wanted to use media queries in javascript in a similar sort of way to how I was using media queries in Sass.</p>
+
+<p>If you haven&#39;t looked into <a href="https://www.npmjs.com/package/mq-js">mq-scss</a> I highly recommend checking it out. It makes writing media queries far easier than any other method.</p><h2>Setup</h2>
+
+<p>Firstly, use <code>npm install mq-js --save</code> to add the npm module to your project. If you haven&#39;t used npm before, read through <a href="https://docs.npmjs.com/getting-started/installing-node">this documentation</a> to get set up.</p>
+
+<p>Now, create this simple <code>mq.js</code> file to set up your websites breakpoints.</p>
+      <aside class="demo">
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//mq.js file
+&quot;use strict&quot;;
+
+import MQ from &quot;mq-js&quot;;
+
+//Define your Site break points here
+const mq = new MQ({
+  breakpoints: {
+    small: 600,
+    medium: 980,
+    large: 1200
+  },
+});
+
+export default mq;</code></pre>
+          </div>
+        </div>
+      </aside>
+      <p style="text-align: center; font-size: 2em"><strong>OR</strong></p><p>Alternatively you can save the breakpoints into a JSON file, then import them.</p>
+      <aside class="demo">
+        <div class="demo__grid grid grid--ieFloat grid--cols-2">
+          <div class="grid__cell demo__markup demo__segment json">
+            <pre><code class="json">
+{
+  &quot;//&quot; : &quot;This is the breakpoints.json file&quot;,
+  &quot;small&quot;: 600,
+  &quot;medium&quot;: 980,
+  &quot;large&quot;: 1200
+}</code></pre>
+          </div>
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//mq.js file
+&quot;use strict&quot;;
+import MQ from &quot;mq-js&quot;;
+import breakpoints from './breakpoints.json';
+
+//Using ES6 deconstruction as a short cut
+const mq = new MQ({ breakpoints });
+
+export default mq;</code></pre>
+          </div>
+        </div>
+      </aside><p>The above breakpoints are what I will be using throughout the examples in this documentation.</p>
+
+<p>Now that you have your break points set up, you can use them when calling the function.</p><h2>mq.min</h2>
+
+<p>In the following example, the button wil only turn green when you click it if the browser window is a minimum of 981px wide (ie. above the &quot;medium&quot; breakpoint).</p>
+
+<p>The border will turn green when it is clickable</p>
+      <aside class="demo">
+        <div class="demo__result demo__segment">
+<div class="example">
+  <a class="btn -one" href="#">Clickable at 981px screen width and above
+  </a>
+</div>
+        </div>
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//module js file
+&quot;use strict&quot;;
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from &quot;./mq&quot;;
+
+$('.btn.-one').click(function(e){
+  e.preventDefault();
+
+  mq.min('medium', (screen_width)=&gt;{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})</code></pre>
+          </div>
+        </div>
+      </aside><p>You might be wondering why 981px instead of 980px. I will get into it a bit more further down but for now just know that it is primarily to avoid conflicts.</p>
+
+<p>Alternitavely you can use it in an if statement sort of format.</p>
+
+<p>Here is the same example again except this time as an if statement.</p>
+      <aside class="demo">
+        <div class="demo__result demo__segment">
+<div class="example">
+  <a class="btn -two" href="#">Clickable above 980px screen width
+  </a>
+</div>
+        </div>
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//module js file
+&quot;use strict&quot;;
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from &quot;./mq&quot;;
+
+$('.btn.-two').click(function(e){
+  e.preventDefault();
+
+  if (mq.min('medium')){
+    $(this).toggleClass('-active');
+  }
+})</code></pre>
+          </div>
+        </div>
+      </aside><p>Notice that the first example give you access to the screen width at the time the button was clicked. The second example does not (or at least not without custom code)</p><h2>mq.max</h2>
+
+<p><code>mq.max</code> does pretty much what you expect it to do. It will only run the function if the screen width is bellow the specified breakpoint.</p>
+
+<p>It also comes in <code>if</code> format but for the sake of brevity I&#39;ll just show the <code>callback</code> format.</p>
+      <aside class="demo">
+        <div class="demo__result demo__segment">
+<div class="example">
+  <a class="btn -three" href="#">Clickable at and below 980px screen width
+  </a>
+</div>
+        </div>
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//module js file
+&quot;use strict&quot;;
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from &quot;./mq&quot;;
+
+$('.btn.-three').click(function(e){
+  e.preventDefault();
+
+  mq.max('medium', (screen_width)=&gt;{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})</code></pre>
+          </div>
+        </div>
+      </aside><p><code>mq.max</code> is <strong>inclusive</strong> of the breakpoint value where as <code>mq.min</code> is <strong>exclusive</strong> of the breakpoint value. This serves two important purposes:</p>
+
+<ol><li><p>It prevents bugs from occuring in that 1px sweet spot where both would return true.</p></li><li><p>It aligns with how <a href="https://www.npmjs.com/package/mq-scss">mq-scss</a> handles min and max width to prevent odd bugs where javascript is firing but the styles aren&#39;t there to support it (or vice versa).</p></li></ol><h2>mq.inside</h2>
+
+<p><code>mq.inside</code> works the same way as it does in <a href="https://www.npmjs.com/package/mq-scss">mq-scss</a>.</p>
+
+<p>You state the larger value first then the smaller value. The function will only be triggered if it is within that range.</p>
+
+<p>Like everything else, it also comes in <code>if</code> format but for the sake of brevity I&#39;m showing only the <code>callback</code> format.</p>
+
+<p>The smaller value is always the value that gets +1 for consistency with the mq-scss mixin.</p>
+      <aside class="demo">
+        <div class="demo__result demo__segment">
+<div class="example">
+  <a class="btn -four" href="#">Clickable at and between 980px and 601px screen width
+  </a>
+</div>
+        </div>
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//module js file
+&quot;use strict&quot;;
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from &quot;./mq&quot;;
+
+$('.btn.-four').click(function(e){
+  e.preventDefault();
+
+  mq.inside('medium', 'small', (screen_width)=&gt;{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})</code></pre>
+          </div>
+        </div>
+      </aside><h3>Smallest value first</h3>
+
+<p>If you have more of smallest-up-to-largest sort of mindset then placing the largest value first might feel counterintuative for you.</p>
+
+<p>If that is the case then in your <code>mq.js</code> setup file, you can set the <code>largestFirst</code> setting to <code>false</code> to make the first setting be the smaller value.</p>
+      <aside class="demo">
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//mq.js file
+&quot;use strict&quot;;
+
+import MQ from &quot;mq-js&quot;;
+
+//Define your Site break points here
+const mq = new MQ({
+  largestFirst: false,
+  breakpoints: {
+    small: 600,
+    medium: 980,
+    large: 1200
+  }
+});
+
+export default mq;</code></pre>
+          </div>
+        </div>
+      </aside><p>or if you used the the JSON version...</p>
+      <aside class="demo">
+        <div class="demo__grid grid grid--ieFloat grid--cols-2">
+          <div class="grid__cell demo__markup demo__segment json">
+            <pre><code class="json">
+{
+  &quot;//&quot; : &quot;This is the breakpoints.json file&quot;,
+  &quot;small&quot;: 600,
+  &quot;medium&quot;: 980,
+  &quot;large&quot;: 1200
+}</code></pre>
+          </div>
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//mq.js file
+&quot;use strict&quot;;
+import MQ from &quot;mq-js&quot;;
+import breakpoints from './breakpoints.json';
+
+//Using ES6 deconstruction as a short cut
+const mq = new MQ({
+  largestFirst: false,
+  breakpoints
+});
+
+export default mq;</code></pre>
+          </div>
+        </div>
+      </aside><p>Then you are free to place the smaller value first like this:</p>
+      <aside class="demo">
+        <div class="demo__result demo__segment">
+<div class="example">
+  <a class="btn -five" href="#">Clickable at and between 980px and 601px screen width
+  </a>
+</div>
+        </div>
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//module js file
+&quot;use strict&quot;;
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from &quot;./mq&quot;;
+
+$('.btn.-five').click(function(e){
+  e.preventDefault();
+
+  mq.inside('small', 'medium', (screen_width)=&gt;{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})</code></pre>
+          </div>
+        </div>
+      </aside><h2>mq.outside</h2>
+
+<p><code>mq.outside</code> does what you would expect. It is the opposite of <code>mq.inside</code>. It will only fire if the screen width is outside of the two breakpoint values.</p>
+      <aside class="demo">
+        <div class="demo__result demo__segment">
+<div class="example">
+  <a class="btn -six" href="#">Clickable outside of 980px to 601px screen widths
+  </a>
+</div>
+        </div>
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//module js file
+&quot;use strict&quot;;
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from &quot;./mq&quot;;
+
+$('.btn.-six').click(function(e){
+  e.preventDefault();
+
+  mq.outside('medium', 'small', (screen_width)=&gt;{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})</code></pre>
+          </div>
+        </div>
+      </aside><h2>Creating media query variables</h2>
+
+<p>One of the big features in mq-scss is that you can easily create meaningful media query variables.</p>
+
+<p>Here is how to do a similar thing with mq-js:</p>
+      <aside class="demo">
+        <div class="demo__result demo__segment">
+<div class="example">
+  <a class="btn -seven" href="#">Clickable at and below a 980px screen width
+  </a>
+</div>
+        </div>
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//module js file
+&quot;use strict&quot;;
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from &quot;./mq&quot;;
+
+const MQ_btn__active = ()=&gt; mq.max('medium');
+
+$('.btn.-seven').click(function(e){
+  e.preventDefault();
+
+  if (MQ_btn__active()){
+    $(this).toggleClass('-active');
+  }
+
+})</code></pre>
+          </div>
+        </div>
+      </aside><h2>Using pure pixel values</h2>
+
+<p>Just because you have access to the breakpoint values doesn&#39;t mean you have to use them. mq-js still works if you just parse solid numbers into it.</p>
+      <aside class="demo">
+        <div class="demo__result demo__segment">
+<div class="example">
+  <a class="btn -eight" href="#">Clickable at and below 1000px screen width
+  </a>
+</div>
+        </div>
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//module js file
+&quot;use strict&quot;;
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from &quot;./mq&quot;;
+
+$('.btn.-eight').click(function(e){
+  e.preventDefault();
+
+  mq.max(1000, (screen_width)=&gt;{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})</code></pre>
+          </div>
+        </div>
+      </aside><p>Remember that if you use <code>mq.min</code> it will be like adding 1 pixel to the value you provide</p>
+      <aside class="demo">
+        <div class="demo__result demo__segment">
+<div class="example">
+  <a class="btn -nine" href="#">Clickable at 1001px screen width and above
+  </a>
+</div>
+        </div>
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//module js file
+&quot;use strict&quot;;
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from &quot;./mq&quot;;
+
+$('.btn.-nine').click(function(e){
+  e.preventDefault();
+
+  mq.min(1000, (screen_width)=&gt;{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})</code></pre>
+          </div>
+        </div>
+      </aside><h2>Running on window resize</h2>
+
+<p>mq-js is just a simple function that checks the current window size when it is called. It doesn&#39;t do anything fancy when you resize the window. With a litle extra code though, you can easily make it run on window resize.</p>
+
+<p>The following example uses <a href="https://www.npmjs.com/package/debounce">debounce</a> to prevent the function from firing until the window has finished resizing. This improves performance and can avoid odd bugs from occurring.</p>
+
+<p>The button will activate when the screen is at the correct width and deactivate when not. Clicking the buttton does nothing.</p>
+      <aside class="demo">
+        <div class="demo__result demo__segment">
+<div class="example">
+  <a class="btn -ten" href="#">Activates at and between 980px and 601px screen width
+  </a>
+</div>
+        </div>
+        <div class="demo__grid grid grid--ieFloat grid--cols-1">
+          <div class="grid__cell demo__markup demo__segment js">
+            <pre><code class="js">
+//module js file
+&quot;use strict&quot;;
+import $ from 'jquery';
+
+//import debounce for better performance
+import debounce from 'debounce';
+
+//import the mq variable that was created in the setup stage
+import mq from &quot;./mq&quot;;
+
+function toggleBtn(){
+  if (mq.inside('medium', 'small')){
+    $('.btn.-ten').addClass('-active');
+  } else {
+    $('.btn.-ten').removeClass('-active');
+  }
+};
+toggleBtn();
+
+window.onresize = debounce(toggleBtn, 200);</code></pre>
+          </div>
+        </div>
+      </aside><h2>Future updates</h2>
+
+<p>Currently mq-js only supports the mq-scss width based ranges since those are the most important. I will be adding support for more of the mq-scss range types in future updates.</p>
     </div>
-  </div><code class="version">v1.5.2</code>
+  </div>
+  <script src="/assets/scripts/highlight.pack.js"></script>
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+    
+  </script>
   <script src="/assets/scripts/main.js"></script>
 </body></html>

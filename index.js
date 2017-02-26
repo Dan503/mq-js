@@ -23,10 +23,17 @@ function screenHeight() {
 }
 
 var MQ = function () {
-  function MQ(breakpoints) {
+  function MQ() {
+    var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
     _classCallCheck(this, MQ);
 
-    this.bp = breakpoints;
+    this.settings = Object.assign({
+      breakpoints: {},
+      largestFirst: true
+    }, settings);
+
+    this.bp = this.settings.breakpoints;
   }
 
   //Checks if the size is a valid breakpoint value
@@ -57,7 +64,7 @@ var MQ = function () {
       var screen_width = screenWidth();
       size = this.checkBP(size);
 
-      var isAllowed = screen_width > size + 1;
+      var isAllowed = screen_width > size;
 
       if (isAllowed) callback.call(window, screen_width);
 
@@ -71,7 +78,7 @@ var MQ = function () {
       var screen_width = screenWidth();
       size = this.checkBP(size);
 
-      var isAllowed = screen_width < size;
+      var isAllowed = screen_width <= size;
 
       if (isAllowed) callback.call(window, screen_width);
 
@@ -83,10 +90,19 @@ var MQ = function () {
       var callback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
 
       var screen_width = screenWidth();
+
+      //If largestFirst is turned off,
+      //it swaps the values around
+      if (!this.settings.largestFirst) {
+        var tmp = wideSize;
+        wideSize = thinSize;
+        thinSize = tmp;
+      }
+
       wideSize = this.checkBP(wideSize);
       thinSize = this.checkBP(thinSize);
 
-      var isAllowed = thinSize + 1 < screen_width && screen_width < wideSize;
+      var isAllowed = thinSize < screen_width && screen_width <= wideSize;
 
       if (isAllowed) callback.call(window, screen_width);
 
