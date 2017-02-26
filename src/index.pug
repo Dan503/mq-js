@@ -3,19 +3,71 @@ extends _layouts/base
 block includes
   include /_modules/pageContainer/pageContainer
   include /_modules/demo/demo
+  include /_modules/bodyContent/bodyContent
 
 block content
   +pageContainer()
     h1 mq-js
     pre.no-lines(style="margin-bottom: 80px;"): code(style='text-align: center;') npm install mq-js --save
 
+    p This documentation assumes that you have the ability to use ES6 JavaScript syntax in your project. Try looking into #[a(href="https://github.com/larsonjj/generator-yeogurt") Yeogurt] or #[a(href="https://babeljs.io/") Babel] if you aren't already using ES6 syntax in your JavaScript.
+
+    +bodyContent()
+      :markdown
+        ## Setup
+
+        Firstly, use `npm install mq-js --save` to add the npm module to your project. If you haven't used npm before, read through [this documentation](https://docs.npmjs.com/getting-started/installing-node) to get set up.
+
+        Now, create this simple `mq.js` file to set up your websites breakpoints.
+
     +demo({
-      html: `
-.something`,
-      scss: `
-.something {}`,
       js: `
-function something(){
-  console.log('blah');
-}`,
+//mq.js file
+"use strict";
+
+import MQ from "mq-js";
+
+//Define your Site break points here
+const mq = new MQ({
+  small: 600,
+  medium: 980,
+  large: 1200
+});
+
+export default mq;`,
     })
+
+    p(style="text-align: center; font-size: 30px")
+      strong OR
+
+    :markdown
+      Alternatively you can save the breakpoints into a JSON file, then import them.
+
+    +demo({
+      json: `
+{
+  "//" : "This is the breakpoints.json file",
+  "small": 600,
+  "medium": 980,
+  "large": 1200
+}`,
+      js: `
+//mq.js file
+"use strict";
+import MQ from "mq-js";
+import breakpoints from './breakpoints.json';
+
+const mq = new MQ(breakpoints);
+
+export default mq;`,
+    })
+
+    :markdown
+      The above breakpoints are what I will be using throughout the examples.
+
+    :markdown
+      ## Basic usage
+
+      Now that you have your break points set up, you can use them when calling the function.
+
+      In the following example, the button wil only turn green if you click it when the browser window is above 980px wide.

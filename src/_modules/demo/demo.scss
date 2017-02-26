@@ -8,7 +8,6 @@
 			margin-bottom: 0;
 		}
 		&:before {
-			content: 'label';
 			position: absolute;
 			bottom: 100%;
 			left: 0;
@@ -57,14 +56,17 @@
 		position: relative;
 		padding-left: 40px;
 		display: flex;
-		&:before {
-			content: 'HTML';
-		}
+    &.html:before {
+      content: 'HTML';
+    }
 		&.scss:before {
 			content: 'Sass';
 		}
     &.js:before {
       content: 'JavaScript';
+    }
+    &.json:before {
+      content: 'JSON';
     }
 
     pre {
