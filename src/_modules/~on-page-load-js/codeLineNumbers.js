@@ -18,7 +18,9 @@ export default function(){
         }
       }
     }
-    $(this).wrap('<div class="code"></div>').before("<pre class='lines'>" + lines.join("\n") + "</pre>");
+    $(this)
+      //.wrap('<div class="code"></div>')
+      .before("<pre class='lines'>" + lines.join("\n") + "</pre>");
   });
 
 }

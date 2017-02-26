@@ -1,4 +1,4 @@
-﻿///*================================================*\
+///*================================================*\
 //	COLORS
 //----------------------------------------------------
 //	All color variables are listed here
@@ -17,9 +17,10 @@ $hoverModifier--small: 20%;
 
 //green
 $CB-green-light: #b9d48b;
+$CB-green-bright: #00C000;
 $CB-green-dark: #08705e;//quaternary
 	//green hover states
-	$CB-green-light--hover: tint($CB-green-light, $hoverModifier);
+	$CB-green-light--hover: shade($CB-green-light, 20%);
 	$CB-green-dark--hover: shade($CB-green-dark, $hoverModifier);
 
 //aqua

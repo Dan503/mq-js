@@ -122,7 +122,6 @@ a {
 
   &:hover, &:focus {
     text-decoration: underline;
-    color: $CF-links--hover;
   }
 
   &[disabled] {
@@ -208,6 +207,10 @@ pre {
   .no-flexbox & {
     max-width: 780px;
   }
+}
+
+code {
+  max-width: 100%;
 }
 
 p,li {

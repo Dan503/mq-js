@@ -21,4 +21,27 @@ $(() => {
     console.log('height', window.innerHeight);
     console.log('width', window.innerWidth);
   }
+
+  $('.btn.-one').click(function(e){
+    e.preventDefault();
+    mq.min('medium', (screen_width)=>{
+      $(this).toggleClass('-active');
+      console.log(screen_width);
+    })
+  })
+
+  $('.btn.-two').click(function(e){
+    e.preventDefault();
+    if (mq.min('medium')){
+      $(this).toggleClass('-active');
+    }
+  })
+
+  $('.btn.-three').click(function(e){
+    e.preventDefault();
+    mq.max('medium', (screen_width)=>{
+      $(this).toggleClass('-active');
+      console.log(screen_width);
+    })
+  })
 });

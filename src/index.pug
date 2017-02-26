@@ -76,4 +76,106 @@ export default mq;`,
 
       Now that you have your break points set up, you can use them when calling the function.
 
-      In the following example, the button wil only turn green if you click it when the browser window is above 980px wide.
+    :markdown
+      ### mq.min
+
+      In the following example, the button wil only turn green when you click it if the browser window is a minimum of 980px wide (ie. above the "medium" breakpoint).
+
+      The border will turn green when it is clickable
+
+    +demo({
+      html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-one'})
+    | Clickable above 980px screen width`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+$('.btn.-one').click(function(e){
+  e.preventDefault();
+  mq.min('medium', (screen_width)=>{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})
+`,
+    })
+
+    :markdown
+      Alternitavely you can use it in an if statement sort of format.
+
+      Here is the same example again except this time as an if statement.
+
+    +demo({
+      html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-two'})
+    | Clickable above 980px screen width`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+$('.btn.-two').click(function(e){
+  e.preventDefault();
+  if (mq.min('medium')){
+    $(this).toggleClass('-active');
+  }
+})
+`,
+    })
+
+    :markdown
+      Notice that the first example give you access to the screen width at the time the button was clicked. The second example does not (or at least not without custom code)
+
+    :markdown
+      ### mq.max
+
+      `mq.max` does pretty much what you expect it to do. It will only run the function if the screen width is bellow the specified breakpoint.
+
+      It also comes in `if` format but for the sake of brevity I'll just show the `callback` format.
+
+    +demo({
+      html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-three'})
+    | Clickable below 980px screen width`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+$('.btn.-three').click(function(e){
+  e.preventDefault();
+  mq.max('medium', (screen_width)=>{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})
+`,
+    })
+
+    :markdown
+      `mq.max` is **inclusive** of the breakpoint value where as `mq.min` is **exclusive** of the breakpoint value. This serves two important purposes:
+
+      1. It prevents bugs from occuring in that 1px sweet spot where both would return true.
+
+      2. It aligns with how [mq-scss](https://www.npmjs.com/package/mq-scss) handles min and max width to prevent odd bugs where javascript is firing but the styles aren't there to support it (or vice versa).
