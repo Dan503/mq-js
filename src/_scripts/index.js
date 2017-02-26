@@ -15,8 +15,12 @@ function screenHeight(){
 }
 
 class MQ {
-  constructor(breakpoints){
+  constructor(breakpoints, settings = {}){
     this.bp = breakpoints;
+
+    this.settings = Object.assign({
+      largestFirst: true,
+    }, settings);
   }
 
   //Checks if the size is a valid breakpoint value
@@ -60,6 +64,15 @@ class MQ {
 
   inside(wideSize, thinSize, callback = ()=>{}){
     let screen_width = screenWidth();
+
+    //If largestFirst is turned off,
+    //it swaps the values around
+    if (!settings.largestFirst){
+      const tmp = wideSize;
+      wideSize = thinSize;
+      thinSize = tmp;
+    }
+
     wideSize = this.checkBP(wideSize);
     thinSize = this.checkBP(thinSize);
 
