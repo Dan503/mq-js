@@ -40,7 +40,7 @@ class MQ {
     let screen_width = screenWidth();
     size = this.checkBP(size);
 
-    const isAllowed = screen_width > (size + 1);
+    const isAllowed = screen_width > size;
 
     if (isAllowed) callback.call(window, screen_width);
 
@@ -51,7 +51,7 @@ class MQ {
     let screen_width = screenWidth();
     size = this.checkBP(size);
 
-    const isAllowed = screen_width < size;
+    const isAllowed = screen_width <= size;
 
     if (isAllowed) callback.call(window, screen_width);
 
@@ -63,7 +63,7 @@ class MQ {
     wideSize = this.checkBP(wideSize);
     thinSize = this.checkBP(thinSize);
 
-    const isAllowed = (thinSize + 1) < screen_width && screen_width < wideSize;
+    const isAllowed = thinSize < screen_width && screen_width <= wideSize;
 
     if (isAllowed) callback.call(window, screen_width);
 
