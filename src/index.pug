@@ -79,7 +79,7 @@ export default mq;`,
     :markdown
       ## mq.min
 
-      In the following example, the button wil only turn green when you click it if the browser window is a minimum of 980px wide (ie. above the "medium" breakpoint).
+      In the following example, the button wil only turn green when you click it if the browser window is a minimum of 981px wide (ie. above the "medium" breakpoint).
 
       The border will turn green when it is clickable
 
@@ -88,7 +88,7 @@ export default mq;`,
 include /_modules/btn/btn
 .example
   +btn({classes:'-one'})
-    | Clickable above 980px screen width`,
+    | Clickable at 981px screen width and above`,
       js: `
 //module js file
 "use strict";
@@ -110,6 +110,8 @@ $('.btn.-one').click(function(e){
     })
 
     :markdown
+      You might be wondering why 981px instead of 980px. I will get into it a bit more further down but for now just know that it is primarily to avoid conflicts.
+
       Alternitavely you can use it in an if statement sort of format.
 
       Here is the same example again except this time as an if statement.
@@ -330,3 +332,95 @@ $('.btn.-six').click(function(e){
 })`,
     })
 
+    :markdown
+      ## Creating media query variables
+
+      One of the big features in mq-scss is that you can easily create meaningful media query variables.
+
+      Here is how to do a similar thing with mq-js:
+
+    +demo({
+      html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-seven'})
+    | Clickable at and below a 980px screen width`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+const MQ_btn__active = ()=> mq.max('medium');
+
+$('.btn.-seven').click(function(e){
+  e.preventDefault();
+
+  if (MQ_btn__active()){
+    $(this).toggleClass('-active');
+  }
+
+})`,
+    })
+
+    :markdown
+      ## Using pure pixel values
+
+      Just because you have access to the breakpoint values doesn't mean you have to use them. mq-js still works if you just parse solid numbers into it.
+
+    +demo({
+      html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-eight'})
+    | Clickable at and below 1000px screen width`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+$('.btn.-eight').click(function(e){
+  e.preventDefault();
+
+  mq.max(1000, (screen_width)=>{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})`,
+    })
+
+    :markdown
+      Remember that if you use `mq.min` it will be like adding 1 pixel to the value you provide
+
+    +demo({
+      html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-nine'})
+    | Clickable at 1001px screen width and above`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+$('.btn.-nine').click(function(e){
+  e.preventDefault();
+
+  mq.min(1000, (screen_width)=>{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})`,
+    })

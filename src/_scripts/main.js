@@ -82,4 +82,37 @@ $(() => {
     })
   });
 
+  const MQ_btn7__active = ()=> mq.max('medium');
+  $('.btn.-seven').click(function(e){
+    e.preventDefault();
+
+    if (MQ_btn7__active()){
+      $(this).toggleClass('-active');
+    }
+
+  });
+
+
+  $('.btn.-eight').click(function(e){
+    e.preventDefault();
+
+    mq.max(1000, (screen_width)=>{
+      $(this).toggleClass('-active');
+
+      //log the screen width at the time the button was clicked
+      console.log(screen_width);
+    })
+  })
+
+  $('.btn.-nine').click(function(e){
+    e.preventDefault();
+
+    mq.min(1000, (screen_width)=>{
+      $(this).toggleClass('-active');
+
+      //log the screen width at the time the button was clicked
+      console.log(screen_width);
+    })
+  })
+
 });

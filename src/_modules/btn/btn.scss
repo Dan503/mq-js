@@ -54,7 +54,7 @@
     }
   }
 
-  &.-three {
+  &.-three, &.-seven {
     @include mq(max, bp('medium')){
       border-color: $CB-green-bright;
     }
@@ -68,6 +68,18 @@
 
   &.-six {
     @include mq(outside, bp('medium'), bp('small')){
+      border-color: $CB-green-bright;
+    }
+  }
+
+  &.-eight {
+    @include mq(max, 1000px){
+      border-color: $CB-green-bright;
+    }
+  }
+
+  &.-nine {
+    @include mq(min, 1000px){
       border-color: $CB-green-bright;
     }
   }
