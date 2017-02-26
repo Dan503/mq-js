@@ -14,30 +14,14 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
   const src = './' + path.join(dirs.source, dirs.scripts, 'index.js');
 
   gulp.task('babelify', (done)=>{
-    return new Promise((resolve, reject)=>{
-      babel.transformFile(src, {
-          presets: [es2015],
-          babelrc: false
-      }, (err, result) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(result.code);
-          }
+    return gulp.src(src)
+      .pipe(plugins.babel({
+        presets: ['es2015']
+      }))
+      .pipe(plugins.rename({dirname: ''}))
+      .pipe(gulp.dest('./'))
+      .on('end', ()=>{
+        console.log('Babelified the index.js file');
       });
-    })
-      .then((content)=>{
-          console.log(`Babelifying ${src}.`);
-
-          //Determines what the file name should be
-          var stream = vsource('index.js');
-
-          //generates the page content
-          stream.end(content);
-
-          //generates the file and signals task completion
-          return stream.pipe(gulp.dest('./'));
-      })
   });
-
 }
