@@ -1,4 +1,3 @@
-$MQ-text--is-small: (max, bp('mobile'));
 
 .btn {
   font-family: $font-2;
@@ -15,10 +14,6 @@ $MQ-text--is-small: (max, bp('mobile'));
   line-height: 1;
   border: 3px solid brand(1);
   text-decoration: none !important;
-
-  @include mq($MQ-text--is-small){
-    font-size: 0.75em;
-  }
 
   &:hover {
     background-color: #000;
@@ -61,6 +56,18 @@ $MQ-text--is-small: (max, bp('mobile'));
 
   &.-three {
     @include mq(max, bp('medium')){
+      border-color: $CB-green-bright;
+    }
+  }
+
+  &.-four, &.-five {
+    @include mq(inside, bp('medium'), bp('small')){
+      border-color: $CB-green-bright;
+    }
+  }
+
+  &.-six {
+    @include mq(outside, bp('medium'), bp('small')){
       border-color: $CB-green-bright;
     }
   }

@@ -35,9 +35,11 @@ import MQ from "mq-js";
 
 //Define your Site break points here
 const mq = new MQ({
-  small: 600,
-  medium: 980,
-  large: 1200
+  breakpoints: {
+    small: 600,
+    medium: 980,
+    large: 1200
+  },
 });
 
 export default mq;`,
@@ -63,7 +65,8 @@ export default mq;`,
 import MQ from "mq-js";
 import breakpoints from './breakpoints.json';
 
-const mq = new MQ(breakpoints);
+//Using ES6 deconstruction as a short cut
+const mq = new MQ({ breakpoints });
 
 export default mq;`,
     })
@@ -71,13 +74,10 @@ export default mq;`,
     :markdown
       The above breakpoints are what I will be using throughout the examples in this documentation.
 
-    :markdown
-      ## Basic usage
-
       Now that you have your break points set up, you can use them when calling the function.
 
     :markdown
-      ### mq.min
+      ## mq.min
 
       In the following example, the button wil only turn green when you click it if the browser window is a minimum of 980px wide (ie. above the "medium" breakpoint).
 
@@ -99,6 +99,7 @@ import mq from "./mq";
 
 $('.btn.-one').click(function(e){
   e.preventDefault();
+
   mq.min('medium', (screen_width)=>{
     $(this).toggleClass('-active');
 
@@ -129,6 +130,7 @@ import mq from "./mq";
 
 $('.btn.-two').click(function(e){
   e.preventDefault();
+
   if (mq.min('medium')){
     $(this).toggleClass('-active');
   }
@@ -139,7 +141,7 @@ $('.btn.-two').click(function(e){
       Notice that the first example give you access to the screen width at the time the button was clicked. The second example does not (or at least not without custom code)
 
     :markdown
-      ### mq.max
+      ## mq.max
 
       `mq.max` does pretty much what you expect it to do. It will only run the function if the screen width is bellow the specified breakpoint.
 
@@ -150,7 +152,7 @@ $('.btn.-two').click(function(e){
 include /_modules/btn/btn
 .example
   +btn({classes:'-three'})
-    | Clickable below 980px screen width`,
+    | Clickable at and below 980px screen width`,
       js: `
 //module js file
 "use strict";
@@ -161,6 +163,7 @@ import mq from "./mq";
 
 $('.btn.-three').click(function(e){
   e.preventDefault();
+
   mq.max('medium', (screen_width)=>{
     $(this).toggleClass('-active');
 
@@ -176,3 +179,152 @@ $('.btn.-three').click(function(e){
       1. It prevents bugs from occuring in that 1px sweet spot where both would return true.
 
       2. It aligns with how [mq-scss](https://www.npmjs.com/package/mq-scss) handles min and max width to prevent odd bugs where javascript is firing but the styles aren't there to support it (or vice versa).
+
+    :markdown
+      ## mq.inside
+
+      `mq.inside` works the same way as it does in [mq-scss](https://www.npmjs.com/package/mq-scss).
+
+      You state the larger value first then the smaller value. The function will only be triggered if it is within that range.
+
+      Like everything else, it also comes in `if` format but for the sake of brevity I'm showing only the `callback` format.
+
+      The smaller value is always the value that gets +1 for consistency with the mq-scss mixin.
+
+    +demo({
+      html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-four'})
+    | Clickable at and between 980px and 601px screen width`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+$('.btn.-four').click(function(e){
+  e.preventDefault();
+
+  mq.inside('medium', 'small', (screen_width)=>{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})`,
+    })
+
+    :markdown
+      If you have more of smallest-up-to-largest sort of mindset then placing the largest value first might feel counterintuative for you.
+
+      If that is the case then in your `mq.js` setup file, you can set the `largestFirst` setting to `false` to make the first setting be the smaller value.
+
+    +demo({
+      js: `
+//mq.js file
+"use strict";
+
+import MQ from "mq-js";
+
+//Define your Site break points here
+const mq = new MQ({
+  largestFirst: false,
+  breakpoints: {
+    small: 600,
+    medium: 980,
+    large: 1200
+  }
+});
+
+export default mq;`,
+    })
+
+    :markdown
+      or if you used the the JSON version...
+
+    +demo({
+      json: `
+{
+  "//" : "This is the breakpoints.json file",
+  "small": 600,
+  "medium": 980,
+  "large": 1200
+}`,
+      js: `
+//mq.js file
+"use strict";
+import MQ from "mq-js";
+import breakpoints from './breakpoints.json';
+
+//Using ES6 deconstruction as a short cut
+const mq = new MQ({
+  largestFirst: false,
+  breakpoints
+});
+
+export default mq;`,
+    })
+
+    :markdown
+      Then you are free to place the smaller value first.
+
+    +demo({
+      html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-five'})
+    | Clickable at and between 980px and 601px screen width`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+$('.btn.-five').click(function(e){
+  e.preventDefault();
+
+  mq.inside('small', 'medium', (screen_width)=>{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})`,
+    })
+
+    :markdown
+      ## mq.outside
+
+      `mq.outside` does what you would expect. It is the opposite of mq.inside. It will only fire if the screen width is outside the
+
+    +demo({
+      html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-six'})
+    | Clickable outside of 980px to 601px screen widths`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+$('.btn.-six').click(function(e){
+  e.preventDefault();
+
+  mq.outside('medium', 'small', (screen_width)=>{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})`,
+    })
+

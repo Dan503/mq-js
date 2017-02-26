@@ -5,7 +5,7 @@
 
 import $ from 'jquery';
 import debounce from 'debounce';
-import mq from './mq';
+import { mq, mq_s2L } from './mq';
 
 import tabs from 'tabs/tabs';
 
@@ -24,24 +24,62 @@ $(() => {
 
   $('.btn.-one').click(function(e){
     e.preventDefault();
+
     mq.min('medium', (screen_width)=>{
       $(this).toggleClass('-active');
       console.log(screen_width);
     })
-  })
+  });
 
   $('.btn.-two').click(function(e){
     e.preventDefault();
+
     if (mq.min('medium')){
       $(this).toggleClass('-active');
     }
-  })
+  });
 
   $('.btn.-three').click(function(e){
     e.preventDefault();
+
     mq.max('medium', (screen_width)=>{
       $(this).toggleClass('-active');
       console.log(screen_width);
     })
-  })
+  });
+
+  $('.btn.-four').click(function(e){
+    e.preventDefault();
+
+    mq.inside('medium', 'small', (screen_width)=>{
+      $(this).toggleClass('-active');
+
+      //log the screen width at the time the button was clicked
+      console.log(screen_width);
+    })
+  });
+
+
+  $('.btn.-five').click(function(e){
+    e.preventDefault();
+
+    mq_s2L.inside('small', 'medium', (screen_width)=>{
+      $(this).toggleClass('-active');
+
+      //log the screen width at the time the button was clicked
+      console.log(screen_width);
+    })
+  });
+
+  $('.btn.-six').click(function(e){
+    e.preventDefault();
+
+    mq.outside('medium', 'small', (screen_width)=>{
+      $(this).toggleClass('-active');
+
+      //log the screen width at the time the button was clicked
+      console.log(screen_width);
+    })
+  });
+
 });
