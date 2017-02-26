@@ -15,12 +15,14 @@ function screenHeight(){
 }
 
 class MQ {
-  constructor(breakpoints, settings = {}){
-    this.bp = breakpoints;
+  constructor(settings = {}){
 
     this.settings = Object.assign({
+      breakpoints : {},
       largestFirst: true,
     }, settings);
+
+    this.bp = this.settings.breakpoints;
   }
 
   //Checks if the size is a valid breakpoint value
