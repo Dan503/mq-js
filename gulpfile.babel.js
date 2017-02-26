@@ -50,6 +50,7 @@ gulp.task('compile', gulp.series(
     'sass',
     'modernizr',
     'browserify',
+    'babelify'
   )
 ));
 
