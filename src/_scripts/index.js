@@ -67,7 +67,7 @@ class MQ {
 
     //If largestFirst is turned off,
     //it swaps the values around
-    if (!settings.largestFirst){
+    if (!this.settings.largestFirst){
       const tmp = wideSize;
       wideSize = thinSize;
       thinSize = tmp;
