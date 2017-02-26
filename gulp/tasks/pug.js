@@ -6,7 +6,7 @@ import foldero from 'foldero';
 import pug from 'pug';
 import yaml from 'js-yaml';
 import notifier from 'node-notifier';
-import { notification_icon_location } from '../config/shared-vars';
+import { notification_icon_location, pjson } from '../config/shared-vars';
 
 export default function(gulp, plugins, args, config, taskTarget, browserSync) {
   let dirs = config.directories;
@@ -77,6 +77,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
       filters: pugFilters,
       locals: {
         require,
+        pkg: pjson,
         config,
         pugFilters,
         compile: pug.compile,
