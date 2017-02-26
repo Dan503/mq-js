@@ -218,6 +218,8 @@ $('.btn.-four').click(function(e){
     })
 
     :markdown
+      ### Smallest value first
+
       If you have more of smallest-up-to-largest sort of mindset then placing the largest value first might feel counterintuative for you.
 
       If that is the case then in your `mq.js` setup file, you can set the `largestFirst` setting to `false` to make the first setting be the smaller value.
@@ -269,7 +271,7 @@ export default mq;`,
     })
 
     :markdown
-      Then you are free to place the smaller value first.
+      Then you are free to place the smaller value first like this:
 
     +demo({
       html: `
@@ -300,7 +302,7 @@ $('.btn.-five').click(function(e){
     :markdown
       ## mq.outside
 
-      `mq.outside` does what you would expect. It is the opposite of mq.inside. It will only fire if the screen width is outside the
+      `mq.outside` does what you would expect. It is the opposite of `mq.inside`. It will only fire if the screen width is outside of the two breakpoint values.
 
     +demo({
       html: `
