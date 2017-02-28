@@ -1,54 +1,72 @@
-# Mq-Js readme
+# mq-js
 
-Generated on 2017-02-25 using
-[generator-yeogurt@1.5.2](https://github.com/larsonjj/generator-yeogurt)
+Media Queries in JavaScript inspired by the mq-scss mixin
 
-## Description
+mq-js was inspired by the [mq-scss](https://www.npmjs.com/package/mq-scss) Sass mixin. I wanted to use media queries in JavaScript in a similar sort of way to how I was using media queries in my Sass code.
 
-This is an example readme file.
-Describe your site/app here.
+If you haven't looked into [mq-scss](https://www.npmjs.com/package/mq-scss) I highly recommend checking it out. It makes writing media queries far easier than any other method.
 
-## Technologies used
+## Quick start guide
 
-JavaScript
-- [Browserify](http://browserify.org/) with ES6/2015 support through [Babel](https://babeljs.io/)
-- [Node](https://nodejs.org/)
+This documentation assumes that you have the ability to use ES6 JavaScript syntax in your project. Try out [Babel](https://babeljs.io/) if you aren't using ES6 yet.
 
-Styles
-- [Sass](http://sass-lang.com/) via ([node-sass](https://github.com/sass/node-sass))
+First, npm install mq-js.
 
-Markup
-- [Jade](http://jade-lang.com/)
+    npm install mq-js --save
 
-Optimization
-- [Imagemin](https://github.com/imagemin/imagemin)
-- [Uglify](https://github.com/mishoo/UglifyJS)
+Now, create this simple mq.js file to set up your website breakpoints.
 
-Server
-- [BrowserSync](http://www.browsersync.io/)
+`````````````js
+//mq.js file
+"use strict";
 
-Linting
-- [ESlint](http://eslint.org/)
+import MQ from "mq-js";
 
-Automation
-- [Gulp](http://gulpjs.com)
+//Define your Site break points here
+const breakpoints = {
+  small: 600,
+  medium: 980,
+  large: 1200
+}
 
-Code Management
-- [Editorconfig](http://editorconfig.org/)
-- [Git](https://git-scm.com/)
+//Creates the media query functions
+const mq = new MQ(breakpoints);
 
+//Export mq by default
+export default mq;
 
-## Automated tasks
+//Gives easy access to your site breakpoints
+export { mq, breakpoints }
+`````````````
 
-This project uses [Gulp](http://gulpjs.com) to run automated tasks for development and production builds.
-The tasks are as follows:
+Now import the `mq` variable into your main/module JavaScript file.
 
-`gulp --production`: Same as `gulp serve --production` also run `gulp test` and  not boot up production server
+`````js
+//module js file
+"use strict";
+import $ from 'jquery';
 
-`gulp serve`: Compiles preprocessors and boots up development server
-`gulp serve --open`: Same as `gulp serve` but will also open up site/app in your default browser
-`gulp serve --production`: Same as `gulp serve` but will run all production tasks so you can view the site/app in it's final optimized form
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
 
-`gulp test`: Lints all `*.js` file in the `source` folder using eslint
+$('.btn').click(function(e){
+  e.preventDefault();
 
-***Adding the `--debug` option to any gulp task displays extra debugging information (ex. data being loaded into your templates)***
+  //Use your breakpoints by parsing in a string
+  mq.min('medium', (screen_width)=>{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})
+`````
+
+Available functions:
+
+- mq.min
+- mq.max
+- mq.inside
+- mq.outside
+
+Full documentation can be found at ___________________________
