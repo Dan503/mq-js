@@ -7,13 +7,12 @@ import $ from 'jquery';
 import debounce from 'debounce';
 import { mq, breakpoints } from './mq';
 
-import tabs from 'tabs/tabs';
-
 import codeLineNumbers from '~on-page-load-js/codeLineNumbers';
+import smoothAnchors from '~on-page-load-js/smoothAnchors';
 
 $(() => {
-  tabs();
   codeLineNumbers();
+  smoothAnchors();
 
   $('.btn.-one').click(function(e){
     e.preventDefault();
