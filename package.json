@@ -66,6 +66,14 @@
     "watchify": "~3.7.0 ",
     "wrench": "~1.5.8"
   },
+  "keywords": [
+    "breakpoints",
+    "js",
+    "JavaScript",
+    "media query",
+    "media queries",
+    "responsive"
+  ],
   "scripts": {
     "clean-deps": "rimraf node_modules"
   },
