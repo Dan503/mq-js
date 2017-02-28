@@ -13,6 +13,24 @@ block content
 
     If you haven't looked into [mq-scss](https://www.npmjs.com/package/mq-js) I highly recommend checking it out. It makes writing media queries far easier than any other method.
 
+  h2 Contents
+  -
+    var headings = {
+      'Setup' : 'setup',
+      'mq.min' : 'mq-min',
+      'mq.max' : 'mq-max',
+      'mq.inside' : 'mq-inside',
+      'mq.outside' : 'mq-outside',
+      'Creating media query variables' : 'creating-media-query-variables',
+      'Using pure pixel values' : 'using-pure-pixel-values',
+      'Running on window resize' : 'running-on-window-resize',
+      'Future updates' : 'future-updates',
+    };
+
+  ol
+    each id, heading in headings
+      li: a(href='#'+id, style='color: #000;')= heading
+
   :marked
     ## Setup
 
