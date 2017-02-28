@@ -51,7 +51,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
       console.log(config);
     }
 
-    const pugFilters = [ require('markdown') ];
+    const pugFilters = [ require('marked') ];
 
     let itteration = 0;
 
