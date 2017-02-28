@@ -3,21 +3,13 @@
 
 import MQ from './index';
 
-const bp = {
+const breakpoints = {
   small: 600,
   medium: 980,
   large: 1200
-};
+}
 
-const mq = new MQ({
-  breakpoints: bp,
-});
-
-const mq_s2L = new MQ({
-  breakpoints: bp,
-  largestFirst: false,
-});
+const mq = new MQ(breakpoints);
 
 export default mq;
-
-export { mq, mq_s2L };
+export { mq, breakpoints }

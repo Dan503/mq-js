@@ -5,7 +5,7 @@
 
 import $ from 'jquery';
 import debounce from 'debounce';
-import { mq, mq_s2L } from './mq';
+import mq from './mq';
 
 import tabs from 'tabs/tabs';
 
@@ -53,10 +53,13 @@ $(() => {
   });
 
 
+  console.log(mq.inside('small', 'medium'));
+
   $('.btn.-five').click(function(e){
     e.preventDefault();
 
-    mq_s2L.inside('small', 'medium', (screen_width)=>{
+
+    mq.inside('small', 'medium', (screen_width)=>{
       $(this).toggleClass('-active');
 
       //log the screen width at the time the button was clicked
