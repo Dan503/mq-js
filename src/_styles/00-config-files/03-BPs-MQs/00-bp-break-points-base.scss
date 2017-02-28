@@ -1,0 +1,26 @@
+///*================================================*\
+//	BREAK POINTS
+//----------------------------------------------------
+//	Defines the points at which the page design
+//	can snap and drastically change it's layout
+//	these values are global and can be used in
+//	all modules.
+//*================================================*/
+
+//browser spec min-supported width: 320px (iPhones)
+
+$breakPoints: (
+	'minimum': 300px, //*The smallest width that the site is able to shrink to */
+	'tiny': 350px, //*essentially iphones in portrait view only*/
+	'small': 600px,
+	'mobile': 600px, ///*!MAJOR BREAK POINT!*//*Maximum for strict mobile view*/
+	'phablet': 770px, //*essentially the maximum for iPads in portrait*/
+  'medium' : 980px,
+	'tablet': 1024px, ///*!MAJOR BREAK POINT!*/ /*good place to switch to tablet view*/
+  'page': 800px, ///*!MAJOR BREAK POINT!*//*Point at which the edge of the desktop design meets the edge of the screen*/
+  'large' : 1200px,
+);
+
+@function bp($value){
+	@return map-get($breakPoints, $value);
+}

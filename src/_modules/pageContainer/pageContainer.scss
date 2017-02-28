@@ -1,0 +1,36 @@
+// pagelayout styles
+.pageContainer {
+	//to be used as a parent to pageWidth;
+
+	padding: {
+		left: $VG-screen__padding !important;
+		right: $VG-screen__padding !important;
+	}
+
+	&.-wide {
+		padding: {
+			left: 0 !important;
+			right: 0 !important;
+		};
+	}
+
+	//Styles the element to take up the max-width of the design
+	&__width {
+		@include clearfix;
+
+		margin:0 auto;
+		max-width: bp('page');
+		min-width: bp('minimum') - ($VG-screen__padding * 2);
+		display: block;
+		pointer-events: auto;
+		width: 100%;
+
+		.-wide & {
+			max-width: bp('page') + ($VG-screen__padding * 2);
+		}
+
+		.-thin & {
+			max-width: bp('page') - ($VG-screen__padding * 2);
+		}
+	}
+}
