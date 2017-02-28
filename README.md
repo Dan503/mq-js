@@ -62,9 +62,9 @@ $('.btn').click(function(e){
 
 Available functions:
 
-- mq.min
-- mq.max
-- mq.inside
-- mq.outside
+- [mq.min](https://dan503.github.io/mq-js/#mq-min)
+- [mq.max](https://dan503.github.io/mq-js/#mq-max)
+- [mq.inside](https://dan503.github.io/mq-js/#mq-inside)
+- [mq.outside](https://dan503.github.io/mq-js/#mq-outside)
 
-Full documentation can be found at ___________________________
+Full documentation can be found at https://dan503.github.io/mq-js/
