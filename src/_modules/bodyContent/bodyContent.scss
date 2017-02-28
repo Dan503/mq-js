@@ -5,7 +5,9 @@
 $C-numbers: brand(1);//$CB-blue-dim;
 $C-dots: $C-numbers;
 
-.o-wysiwygContent, .field--name-body {
+.bodyContent {
+  padding-bottom: 100px;
+
 	&, & td {
 
 		text-align: left;
@@ -18,10 +20,10 @@ $C-dots: $C-numbers;
 
 		a:not(.btn) {
 			font-weight: $normal;
-			//text-decoration: underline;
+			text-decoration: underline;
 			color: $CF-links;
 			&:hover, &:focus {
-				text-decoration: underline !important;
+				text-decoration: none;
 			}
 		}
 

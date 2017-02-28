@@ -1,58 +1,57 @@
 extends _layouts/base
 
-block includes
-  include /_modules/pageContainer/pageContainer
+block append includes
   include /_modules/demo/demo
-  include /_modules/bodyContent/bodyContent
-  include /_modules/header/header
 
 block content
-  +pageContainer()
-    +header()
-    :markdown
-      This documentation is best viewed on a Desktop computer or laptop for the sake of viewing the examples at all screen sizes.
+  :markdown
+    This documentation is best viewed on a Desktop computer or laptop for the sake of viewing the examples at all screen sizes.
 
-      This documentation also assumes that you have the ability to use ES6 JavaScript syntax in your project. Try looking into [Yeogurt](https://github.com/larsonjj/generator-yeogurt) or [Babel](https://babeljs.io/) if you aren't already using ES6 syntax in your JavaScript.
+    This documentation also assumes that you have the ability to use ES6 JavaScript syntax in your project. Try looking into [Yeogurt](https://github.com/larsonjj/generator-yeogurt) or [Babel](https://babeljs.io/) if you aren't already using ES6 syntax in your projects.
 
-      mq-js was inspired by the [mq-scss](https://www.npmjs.com/package/mq-js) Sass mixin. I wanted to use media queries in javascript in a similar sort of way to how I was using media queries in Sass.
+    mq-js was inspired by the [mq-scss](https://www.npmjs.com/package/mq-js) Sass mixin. I wanted to use media queries in JavaScript in a similar sort of way to how I was using media queries in my Sass code.
 
-      If you haven't looked into [mq-scss](https://www.npmjs.com/package/mq-js) I highly recommend checking it out. It makes writing media queries far easier than any other method.
+    If you haven't looked into [mq-scss](https://www.npmjs.com/package/mq-js) I highly recommend checking it out. It makes writing media queries far easier than any other method.
 
-    +bodyContent()
-      :markdown
-        ## Setup
+  :markdown
+    ## Setup
 
-        Firstly, use `npm install mq-js --save` to add the npm module to your project. If you haven't used npm before, read through [this documentation](https://docs.npmjs.com/getting-started/installing-node) to get set up.
+    Firstly, use `npm install mq-js --save` to add the npm module to your project. If you haven't used npm before, read through [this documentation](https://docs.npmjs.com/getting-started/installing-node) to get set up.
 
-        Now, create this simple `mq.js` file to set up your websites breakpoints.
+    Now, create this simple `mq.js` file to set up your websites breakpoints.
 
-    +demo({
-      js: `
+  +demo({
+    js: `
 //mq.js file
 "use strict";
 
 import MQ from "mq-js";
 
 //Define your Site break points here
-const mq = new MQ({
-  breakpoints: {
-    small: 600,
-    medium: 980,
-    large: 1200
-  },
-});
+const breakpoints = {
+  small: 600,
+  medium: 980,
+  large: 1200
+}
 
-export default mq;`,
-    })
+//Creates the media query functions
+const mq = new MQ(breakpoints);
 
-    p(style="text-align: center; font-size: 2em")
-      strong OR
+//Export mq by default
+export default mq;
 
-    :markdown
-      Alternatively you can save the breakpoints into a JSON file, then import them.
+//Gives easy access to your site breakpoints
+export { mq, breakpoints }`,
+  })
 
-    +demo({
-      json: `
+  p(style="text-align: center; font-size: 2em")
+    strong OR
+
+  :markdown
+    Alternatively you can save the breakpoints into a JSON file, then import them.
+
+  +demo({
+    json: `
 {
   "//" : "This is the breakpoints.json file",
   "small": 600,
@@ -65,26 +64,41 @@ export default mq;`,
 import MQ from "mq-js";
 import breakpoints from './breakpoints.json';
 
-//Using ES6 deconstruction as a short cut
-const mq = new MQ({ breakpoints });
+const mq = new MQ(breakpoints);
 
-export default mq;`,
+//Export mq by default
+export default mq;
+
+//easier access to your site breakpoints
+export { mq, breakpoints }`,
+  })
+
+  :markdown
+    The above breakpoints are what I will be using throughout the examples in this documentation.
+
+    I'm providing 2 export statements in the examples. This makes it super easy to access your site breakpoints since it is just a matter of switching out your import statement when you need to. It also means that it doesn't matter if you pull the breakpoints in using JSON or define them directly in the `mq.js` file, the code to access them is the same either way.
+
+  +demo({
+    js: `
+//Without breakpoints
+import mq from './mq'
+
+//With breakpoints
+import { mq, breakpoints } from './mq'`,
     })
 
-    :markdown
-      The above breakpoints are what I will be using throughout the examples in this documentation.
+  :markdown
+    Now that you have your break points set up, you can use them when calling the function without having to import them. I'll get to why you might want to import the `breakpoints` variable later. For now, just stick to only importing the `mq` variable on it's own.
 
-      Now that you have your break points set up, you can use them when calling the function.
+  :markdown
+    ## mq.min
 
-    :markdown
-      ## mq.min
+    In the following example, the button will only turn green if you click it when the browser window is at a minimum width of 981px wide (ie. above the "medium" breakpoint).
 
-      In the following example, the button wil only turn green when you click it if the browser window is a minimum of 981px wide (ie. above the "medium" breakpoint).
+    To help you figure out when the button is able to be clicked, the border of the button will turn green when it is clickable.
 
-      The border will turn green when it is clickable
-
-    +demo({
-      html: `
+  +demo({
+    html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-one'})
@@ -100,6 +114,7 @@ import mq from "./mq";
 $('.btn.-one').click(function(e){
   e.preventDefault();
 
+  //Use your breakpoints by parsing in a string
   mq.min('medium', (screen_width)=>{
     $(this).toggleClass('-active');
 
@@ -107,21 +122,21 @@ $('.btn.-one').click(function(e){
     console.log(screen_width);
   })
 })`,
-    })
+  })
 
-    :markdown
-      You might be wondering why 981px instead of 980px. I will get into it a bit more further down but for now just know that it is primarily to avoid conflicts.
+  :markdown
+    As you can see, you can easily access the `"medium"` breakpoint that you defined by simply parsing a string as the breakpoint value. There is no need to import the `breakpoints` variable from the `mq.js` file to use the `"medium"` breakpoint.
 
-      Alternitavely you can use it in an if statement sort of format.
+    You might be wondering why 981px instead of 980px. I will get into that a bit more later but for now just know that it is primarily to avoid conflicts.
 
-      Here is the same example again except this time as an if statement.
+    You can also use it in an if statement sort of format. Here is the same example again except this time as an if statement.
 
-    +demo({
-      html: `
+  +demo({
+    html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-two'})
-    | Clickable above 980px screen width`,
+    | Clickable at 981px screen width and above`,
       js: `
 //module js file
 "use strict";
@@ -137,20 +152,22 @@ $('.btn.-two').click(function(e){
     $(this).toggleClass('-active');
   }
 })`,
-    })
+  })
 
-    :markdown
-      Notice that the first example give you access to the screen width at the time the button was clicked. The second example does not (or at least not without custom code)
+  :markdown
+    Notice that the first example gives you access to the screen width at the time the button is clicked. The second example does not (or at least not without custom code).
 
-    :markdown
-      ## mq.max
+    Also notice that I'm not binding and unbinding the click function on screen resize. By placing `mq` _**inside**_ the click function, it behaves very similarly to how media queries behave in css.
 
-      `mq.max` does pretty much what you expect it to do. It will only run the function if the screen width is bellow the specified breakpoint.
+  :markdown
+    ## mq.max
 
-      It also comes in `if` format but for the sake of brevity I'll just show the `callback` format.
+    `mq.max` does pretty much what you expect it to do. It will only run the function if the screen width is bellow the specified breakpoint.
 
-    +demo({
-      html: `
+    All of these functions also come in the `if` statement format. For the sake of brevity though, I'm just showing the `callback` format in the rest of these examples.
+
+  +demo({
+    html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-three'})
@@ -173,28 +190,28 @@ $('.btn.-three').click(function(e){
     console.log(screen_width);
   })
 })`,
-    })
+  })
 
-    :markdown
-      `mq.max` is **inclusive** of the breakpoint value where as `mq.min` is **exclusive** of the breakpoint value. This serves two important purposes:
+  :markdown
+    `mq.max` is _**inclusive**_ of the breakpoint value where as `mq.min` is _**exclusive**_ of the breakpoint value. That is why `mq.min` essentially adds +1 to the breakpoint value when used. This serves two important purposes:
 
-      1. It prevents bugs from occuring in that 1px sweet spot where both would return true.
+    1. It prevents bugs from occurring in that 1px sweet spot where both would otherwise return true.
 
-      2. It aligns with how [mq-scss](https://www.npmjs.com/package/mq-scss) handles min and max width to prevent odd bugs where javascript is firing but the styles aren't there to support it (or vice versa).
+    2. It aligns with how [mq-scss](https://www.npmjs.com/package/mq-scss) handles min and max width to prevent odd bugs where JavaScript is firing but the styles aren't there to support it (or vice versa).
 
-    :markdown
-      ## mq.inside
+  :markdown
+    ## mq.inside
 
-      `mq.inside` works the same way as it does in [mq-scss](https://www.npmjs.com/package/mq-scss).
+    `mq.inside` works in much the same way as it does in [mq-scss](https://www.npmjs.com/package/mq-scss).
 
-      You state the larger value first then the smaller value. The function will only be triggered if it is within that range.
+    Instead of stating one value then calling the function, you state two values then call the function.
 
-      Like everything else, it also comes in `if` format but for the sake of brevity I'm showing only the `callback` format.
+    You can state the breakpoint values in any order but the function needs to be called last (if at all). The function will be triggered if the screen width sits between the two breakpoint values when it is called.
 
-      The smaller value is always the value that gets +1 for consistency with the mq-scss mixin.
+    The smaller value always gets +1 for consistency with the mq-scss mixin and to prevent the issues mentioned above.
 
-    +demo({
-      html: `
+  +demo({
+    html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-four'})
@@ -217,70 +234,19 @@ $('.btn.-four').click(function(e){
     console.log(screen_width);
   })
 })`,
-    })
+  })
 
-    :markdown
-      ### Smallest value first
+  :markdown
+    ## mq.outside
 
-      If you have more of smallest-up-to-largest sort of mindset then placing the largest value first might feel counterintuative for you.
+    `mq.outside` does what you would expect. It is the opposite of `mq.inside`. It will only fire if the screen width is outside of the two breakpoint values.
 
-      If that is the case then in your `mq.js` setup file, you can set the `largestFirst` setting to `false` to make the first setting be the smaller value.
-
-    +demo({
-      js: `
-//mq.js file
-"use strict";
-
-import MQ from "mq-js";
-
-//Define your Site break points here
-const mq = new MQ({
-  largestFirst: false,
-  breakpoints: {
-    small: 600,
-    medium: 980,
-    large: 1200
-  }
-});
-
-export default mq;`,
-    })
-
-    :markdown
-      or if you used the the JSON version...
-
-    +demo({
-      json: `
-{
-  "//" : "This is the breakpoints.json file",
-  "small": 600,
-  "medium": 980,
-  "large": 1200
-}`,
-      js: `
-//mq.js file
-"use strict";
-import MQ from "mq-js";
-import breakpoints from './breakpoints.json';
-
-//Using ES6 deconstruction as a short cut
-const mq = new MQ({
-  largestFirst: false,
-  breakpoints
-});
-
-export default mq;`,
-    })
-
-    :markdown
-      Then you are free to place the smaller value first like this:
-
-    +demo({
+  +demo({
       html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-five'})
-    | Clickable at and between 980px and 601px screen width`,
+    | Clickable outside of 980px to 601px screen widths`,
       js: `
 //module js file
 "use strict";
@@ -292,37 +258,6 @@ import mq from "./mq";
 $('.btn.-five').click(function(e){
   e.preventDefault();
 
-  mq.inside('small', 'medium', (screen_width)=>{
-    $(this).toggleClass('-active');
-
-    //log the screen width at the time the button was clicked
-    console.log(screen_width);
-  })
-})`,
-    })
-
-    :markdown
-      ## mq.outside
-
-      `mq.outside` does what you would expect. It is the opposite of `mq.inside`. It will only fire if the screen width is outside of the two breakpoint values.
-
-    +demo({
-      html: `
-include /_modules/btn/btn
-.example
-  +btn({classes:'-six'})
-    | Clickable outside of 980px to 601px screen widths`,
-      js: `
-//module js file
-"use strict";
-import $ from 'jquery';
-
-//import the mq variable that was created in the setup stage
-import mq from "./mq";
-
-$('.btn.-six').click(function(e){
-  e.preventDefault();
-
   mq.outside('medium', 'small', (screen_width)=>{
     $(this).toggleClass('-active');
 
@@ -330,20 +265,20 @@ $('.btn.-six').click(function(e){
     console.log(screen_width);
   })
 })`,
-    })
+  })
 
-    :markdown
-      ## Creating media query variables
+  :markdown
+    ## Creating media query variables
 
-      One of the big features in mq-scss is that you can easily create meaningful media query variables.
+    One of the big features in mq-scss is that you can easily create meaningful media query variables.
 
-      Here is how to do a similar thing with mq-js:
+    Here is how to do a similar sort of thing using mq-js:
 
-    +demo({
-      html: `
+  +demo({
+    html: `
 include /_modules/btn/btn
 .example
-  +btn({classes:'-seven'})
+  +btn({classes:'-six'})
     | Clickable at and below a 980px screen width`,
       js: `
 //module js file
@@ -355,7 +290,7 @@ import mq from "./mq";
 
 const MQ_btn__active = ()=> mq.max('medium');
 
-$('.btn.-seven').click(function(e){
+$('.btn.-six').click(function(e){
   e.preventDefault();
 
   if (MQ_btn__active()){
@@ -363,19 +298,48 @@ $('.btn.-seven').click(function(e){
   }
 
 })`,
-    })
+  })
 
-    :markdown
-      ## Using pure pixel values
+  :markdown
+    ## Using pure pixel values
 
-      Just because you have access to the breakpoint values doesn't mean you have to use them. mq-js still works if you just parse solid numbers into it.
+    Just because you have access to the breakpoint values doesn't mean you have to use them. mq-js still works if you just parse solid numbers into it.
 
-    +demo({
-      html: `
+  +demo({
+    html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-seven'})
+    | Clickable at and below 1000px screen width`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+$('.btn.-seven').click(function(e){
+  e.preventDefault();
+
+  mq.max(1000, (screen_width)=>{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})`,
+  })
+
+  :markdown
+    Remember that if you use `mq.min` it will be like adding 1 pixel to the value you provide.
+
+  +demo({
+    html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-eight'})
-    | Clickable at and below 1000px screen width`,
+    | Clickable at 1001px screen width and above`,
       js: `
 //module js file
 "use strict";
@@ -387,35 +351,6 @@ import mq from "./mq";
 $('.btn.-eight').click(function(e){
   e.preventDefault();
 
-  mq.max(1000, (screen_width)=>{
-    $(this).toggleClass('-active');
-
-    //log the screen width at the time the button was clicked
-    console.log(screen_width);
-  })
-})`,
-    })
-
-    :markdown
-      Remember that if you use `mq.min` it will be like adding 1 pixel to the value you provide
-
-    +demo({
-      html: `
-include /_modules/btn/btn
-.example
-  +btn({classes:'-nine'})
-    | Clickable at 1001px screen width and above`,
-      js: `
-//module js file
-"use strict";
-import $ from 'jquery';
-
-//import the mq variable that was created in the setup stage
-import mq from "./mq";
-
-$('.btn.-nine').click(function(e){
-  e.preventDefault();
-
   mq.min(1000, (screen_width)=>{
     $(this).toggleClass('-active');
 
@@ -423,19 +358,51 @@ $('.btn.-nine').click(function(e){
     console.log(screen_width);
   })
 })`,
-    })
+  })
 
-    :markdown
-      ## Running on window resize
+  :markdown
+    What if you only want to tweak one of the normal breakpoint values though so it is just a few pixels larger than the base break point? That is when it is useful to import the `breakpoint` variable.
 
-      mq-js is just a simple function that checks the current window size when it is called. It doesn't do anything fancy when you resize the window. With a litle extra code though, you can easily make it run on window resize.
+    In the following example, I'm importing the breakpoints variable and using it to add 30px to the `"medium"` breakpoint.
 
-      The following example uses [debounce](https://www.npmjs.com/package/debounce) to prevent the function from firing until the window has finished resizing. This improves performance and can avoid odd bugs from occurring.
+  +demo({
+    html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-nine'})
+    | Clickable at 1011px screen width and above`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
 
-      The button will activate when the screen is at the correct width and deactivate when not. Clicking the buttton does nothing.
+//import BOTH the mq variable AND the breakpoints variable that were created in the setup stage
+import { mq , breakpoints } from "./mq";
 
-    +demo({
-      html: `
+$('.btn.-nine').click(function(e){
+  e.preventDefault();
+
+  //Adding 30px to the base "medium" breakpoint
+  mq.min(breakpoints.medium + 30, (screen_width)=>{
+    $(this).toggleClass('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_width);
+  })
+})`,
+  })
+
+  :markdown
+    ## Running on window resize
+
+    mq-js is just a simple function that checks the current window size when it is called. It doesn't do anything fancy when you resize the window. With a little extra code though, you can easily make it run on window resize.
+
+    The following example uses [Debounce](https://www.npmjs.com/package/debounce) to prevent the function from firing until the window has finished resizing. This improves performance and can avoid odd bugs from occurring.
+
+    The button will activate when the screen is at the correct width and deactivate when not. Clicking the button does nothing.
+
+  +demo({
+    html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-ten'})
@@ -461,9 +428,9 @@ function toggleBtn(){
 toggleBtn();
 
 window.onresize = debounce(toggleBtn, 200);`,
-    })
+  })
 
-    :markdown
-      ## Future updates
+  :markdown
+    ## Future updates
 
-      Currently mq-js only supports the mq-scss width based ranges since those are the most important. I will be adding support for more of the mq-scss range types in future updates.
+    Currently mq-js only supports the mq-scss width based ranges since those are the most important. I will be adding support for more of the mq-scss range types in future updates.

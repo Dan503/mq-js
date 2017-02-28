@@ -71,10 +71,6 @@ body {
   color: $CF-body__text;
   font-family: $font-1;
   font-weight: $normal;
-
-  &.JS-scrollLock {
-    overflow: hidden;
-  }
 }
 
 p, ul, ol {
@@ -110,7 +106,7 @@ h1 {
   text-align: center;
   + h2 { margin-top: 30px; }
 }
-h2 { font-size: 25px; }
+h2 { font-size: 25px; margin-top: 75px; }
 h3 { font-size: 20px; }
 h4 { font-size: 18px; text-transform: uppercase; }
 

@@ -2,6 +2,10 @@
 block config
 
 block includes
+  include /_modules/pageContainer/pageContainer
+  include /_modules/demo/demo
+  include /_modules/bodyContent/bodyContent
+  include /_modules/header/header
 
 doctype html
 
@@ -25,7 +29,10 @@ body
   p.browsehappy You are using an #[strong outdated] browser. Please #[a(href='http://browsehappy.com/') upgrade your browser] to improve your experience.
   <![endif]-->
 
-  block content
+  +pageContainer()
+    +header()
+    +bodyContent()
+      block content
 
   block scripts
     script(src='/assets/scripts/highlight.pack.js')

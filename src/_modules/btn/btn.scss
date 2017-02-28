@@ -12,6 +12,7 @@
   position: relative;
   text-align: left;
   line-height: 1;
+  letter-spacing: 0.5px;
   border: 3px solid brand(1);
   text-decoration: none !important;
 
@@ -54,32 +55,38 @@
     }
   }
 
-  &.-three, &.-seven {
+  &.-three, &.-six {
     @include mq(max, bp('medium')){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-four, &.-five {
+  &.-four {
     @include mq(inside, bp('medium'), bp('small')){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-six {
+  &.-five {
     @include mq(outside, bp('medium'), bp('small')){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-eight {
+  &.-seven {
     @include mq(max, 1000px){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-nine {
+  &.-eight {
     @include mq(min, 1000px){
+      border-color: $CB-green-bright;
+    }
+  }
+
+  &.-nine {
+    @include mq(min, bp('medium') + 30){
       border-color: $CB-green-bright;
     }
   }
