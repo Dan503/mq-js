@@ -18,22 +18,15 @@ function screenWidth() {
   return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 }
 
-function screenHeight() {
-  return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-}
+// function screenHeight(){
+//   return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+// }
 
 var MQ = function () {
-  function MQ() {
-    var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
+  function MQ(breakpoints) {
     _classCallCheck(this, MQ);
 
-    this.settings = Object.assign({
-      breakpoints: {},
-      largestFirst: true
-    }, settings);
-
-    this.bp = this.settings.breakpoints;
+    this.bp = breakpoints;
   }
 
   //Checks if the size is a valid breakpoint value
@@ -91,16 +84,15 @@ var MQ = function () {
 
       var screen_width = screenWidth();
 
-      //If largestFirst is turned off,
-      //it swaps the values around
-      if (!this.settings.largestFirst) {
+      wideSize = this.checkBP(wideSize);
+      thinSize = this.checkBP(thinSize);
+
+      //If largest is first, it swaps the values around
+      if (wideSize < thinSize) {
         var tmp = wideSize;
         wideSize = thinSize;
         thinSize = tmp;
       }
-
-      wideSize = this.checkBP(wideSize);
-      thinSize = this.checkBP(thinSize);
 
       var isAllowed = thinSize < screen_width && screen_width <= wideSize;
 
