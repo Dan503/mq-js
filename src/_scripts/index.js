@@ -87,6 +87,20 @@ class MQ {
     );
   }
 
+  insideHeight(tallSize, shortSize, callback){
+    return result(
+      inside(tallSize, shortSize, 'height', this.bp),
+      callback
+    );
+  }
+
+  outsideHeight(tallSize, shortSize, callback){
+    return result(
+      !inside(tallSize, shortSize, 'height', this.bp),
+      callback
+    );
+  }
+
 }
 
 function result (isAllowed, callback = ()=>{}) {
