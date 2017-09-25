@@ -73,30 +73,38 @@ class MQ {
     );
   }
 
-  inside(wideSize, thinSize, callback){
+  inside(large, small, callback){
     return result(
-      inside(wideSize, thinSize, 'width', this.bp),
+      inside(large, small, 'width', this.bp),
+      callback
+    );
+  }
+  //inside alias
+  insideWidth(large, small, callback){
+    return this.inside(large, small, callback);
+  }
+
+  outside(large, small, callback){
+    return result(
+      !inside(large, small, 'width', this.bp),
+      callback
+    );
+  }
+  //outside alias
+  outsideWidth(large, small, callback){
+    return this.outside(large, small, callback);
+  }
+
+  insideHeight(large, small, callback){
+    return result(
+      inside(large, small, 'height', this.bp),
       callback
     );
   }
 
-  outside(wideSize, thinSize, callback){
+  outsideHeight(large, small, callback){
     return result(
-      !inside(wideSize, thinSize, 'width', this.bp),
-      callback
-    );
-  }
-
-  insideHeight(tallSize, shortSize, callback){
-    return result(
-      inside(tallSize, shortSize, 'height', this.bp),
-      callback
-    );
-  }
-
-  outsideHeight(tallSize, shortSize, callback){
-    return result(
-      !inside(tallSize, shortSize, 'height', this.bp),
+      !inside(large, small, 'height', this.bp),
       callback
     );
   }
