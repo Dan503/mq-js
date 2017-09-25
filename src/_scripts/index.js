@@ -109,6 +109,20 @@ class MQ {
     );
   }
 
+  insideRatio(large, small, callback){
+    return result(
+      insideRatio(large, small),
+      callback
+    )
+  }
+
+  outsideRatio(large, small, callback){
+    return result(
+      !insideRatio(large, small),
+      callback
+    );
+  }
+
 }
 
 function result (isAllowed, callback = ()=>{}) {
@@ -150,7 +164,7 @@ function inside (largeSize, smallSize, dimension, breakpoints) {
 
   const dimensions = screenSize();
 
-  const screen_dimension = dimensions[dimension];
+  const screen_dimension = dimension === 'ratio' ? screenRatio() : dimensions[dimension];
 
   if (!screen_dimension){
     throw new Error(`invalid direction: "${direction}"; valid directions are: ${Object.keys(dimensions)}`);
@@ -167,6 +181,15 @@ function inside (largeSize, smallSize, dimension, breakpoints) {
   }
 
   return smallSize < screen_dimension && screen_dimension <= largeSize;
+}
+
+function insideRatio (largeRatio, smallRatio) {
+  return inside (
+    convertRatio(largeRatio),
+    convertRatio(smallRatio),
+    'ratio',
+    {}
+  )
 }
 
 function checkRatio(ratio, style) {
@@ -189,12 +212,15 @@ function minRatio () {
 }
 
 function getRatios (ratio) {
-  const { width, height } = screenSize();
-
   return {
     converted: convertRatio(ratio),
-    screen: width / height,
+    screen: screenRatio(),
   }
+}
+
+function screenRatio(){
+  const { width, height } = screenSize();
+  return width / height;
 }
 
 function convertRatio (ratio) {
