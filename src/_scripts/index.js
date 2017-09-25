@@ -31,6 +31,20 @@ class MQ {
     return this.max(size, callback);
   }
 
+  minHeight(size, callback){
+    return result(
+      screenHeight() > this.checkBP(size),
+      callback
+    );
+  }
+
+  maxHeight(size, callback){
+    return result(
+      screenHeight() <= this.checkBP(size),
+      callback
+    );
+  }
+
   inside(wideSize, thinSize, callback){
     return result(
       inside(wideSize, thinSize, 'w', this.bp),
