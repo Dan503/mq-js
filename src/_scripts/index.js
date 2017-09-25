@@ -1,93 +1,102 @@
 "use strict";
 
-//designed to be used in an if statement like:
-// works with the bp breakpoint object /_scripts/config/bp-break-points.js
-//if (mq.min(bp('tablet') + 50){ ...functionality... }
-//if (mq.inside('tablet', 'mobile'){ ...functionality... }
-//can also be used like mq.min('tablet', (screenWidth)=>{ /* functionality */ });
-
-function screenWidth(){
-  return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-}
-
-// function screenHeight(){
-//   return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-// }
-
 class MQ {
   constructor(breakpoints){
-
     this.bp = breakpoints;
   }
 
-  //Checks if the size is a valid breakpoint value
   checkBP(size){
-    if (typeof size === 'string'){
-      if (typeof this.bp[size] !== 'undefined'){
-        return this.bp[size];
-      } else {
-        console.log('Available Breakpoints:', this.bp);
-        throw `"${size}" breakpoint does not exist`;
-      }
-    } else if (typeof size === 'number') {
-      return size;
+    return checkBP(size, this.bp);
+  }
+
+  min(size, callback) {
+    return result(
+      screenWidth() > this.checkBP(size),
+      callback
+    );
+  }
+
+  max(size, callback){
+    return result(
+      screenWidth() <= this.checkBP(size),
+      callback
+    );
+  }
+
+  inside(wideSize, thinSize, callback){
+    return result(
+      inside(wideSize, thinSize, 'w', this.bp),
+      callback
+    );
+  }
+
+  outside(wideSize, thinSize, callback){
+    return result(
+      !inside(wideSize, thinSize, 'w', this.bp),
+      callback
+    );
+  }
+}
+
+function result (isAllowed, callback = ()=>{}) {
+  const screen_size = { width: screenWidth(), height: screenHeight() };
+  if (isAllowed) callback.call(window, screen_size);
+  return isAllowed;
+}
+
+function screenWidth () {
+  return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+}
+
+function screenHeight () {
+  return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+}
+
+//Checks if the size is a valid breakpoint value
+function checkBP(size, breakpoints){
+  if (typeof size === 'string'){
+    if (typeof breakpoints[size] !== 'undefined'){
+      return breakpoints[size];
     } else {
-      console.log('Available Breakpoints:', this.bp);
-      throw `"${size}" is not a valid breakpoint.\n It must be a string or a number`;
+      console.log('Available Breakpoints:', breakpoints);
+      throw new Error(`"${size}" breakpoint does not exist`);
     }
+  } else if (typeof size === 'number') {
+    return size;
+  } else {
+    console.log('Available Breakpoints:', breakpoints);
+    throw new Error(`"${size}" is not a valid breakpoint. It must be a string or a number`);
+  }
+}
+
+// Test if current screen size is between 2 values
+function inside (largeSize, smallSize, dimension, breakpoints) {
+  if (values.length > 2){
+    throw new Error('More than 2 values provided to "inside" function: '+values);
   }
 
-  min(size, callback = ()=>{}) {
-    let screen_width = screenWidth();
-    size = this.checkBP(size);
-
-    const isAllowed = screen_width > size;
-
-    if (isAllowed) callback.call(window, screen_width);
-
-    return isAllowed;
+  const dimensions = {
+    w: screenWidth(),
+    h: screenHeight(),
   }
 
-  max(size, callback = ()=>{}){
-    let screen_width = screenWidth();
-    size = this.checkBP(size);
+  const screen_dimension = dimensions[dimension];
 
-    const isAllowed = screen_width <= size;
-
-    if (isAllowed) callback.call(window, screen_width);
-
-    return isAllowed;
+  if (!screen_dimension){
+    throw new Error(`invalid direction: "${direction}"; valid directions are: ${dimensions.keys}`);
   }
 
-  inside(wideSize, thinSize, callback = ()=>{}){
-    let screen_width = screenWidth();
+  let largeSize = checkBP(largeSize, breakpoints);
+  let smallSize = checkBP(smallSize, breakpoints);
 
-    wideSize = this.checkBP(wideSize);
-    thinSize = this.checkBP(thinSize);
-
-    //If largest is first, it swaps the values around
-    if (wideSize < thinSize){
-      const tmp = wideSize;
-      wideSize = thinSize;
-      thinSize = tmp;
-    }
-
-    const isAllowed = thinSize < screen_width && screen_width <= wideSize;
-
-    if (isAllowed) callback.call(window, screen_width);
-
-    return isAllowed;
+  //If smallest is first, it swaps the values around
+  if (largeSize < smallSize){
+    const tmp = largeSize;
+    largeSize = smallSize;
+    smallSize = tmp;
   }
 
-  outside(wideSize, thinSize, callback = ()=>{}){
-    let screen_width = screenWidth();
-
-    const isAllowed = !this.inside(wideSize, thinSize);
-
-    if (isAllowed) callback.call(window, screen_width);
-
-    return isAllowed;
-  }
+  return smallSize < screen_dimension && screen_dimension <= largeSize;
 }
 
 export default MQ;
