@@ -15,12 +15,20 @@ class MQ {
       callback
     );
   }
+  //alias for "min"
+  minWidth(size, callback){
+    return this.min(size, callback);
+  }
 
   max(size, callback){
     return result(
       screenWidth() <= this.checkBP(size),
       callback
     );
+  }
+  //alias for "max"
+  maxWidth(size, callback){
+    return this.max(size, callback);
   }
 
   inside(wideSize, thinSize, callback){
