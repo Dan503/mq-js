@@ -45,6 +45,27 @@ class MQ {
     );
   }
 
+  ratio(ratio, callback){
+    return result(
+      checkRatio(ratio, 'exact'),
+      callback
+    );
+  }
+
+  minRatio(ratio, callback){
+    return result(
+      checkRatio(ratio, 'min'),
+      callback
+    );
+  }
+
+  maxRatio(ratio, callback){
+    return result(
+      checkRatio(ratio, 'max'),
+      callback
+    );
+  }
+
   inside(wideSize, thinSize, callback){
     return result(
       inside(wideSize, thinSize, 'width', this.bp),
@@ -116,6 +137,46 @@ function inside (largeSize, smallSize, dimension, breakpoints) {
   }
 
   return smallSize < screen_dimension && screen_dimension <= largeSize;
+}
+
+function checkRatio(ratio, style) {
+  const ratios = getRatios(ratio);
+  return {
+    exact: ()=> ratios.converted === ratios.screen,
+    min: ()=> ratios.converted > ratios.screen,
+    max: ()=> ratios.converted <= ratios.screen,
+  }[style];
+}
+
+function exactRatioCheck (ratio) {
+  const ratios = getRatios(ratio);
+  return ratios.converted === ratios.screen;
+}
+
+function minRatio () {
+  return ratios.converted === ratios.screen;
+
+}
+
+function getRatios (ratio) {
+  const { width, height } = screenSize();
+
+  return {
+    converted: convertRatio(ratio),
+    screen: width / height,
+  }
+}
+
+function convertRatio (ratio) {
+  if (typeof ratio !== 'number' || typeof ratio !== 'string' || !ratio.match(/[0-9\.]+\s*?\/\s*?[0-9\.]+/)) {
+    throw new Error(`"${ratio}" must be either a number or a string in the format "[width] / [height]"`);
+  }
+
+  if (typeof ratio === 'number') {
+    return ratio;
+  } else {
+    return eval(ratio);
+  }
 }
 
 export default MQ;
