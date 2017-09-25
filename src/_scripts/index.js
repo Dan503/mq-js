@@ -47,22 +47,21 @@ class MQ {
 
   inside(wideSize, thinSize, callback){
     return result(
-      inside(wideSize, thinSize, 'w', this.bp),
+      inside(wideSize, thinSize, 'width', this.bp),
       callback
     );
   }
 
   outside(wideSize, thinSize, callback){
     return result(
-      !inside(wideSize, thinSize, 'w', this.bp),
+      !inside(wideSize, thinSize, 'width', this.bp),
       callback
     );
   }
 }
 
 function result (isAllowed, callback = ()=>{}) {
-  const screen_size = { width: screenWidth(), height: screenHeight() };
-  if (isAllowed) callback.call(window, screen_size);
+  if (isAllowed) callback.call(window, screenSize());
   return isAllowed;
 }
 
@@ -72,6 +71,10 @@ function screenWidth () {
 
 function screenHeight () {
   return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+}
+
+function screenSize(){
+  return { width: screenWidth(), height: screenHeight() };
 }
 
 //Checks if the size is a valid breakpoint value
@@ -93,14 +96,8 @@ function checkBP(size, breakpoints){
 
 // Test if current screen size is between 2 values
 function inside (largeSize, smallSize, dimension, breakpoints) {
-  if (values.length > 2){
-    throw new Error('More than 2 values provided to "inside" function: '+values);
-  }
 
-  const dimensions = {
-    w: screenWidth(),
-    h: screenHeight(),
-  }
+  const dimensions = screenSize();
 
   const screen_dimension = dimensions[dimension];
 
