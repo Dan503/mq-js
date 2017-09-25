@@ -13,7 +13,10 @@ function screenHeight () {
 }
 
 function screenSize(){
-  return { width: screenWidth(), height: screenHeight() };
+  const width = screenWidth();
+  const height = screenHeight();
+  const ratio = width / height;
+  return { width, height, ratio };
 }
 
 //Checks if the size is a valid breakpoint value

@@ -68,13 +68,8 @@ function minRatio () {
 function getRatios (ratio) {
   return {
     converted: convertRatio(ratio),
-    screen: screenRatio(),
+    screen: screenSize().ratio,
   }
-}
-
-function screenRatio(){
-  const { width, height } = screenSize();
-  return width / height;
 }
 
 function convertRatio (ratio) {
