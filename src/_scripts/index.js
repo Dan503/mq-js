@@ -66,6 +66,13 @@ class MQ {
     );
   }
 
+  orientation(orientation, callback){
+    return result(
+      checkOrientation(orientation),
+      callback
+    );
+  }
+
   inside(wideSize, thinSize, callback){
     return result(
       inside(wideSize, thinSize, 'width', this.bp),
@@ -79,6 +86,7 @@ class MQ {
       callback
     );
   }
+
 }
 
 function result (isAllowed, callback = ()=>{}) {
@@ -123,7 +131,7 @@ function inside (largeSize, smallSize, dimension, breakpoints) {
   const screen_dimension = dimensions[dimension];
 
   if (!screen_dimension){
-    throw new Error(`invalid direction: "${direction}"; valid directions are: ${dimensions.keys}`);
+    throw new Error(`invalid direction: "${direction}"; valid directions are: ${Object.keys(dimensions)}`);
   }
 
   let largeSize = checkBP(largeSize, breakpoints);
@@ -177,6 +185,20 @@ function convertRatio (ratio) {
   } else {
     return eval(ratio);
   }
+}
+
+function checkOrientation (orientation) {
+  const { width, height } = screenSize();
+
+  const orientations = {
+    portrait: ()=> width < height,
+    landscape: ()=> width > height,
+    square: ()=> width === height,
+  }
+
+  if (!orientations[orientation]) throw new Error(`"${orientation}" not supported, valid orientations: ${Object.keys(orientations)}`);
+
+  return orientations[orientation]();
 }
 
 export default MQ;
