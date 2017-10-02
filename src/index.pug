@@ -503,7 +503,7 @@ window.onresize = debounce(toggleBtn, 200);`,
 
     As of version 2.0.0, mq-js now supports various plugins that allow it to fully replicate everything that mq-scss can do.
 
-    These plugins can be loaded from the mq.js file to avoid the need for loading them every time you wish to use them.
+    These plugins can be loaded from the mq.js file to avoid the need for loading them every time you wish to use them. They need to be loaded after the core mq-js import though.
 
   +demo({
     js: `
@@ -513,7 +513,8 @@ window.onresize = debounce(toggleBtn, 200);`,
 import MQ from "mq-js";
 
 //Enables the height plugin globally
-import "mq-js/plugins/[plugin-name]";
+// Make sure to load after the "mq-js" import
+import "mq-js/plugins/height";
 
 //Define your Site break points here
 const breakpoints = {
