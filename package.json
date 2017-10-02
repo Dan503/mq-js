@@ -54,6 +54,7 @@
     "jstransformer-marked": "^1.0.2",
     "lodash": "~4.0.0",
     "minimist": "~1.2.0",
+    "mq-scss": "^1.3.3",
     "node-notifier": "^5.0.2",
     "normalize.css": "~3.0.3",
     "obj-append-strings": "^1.1.2",
