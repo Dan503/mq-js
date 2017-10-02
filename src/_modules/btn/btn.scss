@@ -49,14 +49,22 @@
     }
   }
 
-  &.-one, &.-two {
-    @include mq(min, bp('medium')){
+  &.-inactive {
+    background-color: lightgray;
+    color: brand(2, text);
+    &:hover {
+      background-color: gray;
+    }
+  }
+
+  &.-one, &.-two, &.-six {
+    @include mq(max, bp('medium')){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-three, &.-six {
-    @include mq(max, bp('medium')){
+  &.-three {
+    @include mq(min, bp('medium')){
       border-color: $CB-green-bright;
     }
   }
