@@ -12,9 +12,9 @@ function checkOrientation (orientation) {
 	const { width, height } = screenSize();
 
 	const orientations = {
-		portrait: ()=> width < height,
-		landscape: ()=> width > height,
-		square: ()=> width === height,
+		//Square counts as portrait in css media queries
+		portrait: ()=> width <= height,
+		landscape: ()=> width > height
 	}
 
 	if (!orientations[orientation]) throw new Error(`"${orientation}" not supported, valid orientations: ${Object.keys(orientations)}`);
