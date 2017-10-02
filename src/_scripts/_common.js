@@ -47,8 +47,8 @@ function inside (largeSize, smallSize, dimension, breakpoints) {
     throw new Error(`invalid direction: "${direction}"; valid directions are: ${Object.keys(dimensions)}`);
   }
 
-  let largeSize = checkBP(largeSize, breakpoints);
-  let smallSize = checkBP(smallSize, breakpoints);
+  largeSize = checkBP(largeSize, breakpoints);
+  smallSize = checkBP(smallSize, breakpoints);
 
   //If smallest is first, it swaps the values around
   if (largeSize < smallSize){

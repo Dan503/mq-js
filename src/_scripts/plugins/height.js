@@ -1,4 +1,5 @@
 
+import MQ from '../index';
 import { result, screenHeight, inside } from './_common';
 
 MQ.prototype.minHeight = function (size, callback){
