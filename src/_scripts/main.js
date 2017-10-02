@@ -129,4 +129,21 @@ $(() => {
   toggleBtn();
   window.onresize = debounce(toggleBtn, 200);
 
+  $('.btn.-eleven').click(function(e){
+    e.preventDefault();
+    mq.maxHeight(600, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-twelve').click(function(e){
+    e.preventDefault();
+    mq.minHeight(600, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-thirteen').click(function(e){
+    e.preventDefault();
+    mq.insideHeight(800, 400, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-fourteen').click(function(e){
+    e.preventDefault();
+    mq.outsideHeight(800, 400, ()=> $(this).toggleClass('-active'));
+  });
+
 });

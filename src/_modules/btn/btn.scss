@@ -99,4 +99,29 @@
     }
   }
 
+  &.-ten {
+    // never activates
+  }
+
+  &.-eleven {
+    @include mq(max-height, 600){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-twelve {
+    @include mq(min-height, 600){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-thirteen {
+    @include mq(inside-height, 800, 400){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-fourteen {
+    @include mq(outside-height, 800, 400){
+      border-color: $CB-green-bright;
+    }
+  }
+
 }

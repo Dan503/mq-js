@@ -3,6 +3,10 @@
 
 import MQ from './index';
 
+import './plugins/height';
+import './plugins/orientation';
+import './plugins/ratio';
+
 const breakpoints = {
   small: 600,
   medium: 980,

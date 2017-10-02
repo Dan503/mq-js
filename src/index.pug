@@ -499,6 +499,94 @@ window.onresize = debounce(toggleBtn, 200);`,
   })
 
   :marked
-    ## Future updates
+    ## Plugins
 
-    Currently mq-js only supports the mq-scss width based ranges since those are the most important. I will be adding support for more of the mq-scss range types in future updates.
+    As of version 2.0.0, mq-js now supports various plugins that allow it to fully replicate everything that mq-scss can do.
+
+    These plugins can be loaded from the mq.js file to avoid the need for loading them every time you wish to use them.
+
+  +demo({
+    js: `
+//mq.js file
+"use strict";
+
+import MQ from "mq-js";
+
+//Enables the height plugin globally
+import "mq-js/plugins/[plugin-name]";
+
+//Define your Site break points here
+const breakpoints = {
+  small: 600,
+  medium: 980,
+  large: 1200
+}
+
+//Creates the media query functions
+const mq = new MQ(breakpoints);
+
+//Export mq by default
+export default mq;
+
+//Gives easy access to your site breakpoints
+export { mq, breakpoints }`,
+  })
+
+  :marked
+    ### `height` plugin
+
+    This one is pretty straight forward, it works in pretty much the same way as `min`, `max`, `inside` and `outside` except it targets height instead of width. Available functions are `mq.minHeight`, `mq.maxHeight`, `mq.insideHeight` and `mq.outsideHeight`.
+
+  +demo({
+    html: `
+include /_modules/btn/btn
+.example
+  ul
+    li
+      +btn({classes:'-eleven'})
+        | Clickable at and below 600px screen height
+    li
+      +btn({classes:'-twelve'})
+        | Clickable at and above 601px screen height
+    li
+      +btn({classes:'-thirteen'})
+        | Clickable between 401px and 800px screen height
+    li
+      +btn({classes:'-fourteen'})
+        | Clickable outside of 401px and 800px screen height
+`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+//enables the use of minHeight, maxHeight, insideHeight and outsideHeight
+// (unecessary if it has been loaded in the mq.js file)
+import "mq-js/plugins/height";
+
+$('.btn.-eleven').click(function(e){
+  e.preventDefault();
+  mq.maxHeight(600, ()=> $(this).toggleClass('-active'));
+});
+
+$('.btn.-twelve').click(function(e){
+  e.preventDefault();
+  mq.minHeight(600, ()=> $(this).toggleClass('-active'));
+});
+
+$('.btn.-thirteen').click(function(e){
+  e.preventDefault();
+  mq.insideHeight(800, 400, ()=> $(this).toggleClass('-active'));
+});
+
+$('.btn.-fourteen').click(function(e){
+  e.preventDefault();
+  mq.outsideHeight(800, 400, ()=> $(this).toggleClass('-active'));
+});`,
+  })
+
+  :markdown
+    The height plugin is the main reason why I have provided the alternate names for the width based commands. When you are combining height and width media queries in an if statement it can be easier to read `mq.minWidth(800) && mq.minHeight(400)` than `mq.min(800) && mq.minHeight(400)`.
