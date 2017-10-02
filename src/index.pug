@@ -590,3 +590,44 @@ $('.btn.-fourteen').click(function(e){
 
   :markdown
     The height plugin is the main reason why I have provided the alternate names for the width based commands. When you are combining height and width media queries in an if statement it can be easier to read `mq.minWidth(800) && mq.minHeight(400)` than `mq.min(800) && mq.minHeight(400)`.
+
+  :marked
+    ### `orientation` plugin
+
+    This one is even simpler. One little gotcha is that there is no "square" orientation type in css. There is only portrait and landscape types. Square screen types seem to fall under `portrait` in css so I've made square screen types fall under `portrait` in mq-js as well.
+
+  +demo({
+    html: `
+include /_modules/btn/btn
+.example
+  ul
+    li
+      +btn({classes:'-fifteen'})
+        | Clickable on landscape screens
+    li
+      +btn({classes:'-sixteen'})
+        | Clickable on portrait and square screens
+`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+//enables the use of minHeight, maxHeight, insideHeight and outsideHeight
+// (unecessary if it has been loaded in the mq.js file)
+import "mq-js/plugins/orientation";
+
+$('.btn.-fifteen').click(function(e){
+  e.preventDefault();
+  mq.orientation('landscape', ()=> $(this).toggleClass('-active'));
+});
+
+$('.btn.-sixteen').click(function(e){
+  e.preventDefault();
+  mq.orientation('portrait', ()=> $(this).toggleClass('-active'));
+});
+`,
+  })

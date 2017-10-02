@@ -124,4 +124,15 @@
     }
   }
 
+  &.-fifteen {
+    @include mq(orientation, 'landscape'){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-sixteen {
+    @include mq(orientation, 'portrait'){
+      border-color: $CB-green-bright;
+    }
+  }
+
 }

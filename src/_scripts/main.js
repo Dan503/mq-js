@@ -146,4 +146,14 @@ $(() => {
     mq.outsideHeight(800, 400, ()=> $(this).toggleClass('-active'));
   });
 
+  $('.btn.-fifteen').click(function(e){
+    e.preventDefault();
+    mq.orientation('landscape', ()=> $(this).toggleClass('-active'));
+  });
+  
+  $('.btn.-sixteen').click(function(e){
+    e.preventDefault();
+    mq.orientation('portrait', ()=> $(this).toggleClass('-active'));
+  });
+
 });
