@@ -1,5 +1,5 @@
 import MQ from '../index';
-import { result, screenSize, inside } from './_common';
+import { result, screenSize, inside } from '../_common';
 
 MQ.prototype.orientation = function (orientation, callback) {
 	return result(

@@ -1,6 +1,6 @@
 
 import MQ from '../index';
-import { result, screenSize, inside } from './_common';
+import { result, screenSize, inside } from '../_common';
 
 MQ.prototype.ratio = function (ratio, callback){
 	return result(
@@ -23,14 +23,14 @@ MQ.prototype.maxRatio = function (ratio, callback){
 	);
 }
 
-MQ.prototype.insideRatio(large, small, callback){
+MQ.prototype.insideRatio = function (large, small, callback){
 	return result(
 		insideRatio(large, small),
 		callback
 	)
 }
 
-MQ.prototype.outsideRatio(large, small, callback){
+MQ.prototype.outsideRatio = function (large, small, callback){
 	return result(
 		!insideRatio(large, small),
 		callback
@@ -46,7 +46,7 @@ function insideRatio (largeRatio, smallRatio) {
   )
 }
 
-function checkRatio(ratio, style) {
+function checkRatio (ratio, style) {
   const ratios = getRatios(ratio);
   return {
     exact: ()=> ratios.converted === ratios.screen,
