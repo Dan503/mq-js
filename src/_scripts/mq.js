@@ -3,6 +3,10 @@
 
 import MQ from './index';
 
+import './mq-js-plugins/height';
+import './mq-js-plugins/orientation';
+import './mq-js-plugins/ratio';
+
 const breakpoints = {
   small: 600,
   medium: 980,

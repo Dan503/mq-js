@@ -17,19 +17,38 @@ block content
   -
     var headings = {
       'Setup' : 'setup',
-      'mq.min' : 'mq-min',
       'mq.max' : 'mq-max',
+      'mq.min' : 'mq-min',
       'mq.inside' : 'mq-inside',
       'mq.outside' : 'mq-outside',
       'Creating media query variables' : 'creating-media-query-variables',
       'Using pure pixel values' : 'using-pure-pixel-values',
       'Running on window resize' : 'running-on-window-resize',
-      'Future updates' : 'future-updates',
+      'Plugins' : {
+        id: 'plugins',
+        list: {
+          'Height plugin' : '-height-plugin',
+          'Orientation plugin' : '-orientation-plugin',
+          'Ratio plugin' : '-ratio-plugin',
+        }
+      },
     };
+
+  mixin menuItem(heading, value)
+    -
+      var isObj = typeof value === 'object';
+      var href = `#${isObj ? value.id : value}`;
+
+    li: a(href=href, style='color: #000;')= heading
+      if isObj
+        ol
+          each subId, subHeading in value.list
+            +menuItem(subHeading, subId)
 
   ol
     each id, heading in headings
-      li: a(href='#'+id, style='color: #000;')= heading
+      +menuItem(heading, id)
+
 
   :marked
     ## Setup
@@ -108,10 +127,11 @@ import { mq, breakpoints } from './mq'`,
   :marked
     Now that you have your break points set up, you can use them when calling the function without having to import them. I'll get to why you might want to import the `breakpoints` variable later. For now, just stick to only importing the `mq` variable on it's own.
 
-  :marked
-    ## mq.min
 
-    In the following example, the button will only turn green if you click it when the browser window is at a minimum width of 981px wide (ie. above the "medium" breakpoint).
+  :marked
+    ## mq.max
+
+    In the following example, the button will only turn green if you click it when the browser window is at a maximum width of 980px wide (ie. at or below the "medium" breakpoint).
 
     To help you figure out when the button is able to be clicked, the border of the button will turn green when it is clickable.
 
@@ -120,7 +140,7 @@ import { mq, breakpoints } from './mq'`,
 include /_modules/btn/btn
 .example
   +btn({classes:'-one'})
-    | Clickable at 981px screen width and above`,
+    | Clickable at and below 980px screen width`,
       js: `
 //module js file
 "use strict";
@@ -132,29 +152,26 @@ import mq from "./mq";
 $('.btn.-one').click(function(e){
   e.preventDefault();
 
-  //Use your breakpoints by parsing in a string
-  mq.min('medium', (screen_width)=>{
+  mq.max('medium', (screen_size)=>{
     $(this).toggleClass('-active');
 
-    //log the screen width at the time the button was clicked
-    console.log(screen_width);
+    //logs the screen height, width, and ratio at the time the button was clicked
+    console.log(screen_size);
   })
 })`,
   })
 
   :marked
-    As you can see, you can easily access the `"medium"` breakpoint that you defined by simply parsing a string as the breakpoint value. There is no need to import the `breakpoints` variable from the `mq.js` file to use the `"medium"` breakpoint.
+    As you can see, you can easily access the `"medium"` breakpoint that you defined earlier by simply parsing a string as the breakpoint value. There is no need to import the `breakpoints` variable from the `mq.js` file to use the `"medium"` breakpoint.
 
-    You might be wondering why 981px instead of 980px. I will get into that a bit more later but for now just know that it is primarily to avoid conflicts.
-
-    You can also use it in an if statement sort of format. Here is the same example again except this time as an if statement.
+    You can also use it in an if statement sort of format as shown below. All mq-js functions can be used in this `if` statement format. For the sake of brevity though, I'm just showing the `callback` format in the rest of these examples.
 
   +demo({
     html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-two'})
-    | Clickable at 981px screen width and above`,
+    | Clickable at and below 980px screen width`,
       js: `
 //module js file
 "use strict";
@@ -166,30 +183,39 @@ import mq from "./mq";
 $('.btn.-two').click(function(e){
   e.preventDefault();
 
-  if (mq.min('medium')){
+  if (mq.max('medium')){
     $(this).toggleClass('-active');
   }
 })`,
   })
 
   :marked
-    Notice that the first example gives you access to the screen width at the time the button is clicked. The second example does not (or at least not without custom code).
+    Notice that using the callback method gives you access to the screen size data at the time the button is clicked. The if statement format does not (or at least not without custom code).
 
     Also notice that I'm not binding and unbinding the click function on screen resize. By placing `mq` _**inside**_ the click function, it behaves very similarly to how media queries behave in css.
 
+    One last thing. If you prefer to explicitly state that the media query is targeting "width", `mq.max` can also be written as `mq.maxWidth`. It has identical functionality, it's just personal preference.
+
+  +demo({
+      js: `
+// This code has identical functionality...
+mq.max('medium', ()=> { /* ... */ });
+
+// ...to this code
+mq.maxWidth('medium', ()=> { /* ... */ });`,
+  })
+
   :marked
-    ## mq.max
+    ## mq.min
 
-    `mq.max` does pretty much what you expect it to do. It will only run the function if the screen width is bellow the specified breakpoint.
-
-    All of these functions also come in the `if` statement format. For the sake of brevity though, I'm just showing the `callback` format in the rest of these examples.
+    In the following example, the button will only turn green if you click it when the browser window is at a minimum width of 981px wide (ie. above the "medium" breakpoint).
 
   +demo({
     html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-three'})
-    | Clickable at and below 980px screen width`,
+    | Clickable at 981px screen width and above`,
       js: `
 //module js file
 "use strict";
@@ -201,21 +227,33 @@ import mq from "./mq";
 $('.btn.-three').click(function(e){
   e.preventDefault();
 
-  mq.max('medium', (screen_width)=>{
+  //Use your breakpoints by parsing in a string
+  mq.min('medium', (screen_size)=>{
     $(this).toggleClass('-active');
 
     //log the screen width at the time the button was clicked
-    console.log(screen_width);
+    console.log(screen_size);
   })
 })`,
   })
 
   :marked
-    `mq.max` is _**inclusive**_ of the breakpoint value where as `mq.min` is _**exclusive**_ of the breakpoint value. That is why `mq.min` essentially adds +1 to the breakpoint value when used. This serves two important purposes:
+    You might be wondering why 981px instead of 980px. While `mq.max` is _**inclusive**_ of the breakpoint value, `mq.min` is _**exclusive**_ of the breakpoint value. This serves two important purposes:
 
     1. It prevents bugs from occurring in that 1px sweet spot where both would otherwise return true.
 
     2. It aligns with how [mq-scss](https://www.npmjs.com/package/mq-scss) handles min and max width to prevent odd bugs where JavaScript is firing but the styles aren't there to support it (or vice versa).
+
+    Also, like with `mq.max`, it can be written like `mq.minWidth` instead if you prefer.
+
+  +demo({
+      js: `
+// This code has identical functionality...
+mq.min('medium', ()=> { /* ... */ });
+
+// ...to this code
+mq.minWidth('medium', ()=> { /* ... */ });`,
+  })
 
   :marked
     ## mq.inside
@@ -245,13 +283,25 @@ import mq from "./mq";
 $('.btn.-four').click(function(e){
   e.preventDefault();
 
-  mq.inside('medium', 'small', (screen_width)=>{
+  mq.inside('medium', 'small', (screen_size)=>{
     $(this).toggleClass('-active');
 
     //log the screen width at the time the button was clicked
-    console.log(screen_width);
+    console.log(screen_size);
   })
 })`,
+  })
+
+  :marked
+    It can also be written as `mq.insideWidth` if you prefer.
+
+  +demo({
+      js: `
+// This code has identical functionality...
+mq.inside('medium', ()=> { /* ... */ });
+
+// ...to this code
+mq.insideWidth('medium', ()=> { /* ... */ });`,
   })
 
   :marked
@@ -276,13 +326,24 @@ import mq from "./mq";
 $('.btn.-five').click(function(e){
   e.preventDefault();
 
-  mq.outside('medium', 'small', (screen_width)=>{
+  mq.outside('medium', 'small', (screen_size)=>{
     $(this).toggleClass('-active');
 
     //log the screen width at the time the button was clicked
-    console.log(screen_width);
+    console.log(screen_size);
   })
 })`,
+  })
+  :marked
+    It can also be written as `mq.outsideWidth` if you prefer.
+
+  +demo({
+      js: `
+// This code has identical functionality...
+mq.outside('medium', ()=> { /* ... */ });
+
+// ...to this code
+mq.outsideWidth('medium', ()=> { /* ... */ });`,
   })
 
   :marked
@@ -297,7 +358,7 @@ $('.btn.-five').click(function(e){
 include /_modules/btn/btn
 .example
   +btn({classes:'-six'})
-    | Clickable at and below a 980px screen width`,
+    | when clicked, turns green at and below a 980px screen width, turns grey above 980px`,
       js: `
 //module js file
 "use strict";
@@ -306,13 +367,21 @@ import $ from 'jquery';
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-const MQ_btn__active = ()=> mq.max('medium');
+//sets up the MQ_btn media queries
+const MQ_btn = state => ({
+  active: () => mq.max('medium'),
+  inactive: () => mq.min('medium'),
+}[state]());
 
 $('.btn.-six').click(function(e){
   e.preventDefault();
 
-  if (MQ_btn__active()){
+  if (MQ_btn('active')){
     $(this).toggleClass('-active');
+  }
+
+  if (MQ_btn('inactive')){
+    $(this).toggleClass('-inactive');
   }
 
 })`,
@@ -321,7 +390,7 @@ $('.btn.-six').click(function(e){
   :marked
     ## Using pure pixel values
 
-    Just because you have access to the breakpoint values doesn't mean you have to use them. mq-js still works if you just parse solid numbers into it.
+    Just because you have access to the breakpoint values, it doesn't mean that you have to use them. mq-js still works if you just parse solid numbers into it.
 
   +demo({
     html: `
@@ -340,17 +409,17 @@ import mq from "./mq";
 $('.btn.-seven').click(function(e){
   e.preventDefault();
 
-  mq.max(1000, (screen_width)=>{
+  mq.max(1000, (screen_size)=>{
     $(this).toggleClass('-active');
 
-    //log the screen width at the time the button was clicked
-    console.log(screen_width);
+    //log the screen size at the time the button was clicked
+    console.log(screen_size);
   })
 })`,
   })
 
   :marked
-    Remember that if you use `mq.min` it will be like adding 1 pixel to the value you provide.
+    Remember that if you use `mq.min` it will be like adding 1 pixel to the value that you provide.
 
   +demo({
     html: `
@@ -369,17 +438,17 @@ import mq from "./mq";
 $('.btn.-eight').click(function(e){
   e.preventDefault();
 
-  mq.min(1000, (screen_width)=>{
+  mq.min(1000, (screen_size)=>{
     $(this).toggleClass('-active');
 
     //log the screen width at the time the button was clicked
-    console.log(screen_width);
+    console.log(screen_size);
   })
 })`,
   })
 
   :marked
-    What if you only want to tweak one of the normal breakpoint values though so it is just a few pixels larger than the base break point? That is when it is useful to import the `breakpoint` variable.
+    What if you only want to tweak one of the normal breakpoint values so that it is just a few pixels larger than the base break point? That is when it is useful to import the `breakpoint` variable.
 
     In the following example, I'm importing the breakpoints variable and using it to add 30px to the `"medium"` breakpoint.
 
@@ -401,11 +470,11 @@ $('.btn.-nine').click(function(e){
   e.preventDefault();
 
   //Adding 30px to the base "medium" breakpoint
-  mq.min(breakpoints.medium + 30, (screen_width)=>{
+  mq.min(breakpoints.medium + 30, (screen_size)=>{
     $(this).toggleClass('-active');
 
     //log the screen width at the time the button was clicked
-    console.log(screen_width);
+    console.log(screen_size);
   })
 })`,
   })
@@ -449,6 +518,223 @@ window.onresize = debounce(toggleBtn, 200);`,
   })
 
   :marked
-    ## Future updates
+    ## Plugins
 
-    Currently mq-js only supports the mq-scss width based ranges since those are the most important. I will be adding support for more of the mq-scss range types in future updates.
+    As of version 2.0.0, mq-js now supports various plugins that allow it to fully replicate everything that mq-scss can do.
+
+    These plugins can be loaded from the mq.js file to avoid the need for loading them every time you wish to use them.
+
+  +demo({
+    js: `
+//Loading plugins in the mq.js file for global usage
+
+"use strict";
+
+import MQ from "mq-js";
+
+//Enables the height plugin globally
+import "mq-js/plugins/height";
+
+//Enables the orientation plugin globally
+import "mq-js/plugins/orientation";
+
+//Enables the ratio plugin globally
+import "mq-js/plugins/ratio";
+
+//Define your Site break points here
+const breakpoints = {
+  small: 600,
+  medium: 980,
+  large: 1200
+}
+
+//Creates the media query functions
+const mq = new MQ(breakpoints);
+
+//Export mq by default
+export default mq;
+
+//Gives easy access to your site breakpoints
+export { mq, breakpoints }`,
+  })
+
+  :marked
+    ### `height` plugin
+
+    This one is pretty straight forward, it works in pretty much the same way as `min`, `max`, `inside` and `outside` except it targets height instead of width. Available functions are `mq.minHeight`, `mq.maxHeight`, `mq.insideHeight` and `mq.outsideHeight`.
+
+  +demo({
+    html: `
+include /_modules/btn/btn
+.example
+  ul
+    li
+      +btn({classes:'-eleven'})
+        | Clickable at and below 600px screen height
+    li
+      +btn({classes:'-twelve'})
+        | Clickable at and above 601px screen height
+    li
+      +btn({classes:'-thirteen'})
+        | Clickable between 401px and 800px screen height
+    li
+      +btn({classes:'-fourteen'})
+        | Clickable outside of 401px and 800px screen height
+`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+//enables the use of minHeight, maxHeight, insideHeight and outsideHeight
+//(unecessary if it has been loaded in the mq.js file)
+import "mq-js/plugins/height";
+
+$('.btn.-eleven').click(function(e){
+  e.preventDefault();
+  mq.maxHeight(600, ()=> $(this).toggleClass('-active'));
+});
+
+$('.btn.-twelve').click(function(e){
+  e.preventDefault();
+  mq.minHeight(600, ()=> $(this).toggleClass('-active'));
+});
+
+$('.btn.-thirteen').click(function(e){
+  e.preventDefault();
+  mq.insideHeight(800, 400, ()=> $(this).toggleClass('-active'));
+});
+
+$('.btn.-fourteen').click(function(e){
+  e.preventDefault();
+  mq.outsideHeight(800, 400, ()=> $(this).toggleClass('-active'));
+});`,
+  })
+
+  :markdown
+    The height plugin is the main reason why I have provided the alternate names for the width based commands. When you are combining height and width media queries in an if statement it can be easier to read `mq.minWidth(800) && mq.minHeight(400)` than `mq.min(800) && mq.minHeight(400)`.
+
+  :marked
+    ### `orientation` plugin
+
+    This one is even simpler. One little gotcha is that there is no "square" orientation type in css. There is only portrait and landscape types. Square screen types seem to fall under `portrait` in css so I've made square screen types fall under `portrait` in mq-js as well.
+
+  +demo({
+    html: `
+include /_modules/btn/btn
+.example
+  ul
+    li
+      +btn({classes:'-fifteen'})
+        | Clickable on landscape screens
+    li
+      +btn({classes:'-sixteen'})
+        | Clickable on portrait and square screens
+`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+//enables the use of mq.orientation
+//(unecessary if it has been loaded in the mq.js file)
+import "mq-js/plugins/orientation";
+
+$('.btn.-fifteen').click(function(e){
+  e.preventDefault();
+  mq.orientation('landscape', ()=> $(this).toggleClass('-active'));
+});
+
+$('.btn.-sixteen').click(function(e){
+  e.preventDefault();
+  mq.orientation('portrait', ()=> $(this).toggleClass('-active'));
+});
+`,
+  })
+
+  :marked
+    ### `ratio` plugin
+
+    This one is a little more complex. The ratio's for mq-js are always formatted as `[width] / [height]`. Ratios work off of width more so than height in CSS so mq-js does as well. So a ratio of `2 / 3` is counted as being _larger_ than a ratio of `1 / 3` since `2 / 3` is wider than `1 / 3`.
+
+    With this in mind, the ratio plugin provides you with all the typical ranges but for ratios.
+
+  +demo({
+    html: `
+include /_modules/btn/btn
+.example
+  ul
+    li
+      +btn({classes:'-exactRatio'})
+        | Clickable at exactly ratio "1 / 2"
+    li
+      +btn({classes:'-minRatio'})
+        | Clickable at ratios wider than "1 / 2" (exclusive)
+    li
+      +btn({classes:'-maxRatio'})
+        | Clickable at ratios thinner than "1 / 2" (inclusive)
+    li
+      +btn({classes:'-insideRatio'})
+        | Clickable at widths between ratios "1 / 2" and "3 / 2"
+    li
+      +btn({classes:'-outsideRatio'})
+        | Clickable at widths outside ratios "1 / 2" and "3 / 2"
+`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+//Enables the use of ratio, minRatio, maxRatio, insideRatio and outsideRatio
+//(unecessary if it has been loaded in the mq.js file)
+import "mq-js/plugins/orientation";
+
+$('.btn.-exactRatio').click(function(e){
+  e.preventDefault();
+  mq.ratio(1 / 2, ()=> $(this).toggleClass('-active'));
+});
+$('.btn.-minRatio').click(function(e){
+  e.preventDefault();
+  mq.minRatio(1 / 2, ()=> $(this).toggleClass('-active'));
+});
+$('.btn.-maxRatio').click(function(e){
+  e.preventDefault();
+  mq.maxRatio(1 / 2, ()=> $(this).toggleClass('-active'));
+});
+$('.btn.-insideRatio').click(function(e){
+  e.preventDefault();
+  mq.insideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
+});
+$('.btn.-outsideRatio').click(function(e){
+  e.preventDefault();
+  mq.outsideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
+});
+`,
+  })
+
+  :marked
+    You can also provide the ratio as a string instead.
+
+  +demo({
+    html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-maxRatio'})
+    | Clickable at ratios thinner than "1 / 2" (inclusive)
+`,
+      js: `
+$('.btn.-maxRatioString').click(function(e){
+  e.preventDefault();
+  mq.maxRatio('1 / 2', ()=> $(this).toggleClass('-active'));
+});
+`,
+  })

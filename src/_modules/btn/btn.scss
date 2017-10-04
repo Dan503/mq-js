@@ -49,14 +49,22 @@
     }
   }
 
-  &.-one, &.-two {
-    @include mq(min, bp('medium')){
+  &.-inactive {
+    background-color: lightgray;
+    color: brand(2, text);
+    &:hover {
+      background-color: gray;
+    }
+  }
+
+  &.-one, &.-two, &.-six {
+    @include mq(max, bp('medium')){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-three, &.-six {
-    @include mq(max, bp('medium')){
+  &.-three {
+    @include mq(min, bp('medium')){
       border-color: $CB-green-bright;
     }
   }
@@ -87,6 +95,68 @@
 
   &.-nine {
     @include mq(min, bp('medium') + 30){
+      border-color: $CB-green-bright;
+    }
+  }
+
+  &.-ten {
+    // never activates
+  }
+
+  &.-eleven {
+    @include mq(max-height, 600){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-twelve {
+    @include mq(min-height, 600){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-thirteen {
+    @include mq(inside-height, 800, 400){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-fourteen {
+    @include mq(outside-height, 800, 400){
+      border-color: $CB-green-bright;
+    }
+  }
+
+  &.-fifteen {
+    @include mq(orientation, 'landscape'){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-sixteen {
+    @include mq(orientation, 'portrait'){
+      border-color: $CB-green-bright;
+    }
+  }
+
+  &.-exactRatio {
+    @include mq(ratio, '1 / 2'){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-minRatio {
+    @include mq(min-ratio, '1 / 2'){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-maxRatio, &.-maxRatioString {
+    @include mq(max-ratio, '1 / 2'){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-insideRatio {
+    @include mq(inside-ratio, '1 / 2', '3 / 2'){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-outsideRatio {
+    @include mq(outside-ratio, '1 / 2', '3 / 2'){
       border-color: $CB-green-bright;
     }
   }

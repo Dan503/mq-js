@@ -1,0 +1,17 @@
+*.log
+.grunt
+.gulp
+.DS_Store
+docs
+gulp
+node_modules
+src
+tmp
+.babelrc
+.editorconfig
+.eslintrc
+.gitattributes
+.gitignore
+.yo-rc.json
+gulp-start-up.txt
+gulpfile.babel.js
