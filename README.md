@@ -53,11 +53,11 @@ $('.btn').click(function(e){
   e.preventDefault();
 
   //Use your breakpoints by parsing in a string
-  mq.min('medium', (screen_width)=>{
+  mq.min('medium', (screen_size)=>{
     $(this).toggleClass('-active');
 
-    //log the screen width at the time the button was clicked
-    console.log(screen_width);
+    //log the screen height, width and ratio at the time the button was clicked
+    console.log(screen_size);
   })
 })
 `````
@@ -118,3 +118,13 @@ The ratio plugin provides these methods:
 
 [Read the full ratio plugin documentation.](https://dan503.github.io/mq-js/#-ratio-plugin)
 
+## Change Log
+
+This change log only tracks changes to the functionality of the module.
+
+### v2.0.0
+
+- **Breaking Change:** The `screen_size` variable shown in the Quick Start example used to output a number that represented the current screen width. It now outputs an object that contains information on the screen height, width, and ratio.
+- added height plugin
+- added orientation plugin
+- added ratio plugin
