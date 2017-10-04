@@ -4,9 +4,11 @@ mq-js was inspired by the [mq-scss](https://www.npmjs.com/package/mq-scss) Sass 
 
 If you haven't looked into [mq-scss](https://www.npmjs.com/package/mq-scss) I highly recommend checking it out. It makes writing media queries far easier than any other method.
 
+Full documentation for mq-js can be found at https://dan503.github.io/mq-js/
+
 ## Quick start guide
 
-This documentation assumes that you have the ability to use ES6 JavaScript syntax in your project. Try out [Babel](https://babeljs.io/) if you aren't using ES6 yet.
+This documentation assumes that you have the ability to use ES6 JavaScript syntax in your project. mq-js will work in environments that don't support es6 JavaScript syntax however the syntax will be different to what is documented. Try out [Babel](https://babeljs.io/) if you aren't using ES6 in your projects yet.
 
 First, npm install mq-js.
 
@@ -60,11 +62,59 @@ $('.btn').click(function(e){
 })
 `````
 
-Available functions:
+## Core methods
 
 - [mq.min](https://dan503.github.io/mq-js/#mq-min)
 - [mq.max](https://dan503.github.io/mq-js/#mq-max)
 - [mq.inside](https://dan503.github.io/mq-js/#mq-inside)
 - [mq.outside](https://dan503.github.io/mq-js/#mq-outside)
 
-Full documentation can be found at https://dan503.github.io/mq-js/
+note: You can add `Width` to the end of any of those methods and it will still be valid. For example, it is safe to use `mq.minWidth` instead of `mq.min` if you prefer the `minWidth` syntax as they have identical functionality.
+
+## Plugins
+
+### Height plugin
+
+````js
+import "mq-js/plugins/height";
+````
+
+The height plugin provides these methods:
+
+- mq.minHeight
+- mq.maxHeight
+- mq.insideHeight
+- mq.outsideHeight
+
+[Read the full height plugin documentation.](https://dan503.github.io/mq-js/#-height-plugin)
+
+
+### Orientation plugin
+
+````js
+import "mq-js/plugins/orientation";
+````
+
+The orientation plugin provides these methods:
+
+- mq.orientation
+
+[Read the full orientation plugin documentation.](https://dan503.github.io/mq-js/#-orientation-plugin)
+
+
+### Ratio plugin
+
+````js
+import "mq-js/plugins/orientation";
+````
+
+The ratio plugin provides these methods:
+
+- mq.ratio
+- mq.minRatio
+- mq.maxRatio
+- mq.insideRatio
+- mq.outsideRatio
+
+[Read the full ratio plugin documentation.](https://dan503.github.io/mq-js/#-ratio-plugin)
+
