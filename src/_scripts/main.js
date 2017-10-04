@@ -17,16 +17,16 @@ $(() => {
   $('.btn.-one').click(function(e){
     e.preventDefault();
 
-    mq.min('medium', (screen_width)=>{
+    mq.max('medium', (screen_size)=>{
       $(this).toggleClass('-active');
-      console.log(screen_width);
+      console.log(screen_size);
     })
   });
 
   $('.btn.-two').click(function(e){
     e.preventDefault();
 
-    if (mq.min('medium')){
+    if (mq.max('medium')){
       $(this).toggleClass('-active');
     }
   });
@@ -34,40 +34,48 @@ $(() => {
   $('.btn.-three').click(function(e){
     e.preventDefault();
 
-    mq.max('medium', (screen_width)=>{
+    mq.min('medium', (screen_size)=>{
       $(this).toggleClass('-active');
-      console.log(screen_width);
+      console.log(screen_size);
     })
   });
+
 
   $('.btn.-four').click(function(e){
     e.preventDefault();
 
-    mq.inside('medium', 'small', (screen_width)=>{
+    mq.inside('medium', 'small', (screen_size)=>{
       $(this).toggleClass('-active');
 
       //log the screen width at the time the button was clicked
-      console.log(screen_width);
+      console.log(screen_size);
     })
   });
 
   $('.btn.-five').click(function(e){
     e.preventDefault();
 
-    mq.outside('medium', 'small', (screen_width)=>{
+    mq.outside('medium', 'small', (screen_size)=>{
       $(this).toggleClass('-active');
 
       //log the screen width at the time the button was clicked
-      console.log(screen_width);
+      console.log(screen_size);
     })
   });
 
-  const MQ_btn7__active = ()=> mq.max('medium');
+  const MQ_btn = state => ({
+    active: () => mq.max('medium'),
+    inactive: () => mq.min('medium'),
+  }[state]());
   $('.btn.-six').click(function(e){
     e.preventDefault();
 
-    if (MQ_btn7__active()){
+    if (MQ_btn('active')){
       $(this).toggleClass('-active');
+    }
+
+    if (MQ_btn('inactive')){
+      $(this).toggleClass('-inactive');
     }
 
   });
@@ -76,33 +84,33 @@ $(() => {
   $('.btn.-seven').click(function(e){
     e.preventDefault();
 
-    mq.max(1000, (screen_width)=>{
+    mq.max(1000, (screen_size)=>{
       $(this).toggleClass('-active');
 
       //log the screen width at the time the button was clicked
-      console.log(screen_width);
+      console.log(screen_size);
     })
   })
 
   $('.btn.-eight').click(function(e){
     e.preventDefault();
 
-    mq.min(1000, (screen_width)=>{
+    mq.min(1000, (screen_size)=>{
       $(this).toggleClass('-active');
 
       //log the screen width at the time the button was clicked
-      console.log(screen_width);
+      console.log(screen_size);
     })
   })
 
   $('.btn.-nine').click(function(e){
     e.preventDefault();
 
-    mq.min(breakpoints.medium + 30, (screen_width)=>{
+    mq.min(breakpoints.medium + 30, (screen_size)=>{
       $(this).toggleClass('-active');
 
       //log the screen width at the time the button was clicked
-      console.log(screen_width);
+      console.log(screen_size);
     })
   })
 
@@ -120,5 +128,58 @@ $(() => {
 
   toggleBtn();
   window.onresize = debounce(toggleBtn, 200);
+
+  $('.btn.-eleven').click(function(e){
+    e.preventDefault();
+    mq.maxHeight(600, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-twelve').click(function(e){
+    e.preventDefault();
+    mq.minHeight(600, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-thirteen').click(function(e){
+    e.preventDefault();
+    mq.insideHeight(800, 400, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-fourteen').click(function(e){
+    e.preventDefault();
+    mq.outsideHeight(800, 400, ()=> $(this).toggleClass('-active'));
+  });
+
+  $('.btn.-fifteen').click(function(e){
+    e.preventDefault();
+    mq.orientation('landscape', ()=> $(this).toggleClass('-active'));
+  });
+  
+  $('.btn.-sixteen').click(function(e){
+    e.preventDefault();
+    mq.orientation('portrait', ()=> $(this).toggleClass('-active'));
+  });
+
+  $('.btn.-exactRatio').click(function(e){
+    e.preventDefault();
+    mq.ratio(1 / 2, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-minRatio').click(function(e){
+    e.preventDefault();
+    mq.minRatio(1 / 2, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-maxRatio').click(function(e){
+    e.preventDefault();
+    mq.maxRatio(1 / 2, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-insideRatio').click(function(e){
+    e.preventDefault();
+    mq.insideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-outsideRatio').click(function(e){
+    e.preventDefault();
+    mq.outsideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
+  });
+
+  $('.btn.-maxRatioString').click(function(e){
+    e.preventDefault();
+    mq.maxRatio('1 / 2', ()=> $(this).toggleClass('-active'));
+  });
 
 });

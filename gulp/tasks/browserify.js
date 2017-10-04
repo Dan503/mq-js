@@ -52,7 +52,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
         let startTime = new Date().getTime();
         bundler.bundle()
           .on('error', function(err) {
-            notifier.notify({title: 'JS Error', message: err.loc ? `${path.basename(error.filename)} line ${error.loc.line}` : 'JS failed to compile', icon: notification_icon_location+'gulp-error.png'});
+            notifier.notify({title: 'JS Error', message: err.loc ? `${path.basename(err.filename)} line ${err.loc.line}` : 'JS failed to compile', icon: notification_icon_location+'gulp-error.png'});
             plugins.util.log(
               plugins.util.colors.red.bold('Browserify compile error:'),
               '\n',

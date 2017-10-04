@@ -92,5 +92,12 @@
       margin-top: -20px;
       padding: {bottom: 10px; top: 10px; }
     }
-  }
+	}
+
+	.example {
+		ul, li {
+			list-style: none;
+			padding-left: 0 !important;
+		}
+	}
 }
