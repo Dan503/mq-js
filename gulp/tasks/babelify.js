@@ -11,17 +11,32 @@ import vsource from 'vinyl-source-stream';
 export default function(gulp, plugins, args, config, taskTarget, browserSync) {
   let dirs = config.directories;
 
-  const src = './' + path.join(dirs.source, dirs.scripts, 'index.js');
+  const src = [
+    './' + [dirs.source, dirs.scripts, 'index.js'].join('/'),
+    './' + [dirs.source, dirs.scripts, 'plugins/*.js'].join('/'),
+  ];
 
   gulp.task('babelify', (done)=>{
-    return gulp.src(src)
+    return Promise.all([
+      babelify('index.js'),
+      babelify('plugins/*.js', 'plugins'),
+    ])
+    .catch(err => { throw new Error(err) })
+  });
+
+  function babelify(src, dest = ''){
+    return new Promise((resolve, reject) => {
+      gulp.src('./' + [dirs.source, dirs.scripts, src].join('/'))
       .pipe(plugins.babel({
         presets: ['es2015']
       }))
-      .pipe(plugins.rename({dirname: ''}))
+      .pipe(plugins.rename({dirname: dest}))
       .pipe(gulp.dest('./'))
       .on('end', ()=>{
-        console.log('Babelified the index.js file');
-      });
-  });
+        console.log(`\nBabelified ${src}\n`);
+        resolve();
+      })
+      .on('error', error => reject(err));
+    })
+  }
 }
