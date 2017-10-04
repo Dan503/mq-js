@@ -38,48 +38,51 @@ MQ.prototype.outsideRatio = function (large, small, callback){
 }
 
 function insideRatio (largeRatio, smallRatio) {
-  return inside (
-    convertRatio(largeRatio),
-    convertRatio(smallRatio),
-    'ratio',
-    {}
-  )
+	return inside (
+		convertRatio(largeRatio),
+		convertRatio(smallRatio),
+		'ratio',
+		{}
+	)
 }
 
 function checkRatio (ratio, style) {
-  const ratios = getRatios(ratio);
-  return {
-    exact: ()=> ratios.converted === ratios.screen,
-    min: ()=> ratios.converted > ratios.screen,
-    max: ()=> ratios.converted <= ratios.screen,
-  }[style];
+	const ratios = getRatios(ratio);
+	return {
+		exact: ()=> ratios.converted === ratios.screen,
+		min: ()=> ratios.converted < ratios.screen,
+		max: ()=> ratios.converted >= ratios.screen,
+	}[style]();
 }
 
 function exactRatioCheck (ratio) {
-  const ratios = getRatios(ratio);
-  return ratios.converted === ratios.screen;
+	const ratios = getRatios(ratio);
+	return ratios.converted === ratios.screen;
 }
 
 function minRatio () {
-  return ratios.converted === ratios.screen;
-
+	return ratios.converted === ratios.screen;
 }
 
 function getRatios (ratio) {
-  return {
-    converted: convertRatio(ratio),
-    screen: screenSize().ratio,
-  }
+	return {
+		converted: convertRatio(ratio),
+		screen: screenSize().ratio,
+	}
 }
 
 function convertRatio (ratio) {
-  if (typeof ratio !== 'number' || typeof ratio !== 'string' || !ratio.match(/[0-9\.]+\s*?\/\s*?[0-9\.]+/)) {
-    throw new Error(`"${ratio}" must be either a number or a string in the format "[width] / [height]"`);
-  }
 
-  if (typeof ratio === 'number') {
-    return ratio;
-  } else {
-    return eval(ratio);
-  }
+	const isNumber = typeof ratio === 'number';
+	const isFormattedString = typeof ratio === 'string' && !ratio.match(/[0-9\.]+\s*?\/\s*?[0-9\.]+/);
+
+	if (!isNumber && !isFormattedString) {
+		throw new Error(`"${ratio}" must be either a number or a string in the format "[width] / [height]"`);
+	}
+
+	if (isNumber) {
+		return ratio;
+	} else {
+		return eval(ratio);
+	}
 }

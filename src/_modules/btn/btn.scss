@@ -135,4 +135,30 @@
     }
   }
 
+  &.-exactRatio {
+    @include mq(ratio, '1 / 2'){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-minRatio {
+    @include mq(min-ratio, '1 / 2'){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-maxRatio, &.-maxRatioString {
+    @include mq(max-ratio, '1 / 2'){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-insideRatio {
+    @include mq(inside-ratio, '1 / 2', '3 / 2'){
+      border-color: $CB-green-bright;
+    }
+  }
+  &.-outsideRatio {
+    @include mq(outside-ratio, '1 / 2', '3 / 2'){
+      border-color: $CB-green-bright;
+    }
+  }
+
 }

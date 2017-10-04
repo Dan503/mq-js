@@ -39,9 +39,7 @@ function checkBP(size, breakpoints){
 // Test if current screen size is between 2 values
 function inside (largeSize, smallSize, dimension, breakpoints) {
 
-  const dimensions = screenSize();
-
-  const screen_dimension = dimension === 'ratio' ? screenRatio() : dimensions[dimension];
+  const screen_dimension = screenSize()[dimension];
 
   if (!screen_dimension){
     throw new Error(`invalid direction: "${direction}"; valid directions are: ${Object.keys(dimensions)}`);

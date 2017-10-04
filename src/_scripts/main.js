@@ -156,4 +156,30 @@ $(() => {
     mq.orientation('portrait', ()=> $(this).toggleClass('-active'));
   });
 
+  $('.btn.-exactRatio').click(function(e){
+    e.preventDefault();
+    mq.ratio(1 / 2, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-minRatio').click(function(e){
+    e.preventDefault();
+    mq.minRatio(1 / 2, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-maxRatio').click(function(e){
+    e.preventDefault();
+    mq.maxRatio(1 / 2, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-insideRatio').click(function(e){
+    e.preventDefault();
+    mq.insideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
+  });
+  $('.btn.-outsideRatio').click(function(e){
+    e.preventDefault();
+    mq.outsideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
+  });
+
+  $('.btn.-maxRatioString').click(function(e){
+    e.preventDefault();
+    mq.maxRatio('1 / 2', ()=> $(this).toggleClass('-active'));
+  });
+
 });
