@@ -19,7 +19,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
   gulp.task('babelify', (done)=>{
     return Promise.all([
       babelify('index.js'),
-      babelify('plugins/*.js', 'plugins'),
+      babelify('mq-js-plugins/*.js', 'plugins'),
     ])
     .catch(err => { throw new Error(err) })
   });
