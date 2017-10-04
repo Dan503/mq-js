@@ -695,3 +695,21 @@ $('.btn.-outsideRatio').click(function(e){
 });
 `,
   })
+
+  :marked
+    You can also provide the ratio as a string instead.
+
+  +demo({
+    html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-maxRatio'})
+    | Clickable at ratios thinner than "1 / 2" (inclusive)
+`,
+      js: `
+$('.btn.-maxRatioString').click(function(e){
+  e.preventDefault();
+  mq.maxRatio('1 / 2', ()=> $(this).toggleClass('-active'));
+});
+`,
+  })
