@@ -184,3 +184,5 @@ function release(importance) {
 gulp.task('bump', versionBump(getBumpType()));
 
 gulp.task('release', release(getBumpType()));
+
+export default ()=>{}
