@@ -503,18 +503,24 @@ window.onresize = debounce(toggleBtn, 200);`,
 
     As of version 2.0.0, mq-js now supports various plugins that allow it to fully replicate everything that mq-scss can do.
 
-    These plugins can be loaded from the mq.js file to avoid the need for loading them every time you wish to use them. They need to be loaded after the core mq-js import though.
+    These plugins can be loaded from the mq.js file to avoid the need for loading them every time you wish to use them.
 
   +demo({
     js: `
-//mq.js file
+//Loading plugins in the mq.js file for global usage
+
 "use strict";
 
 import MQ from "mq-js";
 
 //Enables the height plugin globally
-// Make sure to load after the "mq-js" import
 import "mq-js/plugins/height";
+
+//Enables the orientation plugin globally
+import "mq-js/plugins/orientation";
+
+//Enables the ratio plugin globally
+import "mq-js/plugins/ratio";
 
 //Define your Site break points here
 const breakpoints = {
@@ -565,7 +571,7 @@ import $ from 'jquery';
 import mq from "./mq";
 
 //enables the use of minHeight, maxHeight, insideHeight and outsideHeight
-// (unecessary if it has been loaded in the mq.js file)
+//(unecessary if it has been loaded in the mq.js file)
 import "mq-js/plugins/height";
 
 $('.btn.-eleven').click(function(e){
@@ -617,8 +623,8 @@ import $ from 'jquery';
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-//enables the use of minHeight, maxHeight, insideHeight and outsideHeight
-// (unecessary if it has been loaded in the mq.js file)
+//enables the use of mq.orientation
+//(unecessary if it has been loaded in the mq.js file)
 import "mq-js/plugins/orientation";
 
 $('.btn.-fifteen').click(function(e){
@@ -669,8 +675,8 @@ import $ from 'jquery';
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-//enables the use of minHeight, maxHeight, insideHeight and outsideHeight
-// (unecessary if it has been loaded in the mq.js file)
+//Enables the use of ratio, minRatio, maxRatio, insideRatio and outsideRatio
+//(unecessary if it has been loaded in the mq.js file)
 import "mq-js/plugins/orientation";
 
 $('.btn.-exactRatio').click(function(e){
