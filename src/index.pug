@@ -24,12 +24,31 @@ block content
       'Creating media query variables' : 'creating-media-query-variables',
       'Using pure pixel values' : 'using-pure-pixel-values',
       'Running on window resize' : 'running-on-window-resize',
-      'Future updates' : 'future-updates',
+      'Plugins' : {
+        id: 'plugins',
+        list: {
+          'Height plugin' : '-height-plugin',
+          'Orientation plugin' : '-orientation-plugin',
+          'Ratio plugin' : '-ratio-plugin',
+        }
+      },
     };
+
+  mixin menuItem(heading, value)
+    -
+      var isObj = typeof value === 'object';
+      var href = `#${isObj ? value.id : value}`;
+
+    li: a(href=href, style='color: #000;')= heading
+      if isObj
+        ol
+          each subId, subHeading in value.list
+            +menuItem(subHeading, subId)
 
   ol
     each id, heading in headings
-      li: a(href='#'+id, style='color: #000;')= heading
+      +menuItem(heading, id)
+
 
   :marked
     ## Setup
