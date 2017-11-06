@@ -1,7 +1,7 @@
 
 "use strict";
 
-import MQ from './ultimate';
+import MQ from '../../ultimate';
 
 const breakpoints = {
   small: 600,
