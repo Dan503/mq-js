@@ -105,7 +105,7 @@ The orientation plugin provides these methods:
 ### Ratio plugin
 
 ````js
-import "mq-js/plugins/orientation";
+import "mq-js/plugins/ratio";
 ````
 
 The ratio plugin provides these methods:
