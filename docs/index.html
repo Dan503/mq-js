@@ -26,7 +26,7 @@
     <div class="pageContainer__width">
       <header class="header">
         <h1>mq-js</h1>
-        <p class="version">v2.0.0</p>
+        <p class="version">v2.0.1</p>
         <pre class="no-lines"><code style="text-align: center">npm install mq-js --save</code></pre>
       </header>
       <div class="bodyContent"><p>This documentation is best viewed on a Desktop computer or laptop for the sake of viewing the examples at all screen sizes.</p>
@@ -49,6 +49,7 @@
                 <li><a href="#-height-plugin" style="color: #000">Height plugin</a></li>
                 <li><a href="#-orientation-plugin" style="color: #000">Orientation plugin</a></li>
                 <li><a href="#-ratio-plugin" style="color: #000">Ratio plugin</a></li>
+                <li><a href="#-reactto-plugin" style="color: #000">reactTo plugin</a></li>
               </ol></a></li>
         </ol><h2 id="setup">Setup</h2>
 <p>Firstly, use <code>npm install mq-js --save</code> to add the npm module to your project. If you haven&#39;t used npm before, read through <a href="https://docs.npmjs.com/getting-started/installing-node">this documentation</a> to get set up.</p>
@@ -562,6 +563,17 @@ export default mq;
 export { mq, breakpoints }</code></pre>
             </div>
           </div>
+        </aside><p>Alternatively, you can load all of the plugins in one statement by simply importing <code>mq-js/ultimate</code>;</p>
+
+        <aside class="demo">
+          <div class="demo__grid grid grid--ieFloat grid--cols-1">
+            <div class="grid__cell demo__markup demo__segment js">
+              <pre><code class="js">
+//import all of the plugins at once by importing mq-js/ultimate instead of mq-js
+import MQ from &quot;mq-js/ultimate&quot;;
+</code></pre>
+            </div>
+          </div>
         </aside><h3 id="-height-plugin"><code>height</code> plugin</h3>
 <p>This one is pretty straight forward, it works in pretty much the same way as <code>min</code>, <code>max</code>, <code>inside</code> and <code>outside</code> except it targets height instead of width. Available functions are <code>mq.minHeight</code>, <code>mq.maxHeight</code>, <code>mq.insideHeight</code> and <code>mq.outsideHeight</code>.</p>
 
@@ -751,6 +763,42 @@ $('.btn.-maxRatioString').click(function(e){
   e.preventDefault();
   mq.maxRatio('1 / 2', ()=&gt; $(this).toggleClass('-active'));
 });
+</code></pre>
+            </div>
+          </div>
+        </aside><h3 id="-reactto-plugin"><code>reactTo</code> plugin</h3>
+<p>This plugin is a bit different to the others. The primary purpose of this plugin is to fire off functions when a media query either enters or leaves a defined screen size range.</p>
+
+        <aside class="demo">
+          <div class="demo__result demo__segment">
+<div class="example">
+  <a class="btn -reactTo" href="#">Never clickable, toggles active state when mq changes truthfulness
+  </a>
+</div>
+          </div>
+          <div class="demo__grid grid grid--ieFloat grid--cols-1">
+            <div class="grid__cell demo__markup demo__segment js">
+              <pre><code class="js">
+//module js file
+&quot;use strict&quot;;
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from &quot;./mq&quot;;
+
+//Enables the use of reactTo
+//(unecessary if it has been loaded in the mq.js file)
+import &quot;mq-js/plugins/reactTo&quot;;
+
+mq.reactTo(()=&gt; mq.inside(800, 1000), (is_active, screen_size)=&gt; {
+  // Toggle the &quot;-active&quot; class when crossing one of the mq boundaries
+  $('.btn.-reactTo').toggleClass('-active');
+
+  // is_active = did &quot;mq.inside(800, 1000)&quot; return true?
+  // screen_size = an object holding the screen height, width, and ratio at the point when the screen crossed an mq boundary
+  console.log(is_active, screen_size)
+});
+$('.btn.-reactTo').click(e =&gt; e.preventDefault());
 </code></pre>
             </div>
           </div>

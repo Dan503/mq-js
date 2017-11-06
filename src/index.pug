@@ -30,6 +30,7 @@ block content
           'Height plugin' : '-height-plugin',
           'Orientation plugin' : '-orientation-plugin',
           'Ratio plugin' : '-ratio-plugin',
+          'reactTo plugin' : '-reactto-plugin',
         }
       },
     };
@@ -559,6 +560,15 @@ export { mq, breakpoints }`,
   })
 
   :marked
+    Alternatively, you can load all of the plugins in one statement by simply importing `mq-js/ultimate`;
+  +demo({
+      js: `
+//import all of the plugins at once by importing mq-js/ultimate instead of mq-js
+import MQ from "mq-js/ultimate";
+`,
+  })
+
+  :marked
     ### `height` plugin
 
     This one is pretty straight forward, it works in pretty much the same way as `min`, `max`, `inside` and `outside` except it targets height instead of width. Available functions are `mq.minHeight`, `mq.maxHeight`, `mq.insideHeight` and `mq.outsideHeight`.
@@ -736,5 +746,41 @@ $('.btn.-maxRatioString').click(function(e){
   e.preventDefault();
   mq.maxRatio('1 / 2', ()=> $(this).toggleClass('-active'));
 });
+`,
+  })
+
+  :marked
+    ### `reactTo` plugin
+
+    This plugin is a bit different to the others. The primary purpose of this plugin is to fire off functions when a media query either enters or leaves a defined screen size range.
+
+  +demo({
+    html: `
+include /_modules/btn/btn
+.example
+  +btn({classes:'-reactTo'})(disabled="true")
+    | Never clickable, toggles active state when mq changes truthfulness
+`,
+      js: `
+//module js file
+"use strict";
+import $ from 'jquery';
+
+//import the mq variable that was created in the setup stage
+import mq from "./mq";
+
+//Enables the use of reactTo
+//(unecessary if it has been loaded in the mq.js file)
+import "mq-js/plugins/reactTo";
+
+mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size)=> {
+  // Toggle the "-active" class when crossing one of the mq boundaries
+  $('.btn.-reactTo').toggleClass('-active');
+
+  // is_active = did "mq.inside(800, 1000)" return true?
+  // screen_size = an object holding the screen height, width, and ratio at the point when the screen crossed an mq boundary
+  console.log(is_active, screen_size)
+});
+$('.btn.-reactTo').click(e => e.preventDefault());
 `,
   })
