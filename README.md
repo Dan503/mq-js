@@ -118,13 +118,40 @@ The ratio plugin provides these methods:
 
 [Read the full ratio plugin documentation.](https://dan503.github.io/mq-js/#-ratio-plugin)
 
+
+### reactTo plugin
+
+````js
+import "mq-js/plugins/reactTo";
+````
+
+This gives you access to:
+
+- mq.reactTo
+
+This plugin is a bit different. It takes a function that returns an mq-js screen-check result as it's first parameter and a callback function as it's second parameter. It will then call the callback function every time the screen-check result changes from true to false or false to true.
+
+````js
+mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size)=> {
+  // is_active = did "mq.inside(800, 1000)" return true?
+  // screen_size = an object holding the screen height, width, and ratio at the point when the callback was called
+  console.log(is_active, screen_size);
+});
+````
+
+[Read the full reactTo plugin documentation.](https://dan503.github.io/mq-js/#-react-to-plugin)
+
 ## Change Log
 
 This change log only tracks changes to the functionality of the module.
 
+### v2.1.0
+
+- added the `reactTo` plugin
+
 ### v2.0.0
 
 - **Breaking Change:** The `screen_size` variable shown in the Quick Start example used to output a number that represented the current screen width. It now outputs an object that contains information on the screen height, width, and ratio.
-- added height plugin
-- added orientation plugin
-- added ratio plugin
+- added `height` plugin
+- added `orientation` plugin
+- added `ratio` plugin

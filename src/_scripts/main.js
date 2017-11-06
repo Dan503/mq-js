@@ -183,7 +183,9 @@ $(() => {
   });
 
   mq.reactTo(()=> mq.inside(800, 900), (is_active, screen_size)=> {
+    $('.btn.-reactTo').toggleClass('-active');
     console.log(is_active, screen_size)
   });
+  $('.btn.-reactTo').click(e => e.preventDefault());
 
 });
