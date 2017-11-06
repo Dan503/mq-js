@@ -182,4 +182,8 @@ $(() => {
     mq.maxRatio('1 / 2', ()=> $(this).toggleClass('-active'));
   });
 
+  mq.reactTo(()=> mq.inside(800, 900), (is_active, screen_size)=> {
+    console.log(is_active, screen_size)
+  });
+
 });
