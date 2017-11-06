@@ -139,7 +139,7 @@ mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size)=> {
 });
 ````
 
-[Read the full reactTo plugin documentation.](https://dan503.github.io/mq-js/#-react-to-plugin)
+[Read the full reactTo plugin documentation.](https://dan503.github.io/mq-js/#-reactto-plugin)
 
 ## Change Log
 
