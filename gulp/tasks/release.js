@@ -67,8 +67,10 @@ function checkError(err){
 //Bump up the current version number
 function bumpVersion(importance){
 	return function bump_version (done){
-		if (!importance) throw `\nAn importance must be specified for a version bump to occur.
-	Valid importances: "--patch", "--minor", "--major"\n`;
+		if (!importance) throw new Error(`
+  An importance must be specified for a version bump to occur.
+  Valid importances: "--patch", "--minor", "--major"
+`);
 		// get all the files to bump version in
 		return gulp.src('./package.json')
 			// bump the version number in those files
@@ -93,24 +95,8 @@ function tag_version(){
 	})
 }
 
-//Bump the version number in package.json then commit and tag in git
-function versionBump(importance){
-	return (done)=>{
-		return gulp.series(bumpVersion(importance), tag_version)(done);
-	}
-}
-
 
 ///GIT PROMISES
-
-function create_branch(branch){
-	return new Promise((resolve, reject)=>{
-		git.checkout(branch, {args:'-b'}, (err)=>{
-			checkError(err);
-			resolve();
-		});
-	})
-}
 
 function check_out(branch){
 	return new Promise((resolve, reject)=>{
@@ -130,59 +116,34 @@ function merge_into_current(branch){
 	})
 };
 
-function delete_branch(branch){
-	return new Promise((resolve, reject)=>{
-		git.branch(branch, {args:'-d'}, (err)=>{
-			checkError(err);
-			resolve();
-		});
-	})
-};
-
-
 //RELEASE FUNCTIONS
-
-function startRelease(importance = false){
-	return function start_release (done) {
-
-		let create_release_branch = ()=> create_branch(releaseBranch);
-
-		return gulp.series(
-			create_release_branch,
-			(done)=> {
-				if (importance !== false){
-					return gulp.series(versionBump(importance))(done);
-				} else {
-					done();
-				}
-			}
-		)(done);
-	}
-}
 
 function finish_release(done){
 	return check_out('master')
-		.then(()=> merge_into_current(releaseBranch))
+		.then(()=> merge_into_current('develop'))
+		.then(()=> tag_version())
 		.then(()=> check_out('develop'))
-		.then(()=> merge_into_current(releaseBranch))
-		.then(()=> delete_branch(releaseBranch))
 }
 
 //Do a full Git Flow release which can optionally include a version bump
 function release(importance) {
-	return (done)=>{
-		return gulp.series(
-			startRelease(importance),
-			finish_release
-		)(done);
-	}
+	const version_bump = done => importance !== false ? gulp.series(bumpVersion(importance))(done) : done();
+
+	return done => gulp.series(
+		() => check_out('develop'),
+		version_bump,
+		finish_release
+	)(done);
 }
 
+export default function () {
 
-//TASKS
+	//TASKS
+	gulp.task('bump', gulp.series(
+		bumpVersion(getBumpType())),
+		tag_version
+	);
+	
+	gulp.task('release', release(getBumpType()));
 
-gulp.task('bump', versionBump(getBumpType()));
-
-gulp.task('release', release(getBumpType()));
-
-export default ()=>{}
+}
