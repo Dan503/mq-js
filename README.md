@@ -59,8 +59,19 @@ $('.btn').click(function(e){
     //log the screen height, width and ratio at the time the button was clicked
     console.log(screen_size);
   })
+
+  //Alternatively, use it in an if statement
+  if (mq.max('small')){
+    // Do small stuff
+
+  //You can also use custom values
+  } else if (mq.min(1000)) {
+    // Do stuff for screens that are greater than 1000px wide
+  }
 })
 `````
+
+Note that `mq.max` is _inclusive_ of the given screen size and `mq.min` is _exclusive_ of the given screen size. This is to avoid any potential 1px overlap issues where both statements return true at the same time. It is also designed to align with how mq-scss works.
 
 ## Core methods
 
