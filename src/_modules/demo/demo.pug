@@ -24,11 +24,7 @@ mixin demo__tab(demoMarkup, spec)
     html = render(markupString);
     var keyCount = countKeys(demoMarkup, {
       maxDepth: 1,
-      filter: (item)=>{
-        if (item.key === 'html' && !spec.showHTML) {
-          return false;
-        }
-      }
+      filter: (item)=> item.key !== 'html' && spec.showHTML,
     });
 
   if isObj
