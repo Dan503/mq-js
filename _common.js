@@ -39,6 +39,29 @@ function checkBP(size, breakpoints){
 // Test if current screen size is between 2 values
 function inside (largeSize, smallSize, dimension, breakpoints) {
 
+  if (second_property_is_invalid(smallSize)){
+
+    const message = (divider = ' and ', extra = '') => {
+      const dimensionFunctions = {
+        'width' : `mq.inside(${extra})${divider}mq.outside(${extra})`,
+        'height' : `mq.insideHeight(${extra})${divider}mq.outsideHeight(${extra})`,
+        'ratio' : `mq.insideRatio(${extra})${divider}mq.outsideRatio(${extra})`,
+      }
+      return dimensionFunctions[dimension];
+    }
+
+    throw new Error(`
+
+The ${message()} functions require two breakpoints to be defined.
+
+Currently only the "${largeSize}" breakpoint is defined.
+The other breakpoint is coming through as "${smallSize}".
+
+Please use this format:
+${message('\n', '[breakpoint-1], [breakpoint-2], [optional-callback-function]')}
+`)
+  }
+
   const screen_dimension = screenSize()[dimension];
 
   if (!screen_dimension){
@@ -56,6 +79,12 @@ function inside (largeSize, smallSize, dimension, breakpoints) {
   }
 
   return smallSize < screen_dimension && screen_dimension <= largeSize;
+}
+
+function second_property_is_invalid (secondProperty, breakpoints) {
+  const type = typeof secondProperty;
+  const isInvalid = ['function','undefined'].indexOf(type) > -1;
+  return isInvalid;
 }
 
 Object.assign(exports, { result, screenWidth, screenHeight, screenSize, checkBP, inside })
