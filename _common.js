@@ -37,39 +37,19 @@ function checkBP(size, breakpoints){
 }
 
 // Test if current screen size is between 2 values
-function inside (largeSize, smallSize, dimension, breakpoints) {
+function inside (largeSize, smallSize, dimension, MQ_instance) {
 
-  if (second_property_is_invalid(smallSize)){
+  check_second_value(largeSize, smallSize, dimension);
 
-    const message = (divider = ' and ', extra = '') => {
-      const dimensionFunctions = {
-        'width' : `mq.inside(${extra})${divider}mq.outside(${extra})`,
-        'height' : `mq.insideHeight(${extra})${divider}mq.outsideHeight(${extra})`,
-        'ratio' : `mq.insideRatio(${extra})${divider}mq.outsideRatio(${extra})`,
-      }
-      return dimensionFunctions[dimension];
-    }
-
-    throw new Error(`
-
-The ${message()} functions require two breakpoints to be defined.
-
-Currently only the "${largeSize}" breakpoint is defined.
-The other breakpoint is coming through as "${smallSize}".
-
-Please use this format:
-${message('\n', '[breakpoint-1], [breakpoint-2], [optional-callback-function]')}
-`)
-  }
-
-  const screen_dimension = screenSize()[dimension];
+  const screen_size = screenSize();
+  const screen_dimension = screen_size[dimension];
 
   if (!screen_dimension){
-    throw new Error(`invalid direction: "${direction}"; valid directions are: ${Object.keys(dimensions)}`);
+    throw new Error(`invalid dimension: "${dimension}"; valid dimensions are: ${Object.keys(screen_size)}`);
   }
 
-  largeSize = checkBP(largeSize, breakpoints);
-  smallSize = checkBP(smallSize, breakpoints);
+  largeSize = checkBP(largeSize, MQ_instance.breakpoints);
+  smallSize = checkBP(smallSize, MQ_instance.breakpoints);
 
   //If smallest is first, it swaps the values around
   if (largeSize < smallSize){
@@ -81,11 +61,36 @@ ${message('\n', '[breakpoint-1], [breakpoint-2], [optional-callback-function]')}
   return smallSize < screen_dimension && screen_dimension <= largeSize;
 }
 
-function second_property_is_invalid (secondProperty, breakpoints) {
+function second_property_is_invalid (secondProperty) {
   const type = typeof secondProperty;
   const isInvalid = ['function','undefined'].indexOf(type) > -1;
   return isInvalid;
 }
+
+function check_second_value(propOne, propTwo, dimension){
+  if (second_property_is_invalid(propTwo)){
+    const message = (divider = ' and ', extra = '') => {
+      const dimensionFunctions = {
+        'width' : `mq.inside(${extra})${divider}mq.outside(${extra})`,
+        'height' : `mq.insideHeight(${extra})${divider}mq.outsideHeight(${extra})`,
+        'ratio' : `mq.insideRatio(${extra})${divider}mq.outsideRatio(${extra})`,
+      }
+      return dimensionFunctions[dimension];
+    }
+
+    throw new Error(`
+
+  The ${message()} functions require two breakpoints to be defined.
+
+  Currently only the "${propOne}" breakpoint is defined.
+  The other breakpoint is coming through as "${propTwo}".
+
+  Please use this format:
+  ${message('\n', '[breakpoint-1], [breakpoint-2], [optional-callback-function]')}
+  `)
+  }
+}
+
 
 exports.result = result;
 exports.screenWidth = screenWidth;
@@ -93,3 +98,4 @@ exports.screenHeight = screenHeight;
 exports.screenSize = screenSize;
 exports.checkBP = checkBP;
 exports.inside = inside;
+exports.check_second_value = check_second_value;

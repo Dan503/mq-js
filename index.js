@@ -3,8 +3,45 @@
 var { result, screenWidth, screenSize, checkBP, inside } = require('./_common');
 
 class MQ {
-	constructor(breakpoints){
+	constructor(breakpoints, userSettings = {}){
+		const This = this;
 		this.bp = breakpoints;
+		assign_default_settings();
+
+		function assign_default_settings(){
+			This.settings = {
+				ems: false,
+				emBase: 16,
+			}
+
+			for (property in userSettings){
+				this.settings[property] = userSettings[property];
+			}
+		}
+	}
+
+	convertToEMs(px) {
+		return `${px / this.settings.emBase}em`;
+	}
+
+	finalValue(px) {
+		return this.settings.ems ? this.convertToEMs(px) : `${px}px`;
+	}
+
+	checkMQ(type, size) {
+		const newSize = this.checkBP(size);
+		const types = {
+			min: ()=> {
+				const width = this.finalValue(newSize + 1);
+				return window.matchMedia(`(min-width: ${width})`).matches;
+			},
+			max: ()=> {
+				const width = this.finalValue(newSize);
+				return window.matchMedia(`(max-width: ${width})`).matches;
+			}
+		}
+
+		return types[type]();
 	}
 
 	checkBP(size){
@@ -13,7 +50,7 @@ class MQ {
 
 	min(size, callback) {
 		return result(
-			screenWidth() > this.checkBP(size),
+			this.checkMQ('min', size),
 			callback
 		);
 	}
@@ -24,7 +61,7 @@ class MQ {
 
 	max(size, callback){
 		return result(
-			screenWidth() <= this.checkBP(size),
+			this.checkMQ('min', size),
 			callback
 		);
 	}
@@ -35,7 +72,7 @@ class MQ {
 
 	inside(large, small, callback){
 		return result(
-			inside(large, small, 'width', this.bp),
+			inside(large, small, 'width', this),
 			callback
 		);
 	}
@@ -46,7 +83,7 @@ class MQ {
 
 	outside(large, small, callback){
 		return result(
-			!inside(large, small, 'width', this.bp),
+			!inside(large, small, 'width', this),
 			callback
 		);
 	}
