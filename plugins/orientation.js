@@ -1,33 +1,23 @@
-'use strict';
+var MQ = require('../index');
+var { result, screenSize, inside } = require('../_common');
 
-var _index = require('../index');
+MQ.prototype.orientation = function (orientation, callback) {
+	return result(
+		checkOrientation(orientation),
+		callback
+	);
+}
 
-var _index2 = _interopRequireDefault(_index);
+function checkOrientation (orientation) {
+	const { width, height } = screenSize();
 
-var _common = require('../_common');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_index2.default.prototype.orientation = function (orientation, callback) {
-	return (0, _common.result)(checkOrientation(orientation), callback);
-};
-
-function checkOrientation(orientation) {
-	var _screenSize = (0, _common.screenSize)(),
-	    width = _screenSize.width,
-	    height = _screenSize.height;
-
-	var orientations = {
+	const orientations = {
 		//Square counts as portrait in css media queries
-		portrait: function portrait() {
-			return width <= height;
-		},
-		landscape: function landscape() {
-			return width > height;
-		}
-	};
+		portrait: ()=> width <= height,
+		landscape: ()=> width > height
+	}
 
-	if (!orientations[orientation]) throw new Error('"' + orientation + '" not supported, valid orientations: ' + Object.keys(orientations));
+	if (!orientations[orientation]) throw new Error(`"${orientation}" not supported, valid orientations: ${Object.keys(orientations)}`);
 
 	return orientations[orientation]();
 }
