@@ -68,16 +68,16 @@ document.querySelector('#button').onclick = function(e) {
   //Alternatively, use it in an if statement
   if (mq.max('small')) {
     // Do stuff for screens that are up to (and including) the "small" breakpoint width
-	}
+  }
 
   //You can also use custom values
-	if (mq.min(1000)) {
+  if (mq.min(1000)) {
     // Do stuff for screens that are greater than 1000px wide
-	}
+  }
 
   //If you imported the breakpoints, you can use tweaked versions of them
-	if (mq.inside(bp.small + 50, bp.medium - 100)) {
-		// Do stuff for screens that are between the "small" breakpoint + 50px and the "medium" breakpoint - 100px
+  if (mq.inside(bp.small + 50, bp.medium - 100)) {
+    // Do stuff for screens that are between the "small" breakpoint + 50px and the "medium" breakpoint - 100px
   }
 }
 `````
