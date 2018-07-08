@@ -87,4 +87,9 @@ function second_property_is_invalid (secondProperty, breakpoints) {
   return isInvalid;
 }
 
-Object.assign(exports, { result, screenWidth, screenHeight, screenSize, checkBP, inside })
+exports.result = result;
+exports.screenWidth = screenWidth;
+exports.screenHeight = screenHeight;
+exports.screenSize = screenSize;
+exports.checkBP = checkBP;
+exports.inside = inside;
