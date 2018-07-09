@@ -25,13 +25,13 @@ function checkBP(size, breakpoints){
     if (typeof breakpoints[size] !== 'undefined'){
       return breakpoints[size];
     } else {
-      console.log('Available Breakpoints:', breakpoints);
+      console.error('Available Breakpoints:', breakpoints);
       throw new Error(`"${size}" breakpoint does not exist`);
     }
   } else if (typeof size === 'number') {
     return size;
   } else {
-    console.log('Available Breakpoints:', breakpoints);
+    console.error('Available Breakpoints:', breakpoints);
     throw new Error(`"${size}" is not a valid breakpoint. It must be a string or a number`);
   }
 }
