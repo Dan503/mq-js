@@ -37,28 +37,25 @@ function checkBP(size, breakpoints){
 }
 
 // Test if current screen size is between 2 values
-function inside (largeSize, smallSize, dimension, MQ_instance) {
+function doubleValue ({
+  queryTemplate,
+  sizeOne,
+  sizeTwo,
+  dimension,
+  MQ_instance
+}) {
 
-  check_second_value(largeSize, smallSize, dimension);
+  check_second_value(sizeOne, sizeTwo, dimension);
 
-  const screen_size = screenSize();
-  const screen_dimension = screen_size[dimension];
+  const sizes = [
+    checkBP(sizeOne, MQ_instance.breakpoints),
+    checkBP(sizeTwo, MQ_instance.breakpoints),
+  ];
 
-  if (!screen_dimension){
-    throw new Error(`invalid dimension: "${dimension}"; valid dimensions are: ${Object.keys(screen_size)}`);
-  }
+  const largeSize = Math.max(sizes);
+  const smallSize = Math.min(sizes);
 
-  largeSize = checkBP(largeSize, MQ_instance.breakpoints);
-  smallSize = checkBP(smallSize, MQ_instance.breakpoints);
-
-  //If smallest is first, it swaps the values around
-  if (largeSize < smallSize){
-    const tmp = largeSize;
-    largeSize = smallSize;
-    smallSize = tmp;
-  }
-
-  return smallSize < screen_dimension && screen_dimension <= largeSize;
+  return MQ_instance.checkMQ({ queryTemplate, largeSize, smallSize });
 }
 
 function second_property_is_invalid (secondProperty) {
@@ -97,5 +94,5 @@ exports.screenWidth = screenWidth;
 exports.screenHeight = screenHeight;
 exports.screenSize = screenSize;
 exports.checkBP = checkBP;
-exports.inside = inside;
+exports.doubleValue = doubleValue;
 exports.check_second_value = check_second_value;

@@ -1,6 +1,6 @@
 "use strict";
 
-var { result, screenWidth, screenSize, checkBP, inside } = require('./_common');
+var { result, screenWidth, screenSize, checkBP, doubleValue } = require('./_common');
 
 class MQ {
 	constructor(breakpoints, userSettings = {}){
@@ -28,20 +28,44 @@ class MQ {
 		return this.settings.ems ? this.convertToEMs(px) : `${px}px`;
 	}
 
-	checkMQ(type, size) {
-		const newSize = this.checkBP(size);
-		const types = {
-			min: ()=> {
-				const width = this.finalValue(newSize + 1);
-				return window.matchMedia(`(min-width: ${width})`).matches;
-			},
-			max: ()=> {
-				const width = this.finalValue(newSize);
-				return window.matchMedia(`(max-width: ${width})`).matches;
-			}
+	checkMQ({ queryTemplate, largeSize, smallSize = 0 }) {
+
+		const newSizes = {
+			large: this.checkBP(largeSize),
+			small: this.checkBP(smallSize),
 		}
 
-		return types[type]();
+		// RegEx captures up to 2 groups, the second group being optional.
+		// (max-width: {{large}}) [ and (min-width: {{small+1}}) ] < optional
+		const regEx = /^(.*?)({.*?})(.*?)({.*?}(.*))?$/;
+		let regExResult = regEx.exec(queryTemplate);
+
+		// We don't want item 0 of the regEx result
+		regExResult.shift();
+
+		const bracketsReplaced = regExResult.map(replace_bracket);
+
+		function replace_bracket(string) {
+			const isBracketValue = /^{.*}$/.test(string);
+			const isIncremented = string.indexOf('+1') > 0;
+			const isLarge = string.indexOf('large');
+
+			if (isBracketValue) {
+				const replacement = isLarge ? newSizes.large : newSizes.small;
+				return isIncremented ? replacement + 1 : replacement;
+			}
+
+			return string;
+		}
+
+		const finalValues = bracketsReplaced.map((value) => {
+			const isNumber = typeof value === 'number';
+			return isNumber ? this.finalValue(value) : value;
+		});
+
+		const finalQuery = finalValues.join('');
+
+		return window.matchMedia(finalQuery).matches;
 	}
 
 	checkBP(size){
@@ -50,7 +74,7 @@ class MQ {
 
 	min(size, callback) {
 		return result(
-			this.checkMQ('min', size),
+			this.checkMQ({ queryTemplate: '(min-width: {large+1})', largeSize: size }),
 			callback
 		);
 	}
@@ -61,7 +85,7 @@ class MQ {
 
 	max(size, callback){
 		return result(
-			this.checkMQ('min', size),
+			this.checkMQ({ queryTemplate: '(max-width: {large})', largeSize: size }),
 			callback
 		);
 	}
@@ -70,9 +94,15 @@ class MQ {
 		return this.max(size, callback);
 	}
 
-	inside(large, small, callback){
+	inside(sizeOne, sizeTwo, callback){
 		return result(
-			inside(large, small, 'width', this),
+			doubleValue({
+				queryTemplate: '(max-width: {large}) and (min-width: {small+1})',
+				sizeOne,
+				sizeTwo,
+				dimension: 'width',
+				MQ_instance: this,
+			}),
 			callback
 		);
 	}
@@ -81,9 +111,15 @@ class MQ {
 		return this.inside(large, small, callback);
 	}
 
-	outside(large, small, callback){
+	outside(sizeOne, sizeTwo, callback){
 		return result(
-			!inside(large, small, 'width', this),
+			doubleValue({
+				queryTemplate: '(max-width: {small}), (min-width: {large+1})',
+				sizeOne,
+				sizeTwo,
+				dimension: 'width',
+				MQ_instance: this,
+			}),
 			callback
 		);
 	}
