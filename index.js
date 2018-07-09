@@ -20,12 +20,76 @@ class MQ {
 		}
 	}
 
-	convertToEMs(px) {
-		return `${px / this.settings.emBase}em`;
+	min(size, callback) {
+		return result(
+			this.checkMQ({ queryTemplate: '(min-width: {large+1})', largeSize: size }),
+			callback
+		);
+	}
+
+	//alias for "min"
+	minWidth(size, callback){
+		return this.min(size, callback);
+	}
+
+	max(size, callback){
+		return result(
+			this.checkMQ({ queryTemplate: '(max-width: {large})', largeSize: size }),
+			callback
+		);
+	}
+
+	//alias for "max"
+	maxWidth(size, callback){
+		return this.max(size, callback);
+	}
+
+	inside(sizeOne, sizeTwo, callback){
+		return result(
+			doubleValue({
+				queryTemplate: '(max-width: {large}) and (min-width: {small+1})',
+				sizeOne,
+				sizeTwo,
+				dimension: 'width',
+				MQ_instance: this,
+			}),
+			callback
+		);
+	}
+
+	//inside alias
+	insideWidth(large, small, callback){
+		return this.inside(large, small, callback);
+	}
+
+	outside(sizeOne, sizeTwo, callback){
+		return result(
+			doubleValue({
+				queryTemplate: '(max-width: {small}), (min-width: {large+1})',
+				sizeOne,
+				sizeTwo,
+				dimension: 'width',
+				MQ_instance: this,
+			}),
+			callback
+		);
+	}
+
+	//outside alias
+	outsideWidth(large, small, callback){
+		return this.outside(large, small, callback);
+	}
+
+	checkBP(size){
+		return checkBP(size, this.bp);
 	}
 
 	finalValue(px) {
 		return this.settings.ems ? this.convertToEMs(px) : `${px}px`;
+	}
+
+	convertToEMs(px) {
+		return `${px / this.settings.emBase}em`;
 	}
 
 	checkMQ({ queryTemplate, largeSize, smallSize = 0 }) {
@@ -66,66 +130,6 @@ class MQ {
 		const finalQuery = finalValues.join('');
 
 		return window.matchMedia(finalQuery).matches;
-	}
-
-	checkBP(size){
-		return checkBP(size, this.bp);
-	}
-
-	min(size, callback) {
-		return result(
-			this.checkMQ({ queryTemplate: '(min-width: {large+1})', largeSize: size }),
-			callback
-		);
-	}
-	//alias for "min"
-	minWidth(size, callback){
-		return this.min(size, callback);
-	}
-
-	max(size, callback){
-		return result(
-			this.checkMQ({ queryTemplate: '(max-width: {large})', largeSize: size }),
-			callback
-		);
-	}
-	//alias for "max"
-	maxWidth(size, callback){
-		return this.max(size, callback);
-	}
-
-	inside(sizeOne, sizeTwo, callback){
-		return result(
-			doubleValue({
-				queryTemplate: '(max-width: {large}) and (min-width: {small+1})',
-				sizeOne,
-				sizeTwo,
-				dimension: 'width',
-				MQ_instance: this,
-			}),
-			callback
-		);
-	}
-	//inside alias
-	insideWidth(large, small, callback){
-		return this.inside(large, small, callback);
-	}
-
-	outside(sizeOne, sizeTwo, callback){
-		return result(
-			doubleValue({
-				queryTemplate: '(max-width: {small}), (min-width: {large+1})',
-				sizeOne,
-				sizeTwo,
-				dimension: 'width',
-				MQ_instance: this,
-			}),
-			callback
-		);
-	}
-	//outside alias
-	outsideWidth(large, small, callback){
-		return this.outside(large, small, callback);
 	}
 
 }
