@@ -1,6 +1,6 @@
 
-function result (isAllowed, callback = ()=>{}) {
-  if (isAllowed) callback.call(window, screenSize());
+function result (isAllowed, callback = false) {
+  if (isAllowed && callback) callback.call(window, screenSize());
   return isAllowed;
 }
 
@@ -15,8 +15,17 @@ function screenHeight () {
 function screenSize(){
   const width = screenWidth();
   const height = screenHeight();
-  const ratio = width / height;
-  return { width, height, ratio };
+  const numberRatio = width / height;
+  const stringRatio = number_to_ratio(numberRatio);
+
+  return {
+    width,
+    height,
+    ratio: {
+      number: numberRatio,
+      string: stringRatio,
+    }
+  };
 }
 
 //Checks if the size is a valid breakpoint value
@@ -88,6 +97,22 @@ function check_second_value(propOne, propTwo, dimension){
   }
 }
 
+//http://jonisalonen.com/2012/converting-decimal-numbers-to-ratios/
+function number_to_ratio(x) {
+	var tolerance = 1.0E-6;
+	var h1=1; var h2=0;
+	var k1=0; var k2=1;
+	var b = x;
+	do {
+			var a = Math.floor(b);
+			var aux = h1; h1 = a*h1+h2; h2 = aux;
+			aux = k1; k1 = a*k1+k2; k2 = aux;
+			b = 1/(b-a);
+	} while (Math.abs(x-h1/k1) > x*tolerance);
+
+	return h1+"/"+k1;
+}
+
 
 exports.result = result;
 exports.screenWidth = screenWidth;
@@ -96,3 +121,4 @@ exports.screenSize = screenSize;
 exports.checkBP = checkBP;
 exports.doubleValue = doubleValue;
 exports.check_second_value = check_second_value;
+exports.number_to_ratio = number_to_ratio;

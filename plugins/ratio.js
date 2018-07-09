@@ -1,6 +1,6 @@
 
 var MQ = require('../index');
-var { result, screenSize, inside, check_second_value } = require('../_common');
+var { result, check_second_value, number_to_ratio } = require('../_common');
 
 MQ.prototype.ratio = function (ratio, callback){
 	return result(
@@ -104,18 +104,3 @@ function is_number (ratio) {
 	return isNumber;
 }
 
-//http://jonisalonen.com/2012/converting-decimal-numbers-to-ratios/
-function number_to_ratio(x) {
-	var tolerance = 1.0E-6;
-	var h1=1; var h2=0;
-	var k1=0; var k2=1;
-	var b = x;
-	do {
-			var a = Math.floor(b);
-			var aux = h1; h1 = a*h1+h2; h2 = aux;
-			aux = k1; k1 = a*k1+k2; k2 = aux;
-			b = 1/(b-a);
-	} while (Math.abs(x-h1/k1) > x*tolerance);
-
-	return h1+"/"+k1;
-}
