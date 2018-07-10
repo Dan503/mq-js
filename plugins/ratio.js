@@ -94,8 +94,8 @@ function convert_to (style, ratio) {
 
 function is_number (ratio) {
 	const isNumber = typeof ratio === 'number';
-	// format = "1 / 2";
-	const isFormattedString = typeof ratio === 'string' && !ratio.match(/[0-9\.]+\s*?\/\s*?[0-9\.]+/);
+	// format = " 2 / 1 "; width / height (spaces optional)
+	const isFormattedString = typeof ratio === 'string' && !ratio.match(/^\s*?[0-9\.]+\s*?\/\s*?[0-9\.]+\s*?$/);
 
 	if (!isNumber && !isFormattedString) {
 		throw new Error(`"${ratio}" must be either a number or a string in the format "[width] / [height]"`);
