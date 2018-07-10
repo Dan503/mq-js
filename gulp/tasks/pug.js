@@ -76,6 +76,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
       basedir: './'+[dirs.source].join('/'),
       filters: pugFilters,
       locals: {
+        args,
         require,
         pkg: pjson,
         config,
