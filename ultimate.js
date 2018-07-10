@@ -5,11 +5,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var MQ = require('./index');
+var MQ = require('./index').default;
 
 require('./plugins/height');
 require('./plugins/orientation');
 require('./plugins/ratio');
 require('./plugins/reactTo');
 
-exports.default =  MQ.default;
+exports.default =  MQ;

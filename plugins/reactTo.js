@@ -1,4 +1,4 @@
-var MQ = require('../index');
+var MQ = require('../index').default;
 var { screenSize } = require('../_common');
 
 const callbackList = [];

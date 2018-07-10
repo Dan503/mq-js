@@ -1,4 +1,4 @@
-var MQ = require('../index');
+var MQ = require('../index').default;
 var { result } = require('../_common');
 
 MQ.prototype.orientation = function (orientation, callback) {
