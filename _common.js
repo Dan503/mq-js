@@ -17,10 +17,12 @@ function screenSize(){
   const height = screenHeight();
   const numberRatio = width / height;
   const stringRatio = number_to_ratio(numberRatio);
+  const orientation = numberRatio > 1 ? 'landscape' : 'portrait';
 
   return {
     width,
     height,
+    orientation,
     ratio: {
       number: numberRatio,
       string: stringRatio,
