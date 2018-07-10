@@ -59,8 +59,8 @@ function doubleValue ({
   check_second_value(sizeOne, sizeTwo, dimension);
 
   const sizes = [
-    checkBP(sizeOne, MQ_instance.breakpoints),
-    checkBP(sizeTwo, MQ_instance.breakpoints),
+    checkBP(sizeOne, MQ_instance.bp),
+    checkBP(sizeTwo, MQ_instance.bp),
   ];
 
   const largeSize = Math.max(sizes);
