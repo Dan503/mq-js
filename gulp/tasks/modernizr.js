@@ -19,10 +19,10 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
 
   gulp.task('modernizr', gulp.series('copy', ()=> {
     return gulp.src([
-      path.join(dirs.source, '**/*.{scss,sass,js}'),
+      [dirs.source, '**/*.{scss,sass,js}'].join('/'),
     ])
       .pipe(plugins.modernizr('modernizr.min.js', modernizr_settings))
       .pipe(plugins.uglify())
-      .pipe(gulp.dest(path.join(taskTarget, dirs.assets, dirs.scripts.replace(/^_/, ''))));
+      .pipe(gulp.dest([taskTarget, dirs.assets,  dirs.scripts.replace(/^_/, '')].join('/')));
   }));
 }

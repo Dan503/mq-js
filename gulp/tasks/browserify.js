@@ -95,7 +95,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
 
   // Browserify Task
   gulp.task('browserify', (done) => {
-    return glob('./' + path.join(dirs.source, dirs.scripts, entries.js), function(err, files) {
+    return glob('./' + [dirs.source, dirs.scripts, entries.js].join('/'), function(err, files) {
       if (err) {
         done(err);
       }
