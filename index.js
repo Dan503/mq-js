@@ -1,6 +1,6 @@
 "use strict";
 
-var { result, screenWidth, screenSize, checkBP, doubleValue } = require('./_common');
+var { result, checkBP, doubleValue } = require('./_common');
 
 class MQ {
 	constructor(breakpoints, userSettings = {}){
@@ -106,11 +106,9 @@ class MQ {
 
 		// We only want the group matches in the array
 		function purify_regex(result){
-			result.shift();
-			delete result.index;
-			delete result.groups;
-			delete result.input;
-			return result;
+			const purifiedArray = [...result];
+			purifiedArray.shift();
+			return purifiedArray;
 		}
 
 		const bracketsReplaced = regExResult.map(replace_bracket);
