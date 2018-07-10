@@ -1,23 +1,14 @@
 var MQ = require('../index');
-var { result, screenSize, inside } = require('../_common');
+var { result } = require('../_common');
 
 MQ.prototype.orientation = function (orientation, callback) {
+
+	const orientations = ['portrait', 'landscape'];
+
+	if (orientations.indexOf(orientation) < 0) throw new Error(`"${orientation}" not supported, valid orientations: "${orientations.join('", "')}"`);
+
 	return result(
-		checkOrientation(orientation),
+		window.matchMedia(`(orientation: ${orientation})`).matches,
 		callback
 	);
-}
-
-function checkOrientation (orientation) {
-	const { width, height } = screenSize();
-
-	const orientations = {
-		//Square counts as portrait in css media queries
-		portrait: ()=> width <= height,
-		landscape: ()=> width > height
-	}
-
-	if (!orientations[orientation]) throw new Error(`"${orientation}" not supported, valid orientations: ${Object.keys(orientations)}`);
-
-	return orientations[orientation]();
 }
