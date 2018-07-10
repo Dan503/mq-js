@@ -102,24 +102,34 @@ class MQ {
 		// RegEx captures up to 2 groups, the second group being optional.
 		// (max-width: {{large}}) [ and (min-width: {{small+1}}) ] < optional
 		const regEx = /^(.*?)({.*?})(.*?)({.*?}(.*))?$/;
-		let regExResult = regEx.exec(queryTemplate);
+		const regExResult = purify_regex(regEx.exec(queryTemplate));
 
-		// We don't want item 0 of the regEx result
-		regExResult.shift();
+		// We only want the group matches in the array
+		function purify_regex(result){
+			result.shift();
+			delete result.index;
+			delete result.groups;
+			delete result.input;
+			return result;
+		}
 
 		const bracketsReplaced = regExResult.map(replace_bracket);
 
 		function replace_bracket(string) {
-			const isBracketValue = /^{.*}$/.test(string);
-			const isIncremented = string.indexOf('+1') > 0;
-			const isLarge = string.indexOf('large');
+			if (string) {
+				const isBracketValue = /^{.*}$/.test(string);
+				const isIncremented = string.indexOf('+1') > 0;
+				const isLarge = string.indexOf('large');
 
-			if (isBracketValue) {
-				const replacement = isLarge ? newSizes.large : newSizes.small;
-				return isIncremented ? replacement + 1 : replacement;
+				if (isBracketValue) {
+					const replacement = isLarge ? newSizes.large : newSizes.small;
+					return isIncremented ? replacement + 1 : replacement;
+				}
+
+				return string;
 			}
 
-			return string;
+			return '';
 		}
 
 		const finalValues = bracketsReplaced.map((value) => {
