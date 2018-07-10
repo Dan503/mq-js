@@ -28,7 +28,8 @@ mixin demo__tab(demoMarkup, spec)
     });
 
   if isObj
-    .demo__grid.grid.grid--ieFloat(class=`grid--cols-${keyCount}`)
+    - const colsClass = keyCount > 0 ? `grid--cols-${keyCount}` : '';
+    .demo__grid.grid(class=colsClass)
       each markup, type in demoMarkup
         if (type === 'html' && spec.showHTML || type !== 'html')
           - markup = type === 'html' ? html : markup;
