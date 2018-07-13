@@ -20,7 +20,10 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
 
   // Sass compilation
   gulp.task('sass', () => {
-    return gulp.src([dirs.source, dirs.styles, entries.css].join('/'))
+    return gulp.src([
+      [dirs.source, dirs.styles, '*.scss'].join('/'),
+      '!'+[dirs.source, dirs.styles, '_*.scss'].join('/'),
+    ])
       .pipe(plugins.plumber((error)=>{
         console.log(`\n ${plugins.util.colors.red.bold('Sass failed to compile:')} ${plugins.util.colors.yellow(error.message)}\n`);
         //console.error(error.stack);
@@ -28,6 +31,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
       }))
       .pipe(plugins.wait(100))//Helps prevent odd file not found error
       .pipe(plugins.sourcemaps.init())
+      .pipe(plugins.sassGlob())
       .pipe(plugins.sass({
         outputStyle: 'expanded',
         precision: 10,

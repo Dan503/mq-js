@@ -6,13 +6,26 @@
 import $ from 'jquery';
 import debounce from 'debounce';
 import { mq, breakpoints } from './mq';
+import { bp } from './run_tests';
 
 import codeLineNumbers from '~on-page-load-js/codeLineNumbers';
 import smoothAnchors from '~on-page-load-js/smoothAnchors';
 
+window.test = ()=>{
+  const settings = {
+    innerWidth: 1000,
+    innerHeight: bp.large,
+  };
+
+  window.open('/test-em.html', 'ems test', settings);
+  window.open('/test-px.html', 'px test', settings)
+}
+
 $(() => {
   codeLineNumbers();
   smoothAnchors();
+
+  $('#testingBtn').click(window.test)
 
   $('.btn.-one').click(function(e){
     e.preventDefault();
