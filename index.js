@@ -14,8 +14,8 @@ class MQ {
 				emBase: 16,
 			}
 
-			for (property in userSettings){
-				this.settings[property] = userSettings[property];
+			for (let property in userSettings){
+				This.settings[property] = userSettings[property];
 			}
 		}
 	}
