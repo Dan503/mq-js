@@ -1,5 +1,5 @@
 
-var MQ = require('../index').default;
+var MQ = require('../index');
 var { result, check_second_value, number_to_ratio } = require('../_common');
 
 MQ.prototype.ratio = function (ratio, callback){

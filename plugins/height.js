@@ -1,5 +1,5 @@
 
-var MQ = require('../index').default;
+var MQ = require('../index');
 var { result, doubleValue } = require('../_common');
 
 MQ.prototype.minHeight = function (size, callback){

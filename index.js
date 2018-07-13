@@ -142,4 +142,4 @@ class MQ {
 
 }
 
-exports.default = MQ;
+module.exports = MQ;
