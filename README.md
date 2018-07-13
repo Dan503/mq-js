@@ -163,17 +163,4 @@ mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size) => {
 
 [Read the full reactTo plugin documentation.](https://dan503.github.io/mq-js/#-reactto-plugin)
 
-## Change Log
-
-This change log only tracks changes to the functionality of the module.
-
-### v2.1.0
-
-- added the `reactTo` plugin
-
-### v2.0.0
-
-- **Breaking Change:** The `screen_size` variable shown in the Quick Start example used to output a number that represented the current screen width. It now outputs an object that contains information on the screen height, width, and ratio.
-- added `height` plugin
-- added `orientation` plugin
-- added `ratio` plugin
+The mq-js change log is available on the [mq-js GitHub releases page](https://github.com/Dan503/mq-js/releases)
