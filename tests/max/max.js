@@ -1,5 +1,5 @@
 
-import { mq, bp, Test, report_result_summary } from '../../src/_scripts/run_tests';
+import { mq, bp, Test, report_result_summary, sequence } from '../../src/_scripts/run_tests';
 
 export default function(){
 
@@ -8,7 +8,7 @@ export default function(){
 		fail: 0,
 	}
 
-	class positiveTest extends Test (){
+	class positiveTest extends Test {
 		constructor({ name, test }){
 			super({
 				name,
@@ -20,12 +20,12 @@ export default function(){
 		}
 	}
 
-	class negativeTest extends Test (){
+	class negativeTest extends Test {
 		constructor({ name, test }){
 			super({
 				name,
 				size: [bp.large+1],
-				mqMatch: true,
+				mqMatch: false,
 				test: test,
 				localResults: maxResults,
 			})

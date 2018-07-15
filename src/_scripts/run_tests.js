@@ -1,8 +1,6 @@
 
-import $ from 'jquery';
-
 //tests
-import max from 'max/max';
+import max from '../../tests/max/max';
 
 import MQ from '../../index';
 
@@ -101,10 +99,10 @@ class Test {
 	add_test_result(is_a_pass){
 		if (is_a_pass) {
 			resultSummary.pass++;
-			localResults.pass++;
+			this.localResults.pass++;
 		} else {
 			resultSummary.fail++;
-			localResults.fail++;
+			this.localResults.fail++;
 		}
 	}
 }
@@ -116,4 +114,4 @@ window.onload = function(){
 	])
 }
 
-export { bp, mq, windowResize, has_active_styling, Test, report_result_summary }
+export { bp, mq, windowResize, has_active_styling, Test, report_result_summary, sequence }
