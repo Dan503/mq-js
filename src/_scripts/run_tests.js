@@ -38,17 +38,22 @@ const windowResize = (width, height = width) => {
 	window.resizeTo(width + difference.width, height + difference.height);
 }
 
-let trackTests = {
+let resultSummary = {
 	pass: 0,
 	fail: 0,
 };
 
-const add_test_result = (is_a_pass)=> {
-	if (is_a_pass) {
-		trackTests.pass++;
-	} else {
-		trackTests.fail++;
-	}
+const report_results = type => {
+	return () => Promise.resolve().then(()=>{
+		console.log(mq_style, type, trackTests);
+	})
+}
+
+const sequence = promiseArray => {
+	return promiseArray.reduce((a,b) => {
+		const c = typeof a === 'function' ? a() : a;
+		return c.then(b);
+	});
 }
 
 class Test {
@@ -57,9 +62,11 @@ class Test {
 		name = 'test name undefined',
 		run = ()=>{},
 		mqMatch = true,
+		suite
 	}) {
 		Object.assign(this, {size, name, run, mqMatch});
-		return this.run_code();
+		this.suite = suite;
+		return ()=> this.run_code();
 	}
 
 	async run_code(){
@@ -69,8 +76,10 @@ class Test {
 	}
 
 	async run_test(){
+		// console.log('delay start', this.name);
 		return this.delay()
 		.then(()=> {
+			// console.log('delay end', this.name);
 			this.mq_active = has_active_styling();
 			return this.run()
 		});
@@ -85,22 +94,51 @@ class Test {
 	}
 
 	report_results(result){
-		const successful = result && this.mqMatch && this.mq_active || result && !this.mqMatch && !this.mq_active;
+		const successful = result && this.mqMatch && this.mq_active || !result && !this.mqMatch && !this.mq_active;
 		console.log(`${successful}: ${mq_style} ${this.name}`)
-		add_test_result(successful);
+		this.add_test_result(successful);
+	}
+
+	add_test_result(is_a_pass){
+		if (is_a_pass) {
+			resultSummary.pass++;
+			this.suite.testResults.pass++;
+		} else {
+			resultSummary.fail++;
+			this.suite.testResults.fail++;
+		}
 	}
 }
 
-const report_results = ()=> {
-	console.log(mq_style, trackTests);
+class TestSuite {
+	constructor({ name, positive_tests, negative_tests }){
+
+		Object.assign(this, {
+			name,
+			positive_tests,
+			negative_tests,
+			testResults: {
+				pass: 0,
+				fail: 0,
+			}
+		})
+
+		return ()=> this.run_code();
+	}
+
+	run_code(){
+		return sequence([
+			...this.positive_tests,
+			...this.negative_tests,
+		])
+	}
 }
 
-window.onload = async function(){
-	await Promise.all([
+window.onload = function(){
+	sequence([
 		max(),
+		report_results('max results:'),
 	])
-
-	report_results();
 }
 
-export { bp, mq, windowResize, has_active_styling, Test }
+export { bp, mq, windowResize, has_active_styling, Test, TestSuite }
