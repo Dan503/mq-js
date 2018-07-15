@@ -1,17 +1,34 @@
 
-import { mq, bp, Test, TestSuite } from '../../src/_scripts/run_tests';
+import { mq, bp, Test, report_result_summary } from '../../src/_scripts/run_tests';
 
 export default function(){
 
-	class max_test extends Test {
-		constructor({
-			size = false, // [width [, height] ]
-			name = 'test name undefined',
-			run = ()=>{},
-			mqMatch = true,
-			suite
-		}){
-			super({ size, name, run, mqMatch, suite })
+	let maxResults = {
+		pass: 0,
+		fail: 0,
+	}
+
+	class positiveTest extends Test (){
+		constructor({ name, test }){
+			super({
+				name,
+				test,
+				size: [bp.large],
+				mqMatch: true,
+				localResults: maxResults,
+			})
+		}
+	}
+
+	class negativeTest extends Test (){
+		constructor({ name, test }){
+			super({
+				name,
+				size: [bp.large+1],
+				mqMatch: true,
+				test: test,
+				localResults: maxResults,
+			})
 		}
 	}
 
@@ -22,25 +39,19 @@ export default function(){
 	// max large !match max large + 1px (cb)
 
 	const positive_tests = [
-		new Test({
+		new positiveTest({
 			name: `max "large" matches mq-scss (if)`,
-			size: [bp.large],
-			mqMatch: true,
-			run: ()=> mq.max('large'),
+			test: ()=> mq.max('large'),
 		}),
 
-		new Test({
+		new positiveTest({
 			name: `max bp.large matches mq-scss (if)`,
-			size: [bp.large],
-			mqMatch: true,
-			run: ()=> mq.max(bp.large),
+			test: ()=> mq.max(bp.large),
 		}),
 
-		new Test({
+		new positiveTest({
 			name: `max "large" matches mq-scss (cb)`,
-			size: [bp.large],
-			mqMatch: true,
-			run: ()=> {
+			test: ()=> {
 				let result = false;
 				mq.max('large', ()=> {
 					result = true;
@@ -49,11 +60,9 @@ export default function(){
 			},
 		}),
 
-		new Test({
+		new positiveTest({
 			name: `max bp.large matches mq-scss (cb)`,
-			size: [bp.large],
-			mqMatch: true,
-			run: ()=> {
+			test: ()=> {
 				let result = false;
 				mq.max(bp.large, ()=> {
 					result = true;
@@ -64,25 +73,19 @@ export default function(){
 	];
 
 	const negative_tests = [
-		new Test({
+		new negativeTest({
 			name: `max "large" no match mq-scss (if)`,
-			size: [bp.large+1],
-			mqMatch: false,
-			run: ()=> mq.max('large'),
+			test: ()=> mq.max('large'),
 		}),
 
-		new Test({
+		new negativeTest({
 			name: `max bp.large no match mq-scss (if)`,
-			size: [bp.large+1],
-			mqMatch: false,
-			run: ()=> mq.max(bp.large),
+			test: ()=> mq.max(bp.large),
 		}),
 
-		new Test({
+		new negativeTest({
 			name: `max "large" no match mq-scss (cb)`,
-			size: [bp.large+1],
-			mqMatch: false,
-			run: ()=> {
+			test: ()=> {
 				let result = false;
 				mq.max('large', ()=> {
 					result = true;
@@ -91,11 +94,9 @@ export default function(){
 			},
 		}),
 
-		new Test({
+		new negativeTest({
 			name: `max bp.large no match mq-scss (cb)`,
-			size: [bp.large+1],
-			mqMatch: false,
-			run: ()=> {
+			test: ()=> {
 				let result = false;
 				mq.max(bp.large, ()=> {
 					result = true;
@@ -105,11 +106,10 @@ export default function(){
 		}),
 	]
 
-
-	return new TestSuite({
-		name: 'max',
-		positive_tests,
-		negative_tests,
-	})
+	return sequence([
+		...positive_tests,
+		...negative_tests,
+		report_result_summary('max', maxResults)
+	])
 
 }

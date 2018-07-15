@@ -43,9 +43,9 @@ let resultSummary = {
 	fail: 0,
 };
 
-const report_results = type => {
+const report_result_summary = (type, testTracker) => {
 	return () => Promise.resolve().then(()=>{
-		console.log(mq_style, type, trackTests);
+		console.log(mq_style, `${type} results:`, testTracker);
 	})
 }
 
@@ -58,14 +58,13 @@ const sequence = promiseArray => {
 
 class Test {
 	constructor({
-		size = false, // [width [, height] ]
+		size = false, // [ width, height ] (height optional)
 		name = 'test name undefined',
-		run = ()=>{},
+		test = ()=>{},
 		mqMatch = true,
-		suite
+		localResults,
 	}) {
-		Object.assign(this, {size, name, run, mqMatch});
-		this.suite = suite;
+		Object.assign(this, {size, name, test, mqMatch, localResults });
 		return ()=> this.run_code();
 	}
 
@@ -81,7 +80,7 @@ class Test {
 		.then(()=> {
 			// console.log('delay end', this.name);
 			this.mq_active = has_active_styling();
-			return this.run()
+			return this.test()
 		});
 	}
 
@@ -102,43 +101,19 @@ class Test {
 	add_test_result(is_a_pass){
 		if (is_a_pass) {
 			resultSummary.pass++;
-			this.suite.testResults.pass++;
+			localResults.pass++;
 		} else {
 			resultSummary.fail++;
-			this.suite.testResults.fail++;
+			localResults.fail++;
 		}
-	}
-}
-
-class TestSuite {
-	constructor({ name, positive_tests, negative_tests }){
-
-		Object.assign(this, {
-			name,
-			positive_tests,
-			negative_tests,
-			testResults: {
-				pass: 0,
-				fail: 0,
-			}
-		})
-
-		return ()=> this.run_code();
-	}
-
-	run_code(){
-		return sequence([
-			...this.positive_tests,
-			...this.negative_tests,
-		])
 	}
 }
 
 window.onload = function(){
 	sequence([
 		max(),
-		report_results('max results:'),
+		report_result_summary('total', resultSummary),
 	])
 }
 
-export { bp, mq, windowResize, has_active_styling, Test, TestSuite }
+export { bp, mq, windowResize, has_active_styling, Test, report_result_summary }
