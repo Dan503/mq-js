@@ -1,12 +1,14 @@
 
-import { mq, bp, Test, report_result_summary, sequence } from '../../src/_scripts/run_tests';
+import Test from '../_helpers/Test';
+import bp from '../_helpers/breakpoints';
+import mq from '../_helpers/mq';
+import report_result_summary from '../_helpers/report_result_summary';
+import sequence from '../_helpers/sequence';
+import ResultTracker from '../_helpers/ResultTracker';
 
 export default function(){
 
-	let maxResults = {
-		pass: 0,
-		fail: 0,
-	}
+	let maxResults = new ResultTracker();
 
 	class positiveTest extends Test {
 		constructor({ name, test }){
@@ -15,7 +17,7 @@ export default function(){
 				test,
 				size: [bp.large],
 				mqMatch: true,
-				localResults: maxResults,
+				localTracker: maxResults,
 			})
 		}
 	}
@@ -27,7 +29,7 @@ export default function(){
 				size: [bp.large+1],
 				mqMatch: false,
 				test: test,
-				localResults: maxResults,
+				localTracker: maxResults,
 			})
 		}
 	}
