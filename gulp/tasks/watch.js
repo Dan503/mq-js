@@ -18,7 +18,8 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
       // Styles
       gulp.watch([
         [dirs.source, dirs.styles, '**/*.{scss,sass}'].join('/'),
-        [dirs.source, dirs.modules, '**/*.{scss,sass}'].join('/')
+        [dirs.source, dirs.modules, '**/*.{scss,sass}'].join('/'),
+        ['tests', '**/*.{scss,sass}'].join('/'),
       ])
       .on('change', gulp.series('sass'));
 

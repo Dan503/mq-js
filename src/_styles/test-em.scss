@@ -4,4 +4,6 @@ $mq-ems: true;
 
 @import './_shared-test.scss';
 
-@import '../../tests/**/*.scss';
+html {
+	@import '../../tests/**/*.scss';
+}

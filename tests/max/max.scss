@@ -1,6 +1,4 @@
 
 @include mq(max, $bp-large) {
-	html {
-		background: lightgreen;
-	}
+	@include active();
 }

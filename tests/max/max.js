@@ -1,25 +1,21 @@
 
-import { mq, bp } from '../../src/_scripts/run_tests';
+import { mq, bp, Test } from '../../src/_scripts/run_tests';
 
 export default function(){
-	let result = {
-		true: {
-			if: false,
-			cb: false,
-			number: false,
-			string: false,
-		},
-		false: {
-			if: false,
-			cb: false,
-			number: false,
-			string: false,
-		}
-	}
 
-	if (mq.max(bp.large)) {
-		result.if = true;
-	}
+	// max large matches mq-scss (if)
+	// max large !match max large + 1px (if)
 
-	console.log(result);
+	// max large matches mq-scss (cb)
+	// max large !match max large + 1px (cb)
+
+	return Promise.all([
+		new Test({
+			name: `max "large" matches mq-scss (if)`,
+			size: [bp.large],
+			run: ()=> mq.max('large'),
+			mqMatch: true,
+		})
+	])
+
 }

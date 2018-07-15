@@ -1,7 +1,9 @@
 //mq-scss
-$mq-ems: true;
+$mq-ems: false;
 @import 'mq-scss/mq';
 
 @import './_shared-test.scss';
 
-@import '../../tests/**/*.scss';
+html {
+	@import '../../tests/**/*.scss';
+}
