@@ -2,6 +2,9 @@
 var MQ = require('../index');
 var { result, check_second_value, number_to_ratio } = require('../_common');
 
+// format = " 2 / 1 "; width / height (spaces optional)
+const ratio_regex = /^\s*([0-9\.]+)\s*?\/\s*?([0-9\.]+)\s*$/;
+
 MQ.prototype.ratio = function (ratio, callback){
 	return result(
 		checkRatio(ratio, 'exact'),
@@ -86,21 +89,41 @@ function sort_ratios(ratio_one, ratio_two){
 function convert_to (style, ratio) {
 	const isNumber = is_number(ratio);
 	const styles = {
-		number: ()=> isNumber ? ratio : eval(ratio),
+		number: ()=> isNumber ? ratio : calculate(ratio),
 		string: ()=> !isNumber ? ratio : number_to_ratio(ratio),
 	};
 	return styles[style]();
 }
 
-function is_number (ratio) {
-	const isNumber = typeof ratio === 'number';
-	// format = " 2 / 1 "; width / height (spaces optional)
-	const isFormattedString = typeof ratio === 'string' && !ratio.match(/^\s*?[0-9\.]+\s*?\/\s*?[0-9\.]+\s*?$/);
+function calculate(ratio){
+	if (is_ratio(ratio)){
+		const regResult = ratio_regex.exec(ratio);
+		return regResult[1] / regResult[2];
+	}
+	return ratio
+}
 
-	if (!isNumber && !isFormattedString) {
-		throw new Error(`"${ratio}" must be either a number or a string in the format "[width] / [height]"`);
+function is_ratio(ratio) {
+	// format = " 2 / 1 "; width / height (spaces optional)
+	const isRatio = typeof ratio === 'string' && !ratio_regex.test(ratio);
+
+	if (!isRatio && !is_number(ratio)){
+		invalid(ratio)
+	}
+
+	return isRatio;
+}
+
+function is_number(ratio) {
+	const isNumber = typeof ratio === 'number';
+
+	if (!isNumber && !is_ratio(ratio)) {
+		invalid(ratio);
 	}
 
 	return isNumber;
 }
 
+function invalid(ratio){
+	throw new Error(`"${ratio}" must be either a number or a string in the format "[width] / [height]"`);
+}
