@@ -20,6 +20,8 @@ export default function windowResize (width, height = width) {
 	window.resizeTo(final.width, final.height);
 }
 
+window.windowResize = windowResize;
+
 function get_multiplier(){
 	if (using_ems) {
 		const $document = document.querySelector('body');
