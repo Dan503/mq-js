@@ -5,6 +5,7 @@ import mq from '../_helpers/mq';
 import report_result_summary from '../_helpers/report_result_summary';
 import sequence from '../_helpers/sequence';
 import ResultTracker from '../_helpers/ResultTracker';
+import apply_style from '../_helpers/apply_style';
 
 export default function(){
 
@@ -33,12 +34,6 @@ export default function(){
 			})
 		}
 	}
-
-	// max large matches mq-scss (if)
-	// max large !match max large + 1px (if)
-
-	// max large matches mq-scss (cb)
-	// max large !match max large + 1px (cb)
 
 	const positive_tests = [
 		new positiveTest({
@@ -108,7 +103,8 @@ export default function(){
 		}),
 	]
 
-	return sequence([
+	return ()=> sequence([
+		apply_style('max'),
 		...positive_tests,
 		...negative_tests,
 		report_result_summary('max', maxResults)
