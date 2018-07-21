@@ -6,7 +6,7 @@
 import $ from 'jquery';
 import debounce from 'debounce';
 import { mq, breakpoints } from './mq';
-import { bp } from './run_tests';
+import bp from '../../tests/_helpers/breakpoints';
 
 import codeLineNumbers from '~on-page-load-js/codeLineNumbers';
 import smoothAnchors from '~on-page-load-js/smoothAnchors';
