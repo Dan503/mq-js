@@ -1,3 +1,6 @@
+
+import { using_ems } from './mq_style';
+
 // Do not run test in Chrome, Chrome resize is unstable
 // Firefox resize is stable and predictable :D
 export default function windowResize (width, height = width) {
@@ -7,8 +10,21 @@ export default function windowResize (width, height = width) {
 		height: window.outerHeight - window.innerHeight,
 	}
 
-	//Firefox
-	// window.resizeTo(width + 16, height + 76);
+	const multiplier = get_multiplier();
 
-	window.resizeTo(width + difference.width, height + difference.height);
+	const final = {
+		width: (width * multiplier) + difference.width,
+		height: (height * multiplier) + difference.height,
+	}
+
+	window.resizeTo(final.width, final.height);
+}
+
+function get_multiplier(){
+	if (using_ems) {
+		const $document = document.querySelector('body');
+		const fontSize = parseFloat( getComputedStyle($document).fontSize );
+		return fontSize / 16;
+	}
+	return 1;
 }
