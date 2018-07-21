@@ -61,6 +61,11 @@ export default function(){
 
 	const positive_tests = [
 		new positiveTest_low({
+			name: `insideWidth test`,
+			test: ()=> mq.insideWidth('small', 'large'),
+		}),
+
+		new positiveTest_low({
 			name: `inside "small" matches mq-scss (if)`,
 			test: ()=> mq.inside('small', 'large'),
 		}),

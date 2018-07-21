@@ -61,6 +61,11 @@ export default function(){
 
 	const positive_tests = [
 		new positiveTest_low({
+			name: `outsideWidth test`,
+			test: ()=> mq.outsideWidth('small', 'large'),
+		}),
+
+		new positiveTest_low({
 			name: `outside "small" matches mq-scss (if)`,
 			test: ()=> mq.outside('small', 'large'),
 		}),

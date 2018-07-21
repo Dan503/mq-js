@@ -37,6 +37,11 @@ export default function(){
 
 	const positive_tests = [
 		new positiveTest({
+			name: `maxWidth test`,
+			test: ()=> mq.maxWidth('large'),
+		}),
+
+		new positiveTest({
 			name: `max "large" matches mq-scss (if)`,
 			test: ()=> mq.max('large'),
 		}),

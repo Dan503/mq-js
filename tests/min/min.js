@@ -37,6 +37,11 @@ export default function(){
 
 	const positive_tests = [
 		new positiveTest({
+			name: `minWidth test`,
+			test: ()=> mq.minWidth('large'),
+		}),
+
+		new positiveTest({
 			name: `min "large" matches mq-scss (if)`,
 			test: ()=> mq.min('large'),
 		}),
