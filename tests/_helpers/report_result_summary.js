@@ -5,7 +5,6 @@ import { totalsTracker } from './ResultTracker';
 
 export default function report_result_summary (type = 'total', testTracker = totalsTracker){
 	return () => Promise.resolve().then(()=>{
-		console.log(mq_style, type, 'results:', testTracker.results);
+		console.log('\n', type, mq_style, 'results:', testTracker.results, ' \n ');
 	})
 }
-
