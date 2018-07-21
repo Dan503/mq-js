@@ -47,7 +47,7 @@ export default function(){
 		}),
 
 		new positiveTest({
-			name: `max bp.large matches mq-scss (if)`,
+			name: `max ${bp.large} matches mq-scss (if)`,
 			test: ()=> mq.max(bp.large),
 		}),
 
@@ -63,7 +63,7 @@ export default function(){
 		}),
 
 		new positiveTest({
-			name: `max bp.large matches mq-scss (cb)`,
+			name: `max ${bp.large} matches mq-scss (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.max(bp.large, ()=> {
@@ -81,7 +81,7 @@ export default function(){
 		}),
 
 		new negativeTest({
-			name: `max bp.large no match mq-scss (if)`,
+			name: `max ${bp.large} no match mq-scss (if)`,
 			test: ()=> mq.max(bp.large),
 		}),
 
@@ -97,7 +97,7 @@ export default function(){
 		}),
 
 		new negativeTest({
-			name: `max bp.large no match mq-scss (cb)`,
+			name: `max ${bp.large} no match mq-scss (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.max(bp.large, ()=> {
