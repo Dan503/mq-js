@@ -63,8 +63,11 @@ function doubleValue ({
     checkBP(sizeTwo, MQ_instance.bp),
   ];
 
-  const largeSize = Math.max(sizes);
-  const smallSize = Math.min(sizes);
+  const largeSize = Math.max(...sizes);
+  const smallSize = Math.min(...sizes);
+
+  // Un-comment to debug
+  // console.log({largeSize, smallSize})
 
   return MQ_instance.checkMQ({ queryTemplate, largeSize, smallSize });
 }
