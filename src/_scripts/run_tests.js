@@ -11,8 +11,8 @@ import inside from '../../tests/inside/inside';
 
 window.onload = function(){
 	sequence([
-		// max(),
-		// min(),
+		max(),
+		min(),
 		inside(),
 		report_result_summary(),
 	])
