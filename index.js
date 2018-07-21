@@ -101,7 +101,7 @@ class MQ {
 
 		// RegEx captures up to 2 groups, the second group being optional.
 		// (max-width: {large}) [ and (min-width: {small+1}) ] < optional
-		const regEx = /^(.*?)({.*?})(.*?)({.*?})(.*)?$/;
+		const regEx = /^(.*?)({.*?})(.*?)(({.*?})(.*))?$/;
 		const regExResult = purify_regex(regEx.exec(queryTemplate));
 
 		// We only want the group matches in the array
@@ -116,6 +116,7 @@ class MQ {
 		function replace_bracket(string) {
 			if (string) {
 				const isBracketValue = /^{.*}$/.test(string);
+				const isBracketPlusExtra = /^.*{.*}.*$/.test(string);
 				const isIncremented = string.indexOf('+1') > 0;
 				const isLarge = string.indexOf('large') > 0;
 
@@ -124,7 +125,9 @@ class MQ {
 					return isIncremented ? replacement + 1 : replacement;
 				}
 
-				return string;
+				if (!isBracketPlusExtra) {
+					return string;
+				}
 			}
 
 			return '';
@@ -137,7 +140,7 @@ class MQ {
 
 		const finalQuery = finalValues.join('');
 
-		// Do this as one of the first debug steps for inside/outside
+		// Un-comment this as one of the first debug steps for inside/outside
 		// console.log({finalQuery});
 
 		return window.matchMedia(finalQuery).matches;
