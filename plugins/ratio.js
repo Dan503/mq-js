@@ -41,6 +41,8 @@ MQ.prototype.outsideRatio = function (one, two, callback){
 }
 
 function checkRatio (ratio, style) {
+	check_ratio_validity(ratio);
+
 	const stringRatio = convert_to('string', ratio);
 	return {
 		exact: ()=> window.matchMedia(`(aspect-ratio: ${stringRatio})`).matches,
@@ -50,15 +52,19 @@ function checkRatio (ratio, style) {
 }
 
 function insideRatio (ratio_one, ratio_two) {
-	check_second_value(ratio_one, ratio_two, 'ratio');
-	const sortedRatios = get_sorted_string_ratios(ratio_one, ratio_two);
-	return window.matchMedia(`(min-aspect-ratio: ${sortedRatios.small}) and (max-aspect-ratio: ${sortedRatios.large})`).matches;
+	return doubleValueRatio({ratio_one, ratio_two, queryTemplate: `(max-aspect-ratio: {thin}) and (min-aspect-ratio: {wide})`});
 }
 
 function outsideRatio (ratio_one, ratio_two) {
+	return doubleValueRatio({ratio_one, ratio_two, queryTemplate: `(max-aspect-ratio: {thin}), (min-aspect-ratio: {wide})`});
+}
+
+function doubleValueRatio({ratio_one, ratio_two, queryTemplate}){
+	[ratio_one, ratio_two].forEach(check_ratio_validity);
 	check_second_value(ratio_one, ratio_two, 'ratio');
 	const sortedRatios = get_sorted_string_ratios(ratio_one, ratio_two);
-	return window.matchMedia(`(max-aspect-ratio: ${sortedRatios.small}), (min-aspect-ratio: ${sortedRatios.large})`).matches;
+	const queryString = queryTemplate.replace('{thin}', sortedRatios.small).replace('{wide}', sortedRatios.large);
+	return window.matchMedia(queryString).matches;
 }
 
 function get_sorted_string_ratios(ratio_one, ratio_two){
@@ -105,25 +111,15 @@ function calculate(ratio){
 
 function is_ratio(ratio) {
 	// format = " 2 / 1 "; width / height (spaces optional)
-	const isRatio = typeof ratio === 'string' && !ratio_regex.test(ratio);
-
-	if (!isRatio && !is_number(ratio)){
-		invalid(ratio)
-	}
-
-	return isRatio;
+	return typeof ratio === 'string' && ratio_regex.test(ratio);
 }
 
 function is_number(ratio) {
-	const isNumber = typeof ratio === 'number';
-
-	if (!isNumber && !is_ratio(ratio)) {
-		invalid(ratio);
-	}
-
-	return isNumber;
+	return typeof ratio === 'number';
 }
 
-function invalid(ratio){
-	throw new Error(`"${ratio}" must be either a number or a string in the format "[width] / [height]"`);
+function check_ratio_validity(ratio) {
+	if (!is_ratio(ratio) && !is_number(ratio)) {
+		throw new Error(`"${ratio}" must be either a number or a string in the format "[width] / [height]"`);
+	}
 }
