@@ -1,11 +1,11 @@
 
-import Test from '../_helpers/Test';
-import bp from '../_helpers/breakpoints';
-import mq from '../_helpers/mq';
-import report_result_summary from '../_helpers/report_result_summary';
-import sequence from '../_helpers/sequence';
-import ResultTracker from '../_helpers/ResultTracker';
-import apply_style from '../_helpers/apply_style';
+import Test from '../../_helpers/Test';
+import bp from '../../_helpers/breakpoints';
+import mq from '../../_helpers/mq';
+import report_result_summary from '../../_helpers/report_result_summary';
+import sequence from '../../_helpers/sequence';
+import ResultTracker from '../../_helpers/ResultTracker';
+import apply_style from '../../_helpers/apply_style';
 
 export default function(){
 
