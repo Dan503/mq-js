@@ -56,7 +56,7 @@ function insideRatio (ratio_one, ratio_two) {
 }
 
 function outsideRatio (ratio_one, ratio_two) {
-	return doubleValueRatio({ratio_one, ratio_two, queryTemplate: `(max-aspect-ratio: {wide}), (min-aspect-ratio: {thin})`});
+	return doubleValueRatio({ratio_one, ratio_two, queryTemplate: `(min-aspect-ratio: {wide}), (max-aspect-ratio: {thin})`});
 }
 
 function doubleValueRatio({ratio_one, ratio_two, queryTemplate}){
