@@ -16,6 +16,7 @@ import outside from '../../tests/width-based/outside/outside';
 // Ratio based
 import ratio from '../../tests/ratio-based/ratio/ratio';
 import minRatio from '../../tests/ratio-based/minRatio/minRatio';
+import maxRatio from '../../tests/ratio-based/maxRatio/maxRatio';
 
 window.onload = function(){
 	sequence([
@@ -25,6 +26,7 @@ window.onload = function(){
 		outside,
 		ratio,
 		minRatio,
+		maxRatio,
 		report_result_summary(),
 	])
 }
