@@ -108,7 +108,7 @@ export default function(){
 		}),
 	]
 
-	return ()=> sequence([
+	return sequence([
 		apply_style('min'),
 		...positive_tests,
 		...negative_tests,

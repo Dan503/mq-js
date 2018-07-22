@@ -19,12 +19,12 @@ import minRatio from '../../tests/ratio-based/minRatio/minRatio';
 
 window.onload = function(){
 	sequence([
-		max(),
-		min(),
-		inside(),
-		outside(),
-		ratio(),
-		minRatio(),
+		max,
+		min,
+		inside,
+		outside,
+		ratio,
+		minRatio,
 		report_result_summary(),
 	])
 }

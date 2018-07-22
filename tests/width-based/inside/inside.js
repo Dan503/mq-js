@@ -196,7 +196,7 @@ export default function(){
 		}),
 	]
 
-	return ()=> sequence([
+	return sequence([
 		apply_style('inside'),
 		...positive_tests,
 		...negative_tests,

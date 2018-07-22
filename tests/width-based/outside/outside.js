@@ -196,7 +196,7 @@ export default function(){
 		}),
 	]
 
-	return ()=> sequence([
+	return sequence([
 		apply_style('outside'),
 		...positive_tests,
 		...negative_tests,

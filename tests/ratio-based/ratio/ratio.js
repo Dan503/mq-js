@@ -150,7 +150,7 @@ export default function(){
 
 	]
 
-	return ()=> sequence([
+	return sequence([
 		apply_style('ratio'),
 		...positive_tests,
 		...negative_tests,

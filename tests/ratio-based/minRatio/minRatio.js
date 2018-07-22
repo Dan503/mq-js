@@ -141,7 +141,7 @@ export default function(){
 
 	]
 
-	return ()=> sequence([
+	return sequence([
 		apply_style('minRatio'),
 		...positive_tests,
 		...negative_tests,
