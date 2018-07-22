@@ -1,5 +1,5 @@
 
-import MQ from '../../index';
+import MQ from '../../ultimate';
 import bp from './breakpoints';
 import { using_ems } from './mq_style';
 
