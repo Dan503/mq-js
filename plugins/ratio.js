@@ -52,11 +52,11 @@ function checkRatio (ratio, style) {
 }
 
 function insideRatio (ratio_one, ratio_two) {
-	return doubleValueRatio({ratio_one, ratio_two, queryTemplate: `(max-aspect-ratio: {thin}) and (min-aspect-ratio: {wide})`});
+	return doubleValueRatio({ratio_one, ratio_two, queryTemplate: `(max-aspect-ratio: {wide}) and (min-aspect-ratio: {thin})`});
 }
 
 function outsideRatio (ratio_one, ratio_two) {
-	return doubleValueRatio({ratio_one, ratio_two, queryTemplate: `(max-aspect-ratio: {thin}), (min-aspect-ratio: {wide})`});
+	return doubleValueRatio({ratio_one, ratio_two, queryTemplate: `(max-aspect-ratio: {wide}), (min-aspect-ratio: {thin})`});
 }
 
 function doubleValueRatio({ratio_one, ratio_two, queryTemplate}){
@@ -64,6 +64,8 @@ function doubleValueRatio({ratio_one, ratio_two, queryTemplate}){
 	check_second_value(ratio_one, ratio_two, 'ratio');
 	const sortedRatios = get_sorted_string_ratios(ratio_one, ratio_two);
 	const queryString = queryTemplate.replace('{thin}', sortedRatios.small).replace('{wide}', sortedRatios.large);
+	// Un-comment to debug
+	// console.log(queryString);
 	return window.matchMedia(queryString).matches;
 }
 
