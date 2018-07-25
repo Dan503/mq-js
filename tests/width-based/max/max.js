@@ -14,7 +14,7 @@ export default function(){
 	class positiveTest extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive max ${name}`,
 				test,
 				size: [bp.large],
 				mqMatch: true,
@@ -26,7 +26,7 @@ export default function(){
 	class negativeTest extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative max ${name}`,
 				size: [bp.large+1],
 				mqMatch: false,
 				test: test,
@@ -42,17 +42,17 @@ export default function(){
 		}),
 
 		new positiveTest({
-			name: `max "large" matches mq-scss (if)`,
+			name: `"large" (if)`,
 			test: ()=> mq.max('large'),
 		}),
 
 		new positiveTest({
-			name: `max ${bp.large} matches mq-scss (if)`,
+			name: `${bp.large} (if)`,
 			test: ()=> mq.max(bp.large),
 		}),
 
 		new positiveTest({
-			name: `max "large" matches mq-scss (cb)`,
+			name: `"large" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.max('large', ()=> {
@@ -63,7 +63,7 @@ export default function(){
 		}),
 
 		new positiveTest({
-			name: `max ${bp.large} matches mq-scss (cb)`,
+			name: `${bp.large} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.max(bp.large, ()=> {
@@ -76,17 +76,17 @@ export default function(){
 
 	const negative_tests = [
 		new negativeTest({
-			name: `max "large" no match mq-scss (if)`,
+			name: `"large" (if)`,
 			test: ()=> mq.max('large'),
 		}),
 
 		new negativeTest({
-			name: `max ${bp.large} no match mq-scss (if)`,
+			name: `${bp.large} (if)`,
 			test: ()=> mq.max(bp.large),
 		}),
 
 		new negativeTest({
-			name: `max "large" no match mq-scss (cb)`,
+			name: `"large" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.max('large', ()=> {
@@ -97,7 +97,7 @@ export default function(){
 		}),
 
 		new negativeTest({
-			name: `max ${bp.large} no match mq-scss (cb)`,
+			name: `${bp.large} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.max(bp.large, ()=> {

@@ -14,7 +14,7 @@ export default function(){
 	class positiveTest_low extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive low outside ${name}`,
 				test,
 				size: [bp.small],
 				mqMatch: true,
@@ -26,7 +26,7 @@ export default function(){
 	class positiveTest_high extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive high outside ${name}`,
 				test,
 				size: [bp.large+1],
 				mqMatch: true,
@@ -38,7 +38,7 @@ export default function(){
 	class negativeTest_low extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative low outside ${name}`,
 				size: [bp.small+1],
 				mqMatch: false,
 				test: test,
@@ -50,7 +50,7 @@ export default function(){
 	class negativeTest_high extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative high outside ${name}`,
 				size: [bp.large],
 				mqMatch: false,
 				test: test,
@@ -66,17 +66,17 @@ export default function(){
 		}),
 
 		new positiveTest_low({
-			name: `outside "small" matches mq-scss (if)`,
+			name: `"small" (if)`,
 			test: ()=> mq.outside('small', 'large'),
 		}),
 
 		new positiveTest_low({
-			name: `outside ${bp.small} matches mq-scss (if)`,
+			name: `${bp.small} (if)`,
 			test: ()=> mq.outside(bp.large, bp.small),
 		}),
 
 		new positiveTest_low({
-			name: `outside "small" matches mq-scss (cb)`,
+			name: `"small" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.outside('large', 'small', ()=> {
@@ -87,7 +87,7 @@ export default function(){
 		}),
 
 		new positiveTest_low({
-			name: `outside ${bp.small} matches mq-scss (cb)`,
+			name: `${bp.small} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.outside(bp.small, bp.large, ()=> {
@@ -98,17 +98,17 @@ export default function(){
 		}),
 
 		new positiveTest_high({
-			name: `outside "large" matches mq-scss (if)`,
+			name: `"large" (if)`,
 			test: ()=> mq.outside('small', 'large'),
 		}),
 
 		new positiveTest_high({
-			name: `outside ${bp.large} matches mq-scss (if)`,
+			name: `${bp.large} (if)`,
 			test: ()=> mq.outside(bp.large, bp.small),
 		}),
 
 		new positiveTest_high({
-			name: `outside "large" matches mq-scss (cb)`,
+			name: `"large" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.outside('large', 'small', ()=> {
@@ -119,7 +119,7 @@ export default function(){
 		}),
 
 		new positiveTest_high({
-			name: `outside ${bp.large} matches mq-scss (cb)`,
+			name: `${bp.large} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.outside(bp.small, bp.large, ()=> {
@@ -132,17 +132,17 @@ export default function(){
 
 	const negative_tests = [
 		new negativeTest_high({
-			name: `outside "large" no match mq-scss (if)`,
+			name: `"large" (if)`,
 			test: ()=> mq.outside('large', 'small'),
 		}),
 
 		new negativeTest_high({
-			name: `outside ${bp.large} no match mq-scss (if)`,
+			name: `${bp.large} (if)`,
 			test: ()=> mq.outside(bp.small, bp.large),
 		}),
 
 		new negativeTest_high({
-			name: `outside "large" no match mq-scss (cb)`,
+			name: `"large" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.outside('small', 'large', ()=> {
@@ -153,7 +153,7 @@ export default function(){
 		}),
 
 		new negativeTest_high({
-			name: `outside ${bp.large} no match mq-scss (cb)`,
+			name: `${bp.large} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.outside(bp.large, bp.small, ()=> {
@@ -164,17 +164,17 @@ export default function(){
 		}),
 
 		new negativeTest_low({
-			name: `outside "small" no match mq-scss (if)`,
+			name: `"small" (if)`,
 			test: ()=> mq.outside('large', 'small'),
 		}),
 
 		new negativeTest_low({
-			name: `outside ${bp.small} no match mq-scss (if)`,
+			name: `${bp.small} (if)`,
 			test: ()=> mq.outside(bp.small, bp.large),
 		}),
 
 		new negativeTest_low({
-			name: `outside "small" no match mq-scss (cb)`,
+			name: `"small" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.outside('small', 'large', ()=> {
@@ -185,7 +185,7 @@ export default function(){
 		}),
 
 		new negativeTest_low({
-			name: `outside ${bp.small} no match mq-scss (cb)`,
+			name: `${bp.small} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.outside(bp.large, bp.small, ()=> {

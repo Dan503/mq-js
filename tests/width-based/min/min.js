@@ -14,7 +14,7 @@ export default function(){
 	class positiveTest extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive minHeight ${name}`,
 				test,
 				size: [bp.large+1],
 				mqMatch: true,
@@ -26,7 +26,7 @@ export default function(){
 	class negativeTest extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative minHeight ${name}`,
 				size: [bp.large],
 				mqMatch: false,
 				test: test,
@@ -42,17 +42,17 @@ export default function(){
 		}),
 
 		new positiveTest({
-			name: `min "large" matches mq-scss (if)`,
+			name: `"large" (if)`,
 			test: ()=> mq.min('large'),
 		}),
 
 		new positiveTest({
-			name: `min ${bp.large} matches mq-scss (if)`,
+			name: `${bp.large} (if)`,
 			test: ()=> mq.min(bp.large),
 		}),
 
 		new positiveTest({
-			name: `min "large" matches mq-scss (cb)`,
+			name: `"large" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.min('large', ()=> {
@@ -63,7 +63,7 @@ export default function(){
 		}),
 
 		new positiveTest({
-			name: `min ${bp.large} matches mq-scss (cb)`,
+			name: `${bp.large} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.min(bp.large, ()=> {
@@ -76,17 +76,17 @@ export default function(){
 
 	const negative_tests = [
 		new negativeTest({
-			name: `min "large" no match mq-scss (if)`,
+			name: `"large" (if)`,
 			test: ()=> mq.min('large'),
 		}),
 
 		new negativeTest({
-			name: `min ${bp.large} no match mq-scss (if)`,
+			name: `${bp.large} (if)`,
 			test: ()=> mq.min(bp.large),
 		}),
 
 		new negativeTest({
-			name: `min "large" no match mq-scss (cb)`,
+			name: `"large" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.min('large', ()=> {
@@ -97,7 +97,7 @@ export default function(){
 		}),
 
 		new negativeTest({
-			name: `min ${bp.large} no match mq-scss (cb)`,
+			name: `${bp.large} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.min(bp.large, ()=> {
