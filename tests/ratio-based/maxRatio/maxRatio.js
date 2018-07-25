@@ -14,7 +14,7 @@ export default function(){
 	class positiveTest_exact extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive exact maxRatio ${name}`,
 				test,
 				size: [ bp.large / 2, bp.large],
 				mqMatch: true,
@@ -26,7 +26,7 @@ export default function(){
 	class positiveTest_thin extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive thin maxRatio ${name}`,
 				test,
 				size: [ (bp.large - 2) / 2, bp.large],
 				mqMatch: true,
@@ -38,7 +38,7 @@ export default function(){
 	class negativeTest extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative maxRatio ${name}`,
 				size: [(bp.large + 2) / 2, bp.large],
 				mqMatch: false,
 				test: test,
@@ -50,15 +50,15 @@ export default function(){
 
 	const positive_tests = [
 		new positiveTest_exact({
-			name: `positive maxRatio exact string (if)`,
+			name: `string (if)`,
 			test: ()=> mq.maxRatio(' 1 / 2 '),
 		}),
 		new positiveTest_exact({
-			name: `positive maxRatio exact number (if)`,
+			name: `number (if)`,
 			test: ()=> mq.maxRatio(0.5),
 		}),
 		new positiveTest_exact({
-			name: `positive maxRatio exact string (cb)`,
+			name: `string (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.maxRatio('1/2', ()=> {
@@ -68,7 +68,7 @@ export default function(){
 			},
 		}),
 		new positiveTest_exact({
-			name: `positive maxRatio exact number (cb)`,
+			name: `number (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.maxRatio(0.5, ()=> {
@@ -79,15 +79,15 @@ export default function(){
 		}),
 
 		new positiveTest_thin({
-			name: `positive maxRatio thin string (if)`,
+			name: `string (if)`,
 			test: ()=> mq.maxRatio(' 1 / 2 '),
 		}),
 		new positiveTest_thin({
-			name: `positive maxRatio thin number (if)`,
+			name: `number (if)`,
 			test: ()=> mq.maxRatio(0.5),
 		}),
 		new positiveTest_thin({
-			name: `positive maxRatio thin string (cb)`,
+			name: `string (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.maxRatio('1/2', ()=> {
@@ -97,7 +97,7 @@ export default function(){
 			},
 		}),
 		new positiveTest_thin({
-			name: `positive maxRatio thin number (cb)`,
+			name: `number (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.maxRatio(0.5, ()=> {
@@ -110,16 +110,16 @@ export default function(){
 
 	const negative_tests = [
 		new negativeTest({
-			name: `negative maxRatio string (if)`,
+			name: `string (if)`,
 			test: ()=> mq.maxRatio(' 1 / 2 '),
 		}),
 		new negativeTest({
-			name: `negative maxRatio number (if)`,
+			name: `number (if)`,
 			test: ()=> mq.maxRatio(0.5),
 		}),
 
 		new negativeTest({
-			name: `negative maxRatio string (cb)`,
+			name: `string (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.maxRatio('1/2', ()=> {
@@ -129,7 +129,7 @@ export default function(){
 			},
 		}),
 		new negativeTest({
-			name: `negative maxRatio number (cb)`,
+			name: `number (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.maxRatio(0.5, ()=> {

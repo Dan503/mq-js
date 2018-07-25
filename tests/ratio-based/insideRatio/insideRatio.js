@@ -14,7 +14,7 @@ export default function(){
 	class positiveTest_max extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive max insideRatio ${name}`,
 				test,
 				size: [bp.large],
 				mqMatch: true,
@@ -26,7 +26,7 @@ export default function(){
 	class positiveTest_min extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive min insideRatio ${name}`,
 				test,
 				size: [bp.large / 2, bp.large],
 				mqMatch: true,
@@ -38,7 +38,7 @@ export default function(){
 	class negativeTest_max extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative max insideRatio ${name}`,
 				size: [bp.large + 1, bp.large],
 				mqMatch: false,
 				test: test,
@@ -50,7 +50,7 @@ export default function(){
 	class negativeTest_min extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative min insideRatio ${name}`,
 				size: [(bp.large - 2) / 2, bp.large],
 				mqMatch: false,
 				test: test,
@@ -61,22 +61,22 @@ export default function(){
 
 	const positive_tests = [
 		new positiveTest_max({
-			name: `positive insideRatio string thin (if)`,
+			name: `string thin (if)`,
 			test: ()=> mq.insideRatio('1/1', ' 1 / 2 '),
 		}),
 
 		new positiveTest_max({
-			name: `positive insideRatio number thin (if)`,
+			name: `number thin (if)`,
 			test: ()=> mq.insideRatio(1, 0.5),
 		}),
 
 		new positiveTest_max({
-			name: `positive insideRatio mixed thin (if)`,
+			name: `mixed thin (if)`,
 			test: ()=> mq.insideRatio(1, ' 1 / 2 '),
 		}),
 
 		new positiveTest_max({
-			name: `positive insideRatio string thin (cb)`,
+			name: `string thin (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio('1/1', ' 1 / 2 ', ()=> {
@@ -87,7 +87,7 @@ export default function(){
 		}),
 
 		new positiveTest_max({
-			name: `positive insideRatio number thin (cb)`,
+			name: `number thin (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio(1, 0.5, ()=> {
@@ -98,7 +98,7 @@ export default function(){
 		}),
 
 		new positiveTest_max({
-			name: `positive insideRatio mixed thin (cb)`,
+			name: `mixed thin (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio('1/1', 0.5, ()=> {
@@ -109,22 +109,22 @@ export default function(){
 		}),
 
 		new positiveTest_min({
-			name: `positive insideRatio string wide (if)`,
+			name: `string wide (if)`,
 			test: ()=> mq.insideRatio('1/1', ' 1 / 2 '),
 		}),
 
 		new positiveTest_min({
-			name: `positive insideRatio number wide (if)`,
+			name: `number wide (if)`,
 			test: ()=> mq.insideRatio(1, 0.5),
 		}),
 
 		new positiveTest_min({
-			name: `positive insideRatio mixed wide (if)`,
+			name: `mixed wide (if)`,
 			test: ()=> mq.insideRatio(1, ' 1 / 2 '),
 		}),
 
 		new positiveTest_min({
-			name: `positive insideRatio string wide (cb)`,
+			name: `string wide (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio('1/1', ' 1 / 2 ', ()=> {
@@ -135,7 +135,7 @@ export default function(){
 		}),
 
 		new positiveTest_min({
-			name: `positive insideRatio number wide (cb)`,
+			name: `number wide (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio(1, 0.5, ()=> {
@@ -146,7 +146,7 @@ export default function(){
 		}),
 
 		new positiveTest_min({
-			name: `positive insideRatio mixed wide (cb)`,
+			name: `mixed wide (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio('1/1', 0.5, ()=> {
@@ -159,22 +159,22 @@ export default function(){
 
 	const negative_tests = [
 		new negativeTest_max({
-			name: `negative insideRatio string thin (if)`,
+			name: `string thin (if)`,
 			test: ()=> mq.insideRatio('1/1', ' 1 / 2 '),
 		}),
 
 		new negativeTest_max({
-			name: `negative insideRatio number thin (if)`,
+			name: `number thin (if)`,
 			test: ()=> mq.insideRatio(1, 0.5),
 		}),
 
 		new negativeTest_max({
-			name: `negative insideRatio mixed thin (if)`,
+			name: `mixed thin (if)`,
 			test: ()=> mq.insideRatio(1, ' 1 / 2 '),
 		}),
 
 		new negativeTest_max({
-			name: `negative insideRatio string thin (cb)`,
+			name: `string thin (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio('1/1', ' 1 / 2 ', ()=> {
@@ -185,7 +185,7 @@ export default function(){
 		}),
 
 		new negativeTest_max({
-			name: `negative insideRatio number thin (cb)`,
+			name: `number thin (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio(1, 0.5, ()=> {
@@ -196,7 +196,7 @@ export default function(){
 		}),
 
 		new negativeTest_max({
-			name: `negative insideRatio mixed thin (cb)`,
+			name: `mixed thin (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio('1/1', 0.5, ()=> {
@@ -207,22 +207,22 @@ export default function(){
 		}),
 
 		new negativeTest_min({
-			name: `negative insideRatio string wide (if)`,
+			name: `string wide (if)`,
 			test: ()=> mq.insideRatio('1/1', ' 1 / 2 '),
 		}),
 
 		new negativeTest_min({
-			name: `negative insideRatio number wide (if)`,
+			name: `number wide (if)`,
 			test: ()=> mq.insideRatio(1, 0.5),
 		}),
 
 		new negativeTest_min({
-			name: `negative insideRatio mixed wide (if)`,
+			name: `mixed wide (if)`,
 			test: ()=> mq.insideRatio(1, ' 1 / 2 '),
 		}),
 
 		new negativeTest_min({
-			name: `negative insideRatio string wide (cb)`,
+			name: `string wide (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio('1/1', ' 1 / 2 ', ()=> {
@@ -233,7 +233,7 @@ export default function(){
 		}),
 
 		new negativeTest_min({
-			name: `negative insideRatio number wide (cb)`,
+			name: `number wide (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio(1, 0.5, ()=> {
@@ -244,7 +244,7 @@ export default function(){
 		}),
 
 		new negativeTest_min({
-			name: `negative insideRatio mixed wide (cb)`,
+			name: `mixed wide (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideRatio('1/1', 0.5, ()=> {

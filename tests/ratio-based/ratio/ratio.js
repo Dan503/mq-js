@@ -14,7 +14,7 @@ export default function(){
 	class positiveTest extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive ratio ${name}`,
 				test,
 				size: [ bp.large / 2, bp.large],
 				mqMatch: true,
@@ -26,7 +26,7 @@ export default function(){
 	class negativeTest_wide extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative wide ratio ${name}`,
 				size: [(bp.large + 2) / 2, bp.large],
 				mqMatch: false,
 				test: test,
@@ -38,7 +38,7 @@ export default function(){
 	class negativeTest_tall extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative tall ratio ${name}`,
 				size: [bp.large / 2, bp.large + 1],
 				mqMatch: false,
 				test: test,
@@ -49,15 +49,15 @@ export default function(){
 
 	const positive_tests = [
 		new positiveTest({
-			name: `positive ratio string (if))`,
+			name: `string (if))`,
 			test: ()=> mq.ratio(' 1 / 2 '),
 		}),
 		new positiveTest({
-			name: `positive ratio number (if)`,
+			name: `number (if)`,
 			test: ()=> mq.ratio(0.5),
 		}),
 		new positiveTest({
-			name: `positive ratio string (cb)`,
+			name: `string (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.ratio('1/2', ()=> {
@@ -67,7 +67,7 @@ export default function(){
 			},
 		}),
 		new positiveTest({
-			name: `positive ratio string (cb)`,
+			name: `string (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.ratio('1/2', ()=> {
@@ -77,7 +77,7 @@ export default function(){
 			},
 		}),
 		new positiveTest({
-			name: `positive ratio number (cb)`,
+			name: `number (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.ratio(0.5, ()=> {
@@ -90,25 +90,25 @@ export default function(){
 
 	const negative_tests = [
 		new negativeTest_wide({
-			name: `negative ratio string (wide) (if)`,
+			name: `string (if)`,
 			test: ()=> mq.ratio(' 1 / 2 '),
 		}),
 		new negativeTest_tall({
-			name: `negative ratio string (tall) (if)`,
+			name: `string (if)`,
 			test: ()=> mq.ratio('1/2'),
 		}),
 		new negativeTest_wide({
-			name: `negative ratio number (wide) (if)`,
+			name: `number (if)`,
 			test: ()=> mq.ratio(0.5),
 		}),
 		new negativeTest_tall({
-			name: `negative ratio number (tall) (if)`,
+			name: `number (if)`,
 			test: ()=> mq.ratio(0.5),
 		}),
 
 
 		new negativeTest_wide({
-			name: `negative ratio string (wide) (cb)`,
+			name: `string (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.ratio(' 1 / 2 ', ()=> {
@@ -118,7 +118,7 @@ export default function(){
 			},
 		}),
 		new negativeTest_tall({
-			name: `negative ratio string (tall) (cb)`,
+			name: `string (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.ratio('1/2', ()=> {
@@ -128,7 +128,7 @@ export default function(){
 			},
 		}),
 		new negativeTest_wide({
-			name: `negative ratio number (wide) (cb)`,
+			name: `number (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.ratio(0.5, ()=> {
@@ -138,7 +138,7 @@ export default function(){
 			},
 		}),
 		new negativeTest_tall({
-			name: `negative ratio number (tall) (cb)`,
+			name: `number (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.ratio(0.5, ()=> {

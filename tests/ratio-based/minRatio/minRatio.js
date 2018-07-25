@@ -14,7 +14,7 @@ export default function(){
 	class positiveTest_exact extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive exact minRatio ${name}`,
 				test,
 				size: [ bp.large / 2, bp.large],
 				mqMatch: true,
@@ -26,7 +26,7 @@ export default function(){
 	class positiveTest_wide extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive wide minRatio ${name}`,
 				test,
 				size: [ (bp.large + 2) / 2, bp.large],
 				mqMatch: true,
@@ -38,7 +38,7 @@ export default function(){
 	class negativeTest extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative minRatio ${name}`,
 				size: [(bp.large - 2) / 2, bp.large],
 				mqMatch: false,
 				test: test,
@@ -50,15 +50,15 @@ export default function(){
 
 	const positive_tests = [
 		new positiveTest_exact({
-			name: `positive minRatio exact string (if)`,
+			name: `string (if)`,
 			test: ()=> mq.minRatio(' 1 / 2 '),
 		}),
 		new positiveTest_exact({
-			name: `positive minRatio exact number (if)`,
+			name: `number (if)`,
 			test: ()=> mq.minRatio(0.5),
 		}),
 		new positiveTest_exact({
-			name: `positive minRatio exact string (cb)`,
+			name: `string (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.minRatio('1/2', ()=> {
@@ -68,7 +68,7 @@ export default function(){
 			},
 		}),
 		new positiveTest_exact({
-			name: `positive minRatio exact number (cb)`,
+			name: `number (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.minRatio(0.5, ()=> {
@@ -79,15 +79,15 @@ export default function(){
 		}),
 
 		new positiveTest_wide({
-			name: `positive minRatio wide string (if)`,
+			name: `string (if)`,
 			test: ()=> mq.minRatio(' 1 / 2 '),
 		}),
 		new positiveTest_wide({
-			name: `positive minRatio wide number (if)`,
+			name: `number (if)`,
 			test: ()=> mq.minRatio(0.5),
 		}),
 		new positiveTest_wide({
-			name: `positive minRatio wide string (cb)`,
+			name: `string (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.minRatio('1/2', ()=> {
@@ -97,7 +97,7 @@ export default function(){
 			},
 		}),
 		new positiveTest_wide({
-			name: `positive minRatio wide number (cb)`,
+			name: `number (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.minRatio(0.5, ()=> {
@@ -110,16 +110,16 @@ export default function(){
 
 	const negative_tests = [
 		new negativeTest({
-			name: `negative minRatio string (if)`,
+			name: `string (if)`,
 			test: ()=> mq.minRatio(' 1 / 2 '),
 		}),
 		new negativeTest({
-			name: `negative minRatio number (if)`,
+			name: `number (if)`,
 			test: ()=> mq.minRatio(0.5),
 		}),
 
 		new negativeTest({
-			name: `negative minRatio string (cb)`,
+			name: `string (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.minRatio('1/2', ()=> {
@@ -129,7 +129,7 @@ export default function(){
 			},
 		}),
 		new negativeTest({
-			name: `negative minRatio number (cb)`,
+			name: `number (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.minRatio(0.5, ()=> {
