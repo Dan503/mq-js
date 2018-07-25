@@ -28,6 +28,7 @@ import outsideRatio from '../../tests/ratio-based/outsideRatio/outsideRatio';
 
 // Orientation tests
 import portrait from '../../tests/orientation/portrait/portrait';
+import landscape from '../../tests/orientation/landscape/landscape';
 
 window.onload = function(){
 	sequence([
@@ -45,6 +46,7 @@ window.onload = function(){
 		insideRatio,
 		outsideRatio,
 		portrait,
+		landscape,
 		report_result_summary(),
 	])
 }
