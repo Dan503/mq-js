@@ -14,7 +14,7 @@ export default function(){
 	class positiveTest extends Test {
 		constructor({ name, test }){
 			super({
-				name:`positive minHeight ${name}`,
+				name:`positive min ${name}`,
 				test,
 				size: [bp.large+1],
 				mqMatch: true,
@@ -26,7 +26,7 @@ export default function(){
 	class negativeTest extends Test {
 		constructor({ name, test }){
 			super({
-				name:`negative minHeight ${name}`,
+				name:`negative min ${name}`,
 				size: [bp.large],
 				mqMatch: false,
 				test: test,
