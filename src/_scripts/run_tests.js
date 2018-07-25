@@ -26,6 +26,9 @@ import maxRatio from '../../tests/ratio-based/maxRatio/maxRatio';
 import insideRatio from '../../tests/ratio-based/insideRatio/insideRatio';
 import outsideRatio from '../../tests/ratio-based/outsideRatio/outsideRatio';
 
+// Orientation tests
+import portrait from '../../tests/orientation/portrait/portrait';
+
 window.onload = function(){
 	sequence([
 		max,
@@ -41,6 +44,7 @@ window.onload = function(){
 		maxRatio,
 		insideRatio,
 		outsideRatio,
+		portrait,
 		report_result_summary(),
 	])
 }
