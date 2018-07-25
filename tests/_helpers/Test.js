@@ -44,7 +44,8 @@ export default class Test {
 		const successful = result && this.mqMatch && this.mq_active || !result && !this.mqMatch && !this.mq_active;
 		// Un-comment to debug
 		// console.log({result, mqMatch: this.mqMatch, mq_active: this.mq_active })
-		console.log(`${successful}: ${mq_style} ${this.name}`)
+		const logType = successful ? 'log' : 'error';
+		console[logType](`${successful}: ${mq_style} ${this.name}`)
 		this.add_test_result(successful);
 	}
 

@@ -5,6 +5,18 @@ import { totalsTracker } from './ResultTracker';
 
 export default function report_result_summary (type = 'total', testTracker = totalsTracker){
 	return () => Promise.resolve().then(()=>{
-		console.log('\n', type, mq_style, 'results:', testTracker.results, ' \n ');
+		const isTotal = type === 'total';
+		const errorCount = testTracker.results.fail;
+		const hasFails = errorCount > 0;
+
+		let logType = hasFails ? 'error' : 'warn';
+
+		console[logType]('\n', type, mq_style, 'results:', testTracker.results, ' \n ');
+
+		if (isTotal) {
+			const message = hasFails ? `🤬 ${errorCount} errors detected! 👺` : `😃 SUCCESS! 😁`;
+			alert(message);
+		}
+
 	})
 }
