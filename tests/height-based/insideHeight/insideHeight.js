@@ -14,7 +14,7 @@ export default function(){
 	class positiveTest_low extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive low insideHeight ${name}`,
 				test,
 				size: [bp.small, bp.small+1],
 				mqMatch: true,
@@ -26,7 +26,7 @@ export default function(){
 	class positiveTest_high extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive high insideHeight ${name}`,
 				test,
 				size: [bp.large],
 				mqMatch: true,
@@ -38,7 +38,7 @@ export default function(){
 	class negativeTest_low extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative low insideHeight ${name}`,
 				size: [bp.small],
 				mqMatch: false,
 				test: test,
@@ -50,7 +50,7 @@ export default function(){
 	class negativeTest_high extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative high insideHeight ${name}`,
 				size: [bp.large, bp.large+1],
 				mqMatch: false,
 				test: test,
@@ -61,17 +61,17 @@ export default function(){
 
 	const positive_tests = [
 		new positiveTest_low({
-			name: `insideHeight "small" matches mq-scss (if)`,
+			name: `"small" (if)`,
 			test: ()=> mq.insideHeight('small', 'large'),
 		}),
 
 		new positiveTest_low({
-			name: `insideHeight ${bp.small} matches mq-scss (if)`,
+			name: `${bp.small} (if)`,
 			test: ()=> mq.insideHeight(bp.large, bp.small),
 		}),
 
 		new positiveTest_low({
-			name: `insideHeight "small" matches mq-scss (cb)`,
+			name: `"small" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideHeight('large', 'small', ()=> {
@@ -82,7 +82,7 @@ export default function(){
 		}),
 
 		new positiveTest_low({
-			name: `insideHeight ${bp.small} matches mq-scss (cb)`,
+			name: `${bp.small} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideHeight(bp.small, bp.large, ()=> {
@@ -93,17 +93,17 @@ export default function(){
 		}),
 
 		new positiveTest_high({
-			name: `insideHeight "large" matches mq-scss (if)`,
+			name: `"large" matches (if)`,
 			test: ()=> mq.insideHeight('small', 'large'),
 		}),
 
 		new positiveTest_high({
-			name: `insideHeight ${bp.large} matches mq-scss (if)`,
+			name: `${bp.large} matches (if)`,
 			test: ()=> mq.insideHeight(bp.large, bp.small),
 		}),
 
 		new positiveTest_high({
-			name: `insideHeight "large" matches mq-scss (cb)`,
+			name: `"large" matches (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideHeight('large', 'small', ()=> {
@@ -114,7 +114,7 @@ export default function(){
 		}),
 
 		new positiveTest_high({
-			name: `insideHeight ${bp.large} matches mq-scss (cb)`,
+			name: `${bp.large} matches (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideHeight(bp.small, bp.large, ()=> {
@@ -127,17 +127,17 @@ export default function(){
 
 	const negative_tests = [
 		new negativeTest_high({
-			name: `insideHeight "large" no match mq-scss (if)`,
+			name: `"large" (if)`,
 			test: ()=> mq.insideHeight('large', 'small'),
 		}),
 
 		new negativeTest_high({
-			name: `insideHeight ${bp.large} no match mq-scss (if)`,
+			name: `${bp.large} (if)`,
 			test: ()=> mq.insideHeight(bp.small, bp.large),
 		}),
 
 		new negativeTest_high({
-			name: `insideHeight "large" no match mq-scss (cb)`,
+			name: `"large" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideHeight('small', 'large', ()=> {
@@ -148,7 +148,7 @@ export default function(){
 		}),
 
 		new negativeTest_high({
-			name: `insideHeight ${bp.large} no match mq-scss (cb)`,
+			name: `${bp.large} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideHeight(bp.large, bp.small, ()=> {
@@ -159,17 +159,17 @@ export default function(){
 		}),
 
 		new negativeTest_low({
-			name: `insideHeight "small" no match mq-scss (if)`,
+			name: `"small" (if)`,
 			test: ()=> mq.insideHeight('large', 'small'),
 		}),
 
 		new negativeTest_low({
-			name: `insideHeight ${bp.small} no match mq-scss (if)`,
+			name: `${bp.small} (if)`,
 			test: ()=> mq.insideHeight(bp.small, bp.large),
 		}),
 
 		new negativeTest_low({
-			name: `insideHeight "small" no match mq-scss (cb)`,
+			name: `"small" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideHeight('small', 'large', ()=> {
@@ -180,7 +180,7 @@ export default function(){
 		}),
 
 		new negativeTest_low({
-			name: `insideHeight ${bp.small} no match mq-scss (cb)`,
+			name: `${bp.small} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.insideHeight(bp.large, bp.small, ()=> {

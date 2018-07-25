@@ -14,7 +14,7 @@ export default function(){
 	class positiveTest extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`positive maxHeight ${name}`,
 				test,
 				size: [bp.large],
 				mqMatch: true,
@@ -26,7 +26,7 @@ export default function(){
 	class negativeTest extends Test {
 		constructor({ name, test }){
 			super({
-				name,
+				name:`negative maxHeight ${name}`,
 				size: [bp.large, bp.large+1],
 				mqMatch: false,
 				test: test,
@@ -37,17 +37,17 @@ export default function(){
 
 	const positive_tests = [
 		new positiveTest({
-			name: `maxHeight "large" matches mq-scss (if)`,
+			name: `"large" (if)`,
 			test: ()=> mq.maxHeight('large'),
 		}),
 
 		new positiveTest({
-			name: `maxHeight ${bp.large} matches mq-scss (if)`,
+			name: `${bp.large} (if)`,
 			test: ()=> mq.maxHeight(bp.large),
 		}),
 
 		new positiveTest({
-			name: `maxHeight "large" matches mq-scss (cb)`,
+			name: `"large" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.maxHeight('large', ()=> {
@@ -58,7 +58,7 @@ export default function(){
 		}),
 
 		new positiveTest({
-			name: `maxHeight ${bp.large} matches mq-scss (cb)`,
+			name: `${bp.large} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.maxHeight(bp.large, ()=> {
@@ -71,17 +71,17 @@ export default function(){
 
 	const negative_tests = [
 		new negativeTest({
-			name: `maxHeight "large" no match mq-scss (if)`,
+			name: `"large" (if)`,
 			test: ()=> mq.maxHeight('large'),
 		}),
 
 		new negativeTest({
-			name: `maxHeight ${bp.large} no match mq-scss (if)`,
+			name: `${bp.large} (if)`,
 			test: ()=> mq.maxHeight(bp.large),
 		}),
 
 		new negativeTest({
-			name: `maxHeight "large" no match mq-scss (cb)`,
+			name: `"large" (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.maxHeight('large', ()=> {
@@ -92,7 +92,7 @@ export default function(){
 		}),
 
 		new negativeTest({
-			name: `maxHeight ${bp.large} no match mq-scss (cb)`,
+			name: `${bp.large} (cb)`,
 			test: ()=> {
 				let result = false;
 				mq.maxHeight(bp.large, ()=> {
