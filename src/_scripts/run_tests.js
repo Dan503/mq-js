@@ -28,19 +28,19 @@ import outsideRatio from '../../tests/ratio-based/outsideRatio/outsideRatio';
 
 window.onload = function(){
 	sequence([
-		// max,
-		// min,
-		// inside,
-		// outside,
+		max,
+		min,
+		inside,
+		outside,
 		maxHeight,
 		minHeight,
 		insideHeight,
 		outsideHeight,
-		// ratio,
-		// minRatio,
-		// maxRatio,
-		// insideRatio,
-		// outsideRatio,
+		ratio,
+		minRatio,
+		maxRatio,
+		insideRatio,
+		outsideRatio,
 		report_result_summary(),
 	])
 }
