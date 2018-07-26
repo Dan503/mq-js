@@ -30,6 +30,9 @@ import outsideRatio from '../../tests/ratio-based/outsideRatio/outsideRatio';
 import portrait from '../../tests/orientation/portrait/portrait';
 import landscape from '../../tests/orientation/landscape/landscape';
 
+// reactTo test
+import reactTo from '../../tests/reactTo';
+
 window.onload = function(){
 	sequence([
 		max,
@@ -47,6 +50,7 @@ window.onload = function(){
 		outsideRatio,
 		portrait,
 		landscape,
+		reactTo,
 		report_result_summary(),
 	])
 }

@@ -41,7 +41,10 @@ export default class Test {
 	}
 
 	report_results(result){
-		const successful = result && this.mqMatch && this.mq_active || !result && !this.mqMatch && !this.mq_active;
+		const isMatch = result && this.mqMatch && this.mq_active;
+		const notMatch = !result && !this.mqMatch && !this.mq_active;
+		const isIgnored = this.mqMatch === 'ignore';
+		const successful = isIgnored ? result : (isMatch || notMatch);
 		// Un-comment to debug
 		// console.log({result, mqMatch: this.mqMatch, mq_active: this.mq_active })
 		const logType = successful ? 'log' : 'error';
