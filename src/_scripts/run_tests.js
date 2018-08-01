@@ -2,6 +2,8 @@
 //helpers
 import sequence from '../../tests/_helpers/sequence';
 import report_result_summary from '../../tests/_helpers/report_result_summary';
+import 'es6-object-assign/auto';
+import 'es6-promise/auto';
 
 ////////////
 // TESTS //

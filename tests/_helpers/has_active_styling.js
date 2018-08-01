@@ -6,5 +6,6 @@ const getStyle = function(element, property) {
 };
 
 export default function has_active_styling (){
-	return getStyle(document.querySelector('html'), 'background-color') !== 'rgba(0, 0, 0, 0)';
+	const bg = getStyle(document.querySelector('html'), 'background-color');
+	return ['rgba(0, 0, 0, 0)', 'transparent'].indexOf(bg) < 0;
 }
