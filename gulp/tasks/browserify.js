@@ -82,6 +82,8 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
               + plugins.util.colors.magenta(time + 's'));
             browserSync.reload('*.js');
 
+            es5_test();
+
             done();
           });
       };
@@ -93,6 +95,10 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
       return rebundle();
     });
   };
+
+  function es5_test(){
+    return plugins.run('npm run es-check').exec()
+  }
 
   // Browserify Task
   gulp.task('browserify', (done) => {
