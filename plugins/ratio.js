@@ -1,9 +1,12 @@
 
 var MQ = require('../index');
-var { result, check_second_value, number_to_ratio } = require('../_common');
+var c = require('../_common');
+var result = c.result;
+var check_second_value = c.check_second_value;
+var number_to_ratio = c.number_to_ratio;
 
 // format = " 2 / 1 "; width / height (spaces optional)
-const ratio_regex = /^\s*([0-9\.]+)\s*?\/\s*?([0-9\.]+)\s*$/;
+var ratio_regex = /^\s*([0-9\.]+)\s*?\/\s*?([0-9\.]+)\s*$/;
 
 MQ.prototype.ratio = function (ratio, callback){
 	return result(
@@ -43,43 +46,47 @@ MQ.prototype.outsideRatio = function (one, two, callback){
 function checkRatio (ratio, style) {
 	check_ratio_validity(ratio);
 
-	const stringRatio = convert_to('string', ratio);
+	var stringRatio = convert_to('string', ratio);
 	return {
-		exact: ()=> window.matchMedia(`(aspect-ratio: ${stringRatio})`).matches,
-		min: ()=> window.matchMedia(`(min-aspect-ratio: ${stringRatio})`).matches,
-		max: ()=> window.matchMedia(`(max-aspect-ratio: ${stringRatio})`).matches,
+		exact: function(){ return window.matchMedia('(aspect-ratio: '+stringRatio+')').matches },
+		min: function(){ return window.matchMedia('(min-aspect-ratio: '+stringRatio+')').matches },
+		max: function(){ return window.matchMedia('(max-aspect-ratio: '+stringRatio+')').matches },
 	}[style]();
 }
 
 function insideRatio (ratio_one, ratio_two) {
-	return doubleValueRatio({ratio_one, ratio_two, queryTemplate: `(max-aspect-ratio: {wide}) and (min-aspect-ratio: {thin})`});
+	return doubleValueRatio({ratio_one: ratio_one, ratio_two: ratio_two, queryTemplate: '(max-aspect-ratio: {wide}) and (min-aspect-ratio: {thin})'});
 }
 
 function outsideRatio (ratio_one, ratio_two) {
-	return doubleValueRatio({ratio_one, ratio_two, queryTemplate: `(min-aspect-ratio: {wide}), (max-aspect-ratio: {thin})`});
+	return doubleValueRatio({ratio_one: ratio_one, ratio_two: ratio_two, queryTemplate: '(min-aspect-ratio: {wide}), (max-aspect-ratio: {thin})'});
 }
 
-function doubleValueRatio({ratio_one, ratio_two, queryTemplate}){
+function doubleValueRatio(opts){
+	var ratio_one = opts.ratio_one;
+	var ratio_two = opts.ratio_two;
+	var queryTemplate = opts.queryTemplate;
+
 	[ratio_one, ratio_two].forEach(check_ratio_validity);
 	check_second_value(ratio_one, ratio_two, 'ratio');
-	const sortedRatios = get_sorted_string_ratios(ratio_one, ratio_two);
-	const queryString = queryTemplate.replace('{thin}', sortedRatios.small).replace('{wide}', sortedRatios.large);
+	var sortedRatios = get_sorted_string_ratios(ratio_one, ratio_two);
+	var queryString = queryTemplate.replace('{thin}', sortedRatios.small).replace('{wide}', sortedRatios.large);
 	// Un-comment to debug
 	// console.log(queryString);
 	return window.matchMedia(queryString).matches;
 }
 
 function get_sorted_string_ratios(ratio_one, ratio_two){
-	const stringRatios = [
+	var stringRatios = [
 		convert_to('string', ratio_one),
 		convert_to('string', ratio_two),
 	]
-	return sort_ratios(...stringRatios);
+	return sort_ratios.apply(this, stringRatios);
 }
 
 function sort_ratios(ratio_one, ratio_two){
-	const numberOne = convert_to('number', ratio_one);
-	const numberTwo = convert_to('number', ratio_two);
+	var numberOne = convert_to('number', ratio_one);
+	var numberTwo = convert_to('number', ratio_two);
 
 	if (numberOne < numberTwo) {
 		return {
@@ -95,17 +102,17 @@ function sort_ratios(ratio_one, ratio_two){
 }
 
 function convert_to (style, ratio) {
-	const isNumber = is_number(ratio);
-	const styles = {
-		number: ()=> isNumber ? ratio : calculate(ratio),
-		string: ()=> !isNumber ? ratio : number_to_ratio(ratio),
+	var isNumber = is_number(ratio);
+	var styles = {
+		number: function(){ return isNumber ? ratio : calculate(ratio) },
+		string: function(){ return !isNumber ? ratio : number_to_ratio(ratio) },
 	};
 	return styles[style]();
 }
 
 function calculate(ratio){
 	if (is_ratio(ratio)){
-		const regResult = ratio_regex.exec(ratio);
+		var regResult = ratio_regex.exec(ratio);
 		return regResult[1] / regResult[2];
 	}
 	return ratio
@@ -122,6 +129,6 @@ function is_number(ratio) {
 
 function check_ratio_validity(ratio) {
 	if (!is_ratio(ratio) && !is_number(ratio)) {
-		throw new Error(`"${ratio}" must be either a number or a string in the format "[width] / [height]"`);
+		throw new Error('"'+ratio+'" must be either a number or a string in the format "[width] / [height]"');
 	}
 }
