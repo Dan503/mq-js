@@ -67,16 +67,6 @@ export default function(){
 			},
 		}),
 		new positiveTest({
-			name: `string (cb)`,
-			test: ()=> {
-				let result = false;
-				mq.ratio('1/2', ()=> {
-					result = true;
-				})
-				return result;
-			},
-		}),
-		new positiveTest({
 			name: `number (cb)`,
 			test: ()=> {
 				let result = false;
