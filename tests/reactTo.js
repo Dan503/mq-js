@@ -95,8 +95,6 @@ export default function(){
 		}),
 	];
 
-	console.log(reactValue);
-
 	return sequence([
 		initialState,
 		delay,
