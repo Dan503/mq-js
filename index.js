@@ -5,7 +5,8 @@ var result = c.result
 var checkBP = c.checkBP
 var doubleValue = c.doubleValue;
 
-function MQ (breakpoints, userSettings = {}) {
+function MQ (breakpoints, userSettings) {
+	userSettings = userSettings || {};
 	this.bp = breakpoints;
 	this.settings = {
 		ems: false,
@@ -131,7 +132,7 @@ function checkMQ (instance, opts){
 		return '';
 	}
 
-	var finalValues = bracketsReplaced.map((value) => {
+	var finalValues = bracketsReplaced.map(function(value) {
 		var isNumber = typeof value === 'number';
 		return isNumber ? finalValue(instance, value) : value;
 	});
@@ -153,7 +154,7 @@ function convertToEMs (instance, px){
 }
 
 function overide(defaults, overides){
-	for (let property in overides){
+	for (var property in overides){
 		defaults[property] = overides[property];
 	}
 }
