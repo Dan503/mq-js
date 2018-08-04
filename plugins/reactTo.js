@@ -1,7 +1,7 @@
 var MQ = require('../index');
-var { screenSize } = require('../_common');
+var screenSize = require('../_common').screenSize;
 
-const callbackList = [];
+var callbackList = [];
 
 MQ.prototype.reactTo = function (query, callback) {
 	if (typeof query !== 'function') {
@@ -11,7 +11,7 @@ MQ.prototype.reactTo = function (query, callback) {
 		throw new Error('Second argument should be a function that you wish to run when a change in screen size is detected.')
 	}
 
-	let oldStatus = query();
+	var oldStatus = query();
 	callbackList.push(callback);
 
 	window.addEventListener("resize", check_query(query, oldStatus), true);
@@ -19,10 +19,10 @@ MQ.prototype.reactTo = function (query, callback) {
 
 function check_query(query, oldStatus){
 	return function mq_js_reaction () {
-		const newStatus = query();
+		var newStatus = query();
 		if (oldStatus != newStatus) {
 			oldStatus = newStatus;
-			callbackList.forEach(cb => cb.call(window, newStatus, screenSize()));
+			callbackList.forEach(function (cb) { return cb.call(window, newStatus, screenSize())} );
 		}
 	}
 }

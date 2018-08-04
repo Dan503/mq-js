@@ -1,6 +1,8 @@
 
 var MQ = require('../index');
-var { result, doubleValue } = require('../_common');
+var c = require('../_common');
+var result = c.result;
+var inside_outside = c.inside_outside;
 
 MQ.prototype.minHeight = function (size, callback){
 	return result(
@@ -17,27 +19,9 @@ MQ.prototype.maxHeight = function (size, callback){
 }
 
 MQ.prototype.insideHeight = function (sizeOne, sizeTwo, callback){
-	return result(
-		doubleValue({
-			queryTemplate: '(max-height: {large}) and (min-height: {small+1})',
-			sizeOne,
-			sizeTwo,
-			dimension: 'height',
-			MQ_instance: this,
-		}),
-		callback
-	);
+	return inside_outside('(max-height: {large}) and (min-height: {small+1})', 'height', this, sizeOne, sizeTwo, callback);
 }
 
 MQ.prototype.outsideHeight = function (sizeOne, sizeTwo, callback){
-	return result(
-		doubleValue({
-			queryTemplate: '(max-height: {small}), (min-height: {large+1})',
-			sizeOne,
-			sizeTwo,
-			dimension: 'height',
-			MQ_instance: this,
-		}),
-		callback
-	);
+	return inside_outside('(max-height: {small}), (min-height: {large+1})', 'height', this, sizeOne, sizeTwo, callback);
 }

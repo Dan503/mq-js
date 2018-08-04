@@ -1,151 +1,144 @@
 "use strict";
 
-var { result, checkBP, doubleValue } = require('./_common');
+var c = require('./_common');
+var result = c.result
+var checkBP = c.checkBP
+var inside_outside = c.inside_outside;
 
-class MQ {
-	constructor(breakpoints, userSettings = {}){
-		const This = this;
-		this.bp = breakpoints;
-		assign_default_settings();
-
-		function assign_default_settings(){
-			This.settings = {
-				ems: false,
-				emBase: 16,
-			}
-
-			for (let property in userSettings){
-				This.settings[property] = userSettings[property];
-			}
-		}
+function MQ (breakpoints, userSettings) {
+	userSettings = userSettings || {};
+	this.bp = breakpoints;
+	this.settings = {
+		ems: false,
+		emBase: 16,
 	}
 
-	min(size, callback) {
-		return result(
-			this.checkMQ({ queryTemplate: '(min-width: {large+1})', largeSize: size }),
-			callback
-		);
+	overide(this.settings, userSettings);
+
+	this.checkMQ = function (opts){
+		return checkMQ(this, opts);
 	}
 
+	this.min = function(size, callback){
+		return min(this, size, callback);
+	}
 	//alias for "min"
-	minWidth(size, callback){
-		return this.min(size, callback);
-	}
+	this.minWidth = this.min;
 
-	max(size, callback){
-		return result(
-			this.checkMQ({ queryTemplate: '(max-width: {large})', largeSize: size }),
-			callback
-		);
+	this.max = function(size, callback){
+		return max(this, size, callback);
 	}
-
 	//alias for "max"
-	maxWidth(size, callback){
-		return this.max(size, callback);
-	}
+	this.maxWidth = this.max;
 
-	inside(sizeOne, sizeTwo, callback){
-		return result(
-			doubleValue({
-				queryTemplate: '(max-width: {large}) and (min-width: {small+1})',
-				sizeOne,
-				sizeTwo,
-				dimension: 'width',
-				MQ_instance: this,
-			}),
-			callback
-		);
+	this.inside = function(sizeOne, sizeTwo, callback){
+		return inside(this, sizeOne, sizeTwo, callback);
 	}
+	//alias for "inside"
+	this.insideWidth = this.inside;
 
-	//inside alias
-	insideWidth(large, small, callback){
-		return this.inside(large, small, callback);
+	this.outside = function(sizeOne, sizeTwo, callback){
+		return outside(this, sizeOne, sizeTwo, callback);
 	}
+	//alias for "outside"
+	this.outsideWidth = this.outside;
 
-	outside(sizeOne, sizeTwo, callback){
-		return result(
-			doubleValue({
-				queryTemplate: '(max-width: {small}), (min-width: {large+1})',
-				sizeOne,
-				sizeTwo,
-				dimension: 'width',
-				MQ_instance: this,
-			}),
-			callback
-		);
-	}
-
-	//outside alias
-	outsideWidth(large, small, callback){
-		return this.outside(large, small, callback);
-	}
-
-	checkBP(size){
+	this.checkBP = function(size){
 		return checkBP(size, this.bp);
 	}
+}
 
-	finalValue(px) {
-		return this.settings.ems ? this.convertToEMs(px) : `${px}px`;
+function min (instance, size, callback) {
+	return result(
+		instance.checkMQ({ queryTemplate: '(min-width: {large+1})', largeSize: size }),
+		callback
+	);
+}
+
+function max (instance, size, callback) {
+	return result(
+		instance.checkMQ({ queryTemplate: '(max-width: {large})', largeSize: size }),
+		callback
+	);
+}
+
+function inside (instance, sizeOne, sizeTwo, callback) {
+	return inside_outside('(max-width: {large}) and (min-width: {small+1})', 'width', instance, sizeOne, sizeTwo, callback);
+}
+
+function outside (instance, sizeOne, sizeTwo, callback) {
+	return inside_outside('(max-width: {small}), (min-width: {large+1})', 'width', instance, sizeOne, sizeTwo, callback);
+}
+
+function checkMQ (instance, opts){
+	var queryTemplate = opts.queryTemplate;
+	var largeSize = opts.largeSize;
+	var smallSize = opts.smallSize || 0;
+
+	var newSizes = {
+		large: instance.checkBP(largeSize),
+		small: instance.checkBP(smallSize),
 	}
 
-	convertToEMs(px) {
-		return `${px / this.settings.emBase}em`;
+	// RegEx captures up to 2 groups, the second group being optional.
+	// (max-width: {large}) [ and (min-width: {small+1}) ] < optional
+	var regEx = /^(.*?)({.*?})(.*?)(({.*?})(.*))?$/;
+	var regExResult = purify_regex(regEx.exec(queryTemplate));
+
+	// We only want the group matches in the array
+	function purify_regex(result){
+		var purifiedArray = result.slice(0);
+		purifiedArray.shift();
+		return purifiedArray;
 	}
 
-	checkMQ({ queryTemplate, largeSize, smallSize = 0 }) {
+	var bracketsReplaced = regExResult.map(replace_bracket);
 
-		const newSizes = {
-			large: this.checkBP(largeSize),
-			small: this.checkBP(smallSize),
-		}
+	function replace_bracket(string) {
+		if (string) {
+			var isBracketValue = /^{.*}$/.test(string);
+			var isBracketPlusExtra = /^.*{.*}.*$/.test(string);
+			var isIncremented = string.indexOf('+1') > 0;
+			var isLarge = string.indexOf('large') > 0;
 
-		// RegEx captures up to 2 groups, the second group being optional.
-		// (max-width: {large}) [ and (min-width: {small+1}) ] < optional
-		const regEx = /^(.*?)({.*?})(.*?)(({.*?})(.*))?$/;
-		const regExResult = purify_regex(regEx.exec(queryTemplate));
-
-		// We only want the group matches in the array
-		function purify_regex(result){
-			const purifiedArray = [...result];
-			purifiedArray.shift();
-			return purifiedArray;
-		}
-
-		const bracketsReplaced = regExResult.map(replace_bracket);
-
-		function replace_bracket(string) {
-			if (string) {
-				const isBracketValue = /^{.*}$/.test(string);
-				const isBracketPlusExtra = /^.*{.*}.*$/.test(string);
-				const isIncremented = string.indexOf('+1') > 0;
-				const isLarge = string.indexOf('large') > 0;
-
-				if (isBracketValue) {
-					const replacement = isLarge ? newSizes.large : newSizes.small;
-					return isIncremented ? replacement + 1 : replacement;
-				}
-
-				if (!isBracketPlusExtra) {
-					return string;
-				}
+			if (isBracketValue) {
+				var replacement = isLarge ? newSizes.large : newSizes.small;
+				return isIncremented ? replacement + 1 : replacement;
 			}
 
-			return '';
+			if (!isBracketPlusExtra) {
+				return string;
+			}
 		}
 
-		const finalValues = bracketsReplaced.map((value) => {
-			const isNumber = typeof value === 'number';
-			return isNumber ? this.finalValue(value) : value;
-		});
-
-		const finalQuery = finalValues.join('');
-
-		// Un-comment this as one of the first debug steps for inside/outside
-		// console.log({finalQuery});
-
-		return window.matchMedia(finalQuery).matches;
+		return '';
 	}
 
+	var finalValues = bracketsReplaced.map(function(value) {
+		var isNumber = typeof value === 'number';
+		return isNumber ? finalValue(instance, value) : value;
+	});
+
+	var finalQuery = finalValues.join('');
+
+	// Un-comment this as one of the first debug steps for inside/outside
+	// console.log({finalQuery});
+
+	return window.matchMedia(finalQuery).matches;
+}
+
+function finalValue (instance, px) {
+	return instance.settings.ems ? convertToEMs(instance, px) : px+"px";
+}
+
+function convertToEMs (instance, px){
+	return px / instance.settings.emBase+"em";
+}
+
+function overide(defaults, overides){
+	for (var property in overides){
+		defaults[property] = overides[property];
+	}
 }
 
 module.exports = MQ;

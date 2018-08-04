@@ -82,6 +82,8 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
               + plugins.util.colors.magenta(time + 's'));
             browserSync.reload('*.js');
 
+            es5_test();
+
             done();
           });
       };
@@ -93,6 +95,20 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
       return rebundle();
     });
   };
+
+  function es5_test(){
+    plugins.run('npm run es-check').exec()
+    .on('error', function (err) {
+      notifier.notify({title: 'ES5 Error', message: err.loc ? `${path.basename(err.filename)} line ${err.loc.line}` : 'ES5 error detected', icon: notification_icon_location+'gulp-error.png'});
+      plugins.util.log(
+        plugins.util.colors.red.bold('ES5 syntax error:'),
+        '\n',
+        plugins.util.colors.yellow(err.stack),
+        '\n'
+      );
+      this.emit('end');
+    })
+  }
 
   // Browserify Task
   gulp.task('browserify', (done) => {
