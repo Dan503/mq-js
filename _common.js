@@ -1,5 +1,5 @@
 
-function result (isAllowed, callback = false) {
+function result (isAllowed, callback) {
   if (isAllowed && callback) callback.call(window, screenSize());
   return isAllowed;
 }
@@ -13,16 +13,16 @@ function screenHeight () {
 }
 
 function screenSize(){
-  const width = screenWidth();
-  const height = screenHeight();
-  const numberRatio = width / height;
-  const stringRatio = number_to_ratio(numberRatio);
-  const orientation = numberRatio > 1 ? 'landscape' : 'portrait';
+  var width = screenWidth();
+  var height = screenHeight();
+  var numberRatio = width / height;
+  var stringRatio = number_to_ratio(numberRatio);
+  var orientation = numberRatio > 1 ? 'landscape' : 'portrait';
 
   return {
-    width,
-    height,
-    orientation,
+    width: width,
+    height: height,
+    orientation: orientation,
     ratio: {
       number: numberRatio,
       string: stringRatio,
@@ -37,68 +37,80 @@ function checkBP(size, breakpoints){
       return breakpoints[size];
     } else {
       console.error('Available Breakpoints:', breakpoints);
-      throw new Error(`"${size}" breakpoint does not exist`);
+      throw new Error('"'+size+'" breakpoint does not exist');
     }
   } else if (typeof size === 'number') {
     return size;
   } else {
     console.error('Available Breakpoints:', breakpoints);
-    throw new Error(`"${size}" is not a valid breakpoint. It must be a string or a number`);
+    throw new Error('"'+size+'" is not a valid breakpoint. It must be a string or a number');
   }
 }
 
 // Test if current screen size is between 2 values
-function doubleValue ({
-  queryTemplate,
-  sizeOne,
-  sizeTwo,
-  dimension,
-  MQ_instance
-}) {
+function doubleValue (opts) {
+
+  var queryTemplate = opts.queryTemplate;
+  var sizeOne = opts.sizeOne;
+  var sizeTwo = opts.sizeTwo;
+  var dimension = opts.dimension;
+  var MQ_instance = opts.MQ_instance;
 
   check_second_value(sizeOne, sizeTwo, dimension);
 
-  const sizes = [
+  var sizes = [
     checkBP(sizeOne, MQ_instance.bp),
     checkBP(sizeTwo, MQ_instance.bp),
   ];
 
-  const largeSize = Math.max(...sizes);
-  const smallSize = Math.min(...sizes);
+  var largeSize = Math.max.apply(null,sizes);
+  var smallSize = Math.min.apply(null,sizes);
 
   // Un-comment to debug
   // console.log({largeSize, smallSize})
 
-  return MQ_instance.checkMQ({ queryTemplate, largeSize, smallSize });
+  console.log({
+    queryTemplate: queryTemplate,
+    largeSize: largeSize,
+    smallSize: smallSize
+  });
+
+  return MQ_instance.checkMQ({
+    queryTemplate: queryTemplate,
+    largeSize: largeSize,
+    smallSize: smallSize
+  });
 }
 
 function second_property_is_invalid (secondProperty) {
-  const type = typeof secondProperty;
-  const isInvalid = ['function','undefined'].indexOf(type) > -1;
+  var type = typeof secondProperty;
+  var isInvalid = ['function','undefined'].indexOf(type) > -1;
   return isInvalid;
 }
 
 function check_second_value(propOne, propTwo, dimension){
   if (second_property_is_invalid(propTwo)){
-    const message = (divider = ' and ', extra = '') => {
-      const dimensionFunctions = {
-        'width' : `mq.inside(${extra})${divider}mq.outside(${extra})`,
-        'height' : `mq.insideHeight(${extra})${divider}mq.outsideHeight(${extra})`,
-        'ratio' : `mq.insideRatio(${extra})${divider}mq.outsideRatio(${extra})`,
+    var message = function (divider, extra) {
+      divider = divider || ' and ';
+      extra = extra || '';
+      var dimensionFunctions = {
+        width : ['mq.inside(',extra,')',divider,'mq.outside(',extra,')'].join(''),
+        height : ['mq.insideHeight(',extra,')',divider,'mq.outsideHeight(',extra,')'].join(''),
+        ratio : ['mq.insideRatio(',extra,')',divider,'mq.outsideRatio(',extra,')'].join(''),
       }
       return dimensionFunctions[dimension];
     }
 
-    throw new Error(`
-
-  The ${message()} functions require two breakpoints to be defined.
-
-  Currently only the "${propOne}" breakpoint is defined.
-  The other breakpoint is coming through as "${propTwo}".
-
-  Please use this format:
-  ${message('\n', '[breakpoint-1], [breakpoint-2], [optional-callback-function]')}
-  `)
+    throw new Error('\
+\
+  The '+message()+' functions require two breakpoints to be defined.\
+\
+  Currently only the "'+propOne+'" breakpoint is defined.\
+  The other breakpoint is coming through as "'+propTwo+'".\
+\
+  Please use this format:\
+  '+message('\n', '[breakpoint-1], [breakpoint-2], [optional-callback-function]')+'\
+  ')
   }
 }
 
@@ -117,7 +129,6 @@ function number_to_ratio(x) {
 
 	return h1+" / "+k1;
 }
-
 
 exports.result = result;
 exports.screenWidth = screenWidth;
