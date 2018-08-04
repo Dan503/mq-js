@@ -82,12 +82,6 @@ function doubleValue (opts) {
   // Un-comment to debug
   // console.log({largeSize, smallSize})
 
-  console.log({
-    queryTemplate: queryTemplate,
-    largeSize: largeSize,
-    smallSize: smallSize
-  });
-
   return MQ_instance.checkMQ({
     queryTemplate: queryTemplate,
     largeSize: largeSize,
