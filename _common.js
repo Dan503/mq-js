@@ -47,6 +47,19 @@ function checkBP(size, breakpoints){
   }
 }
 
+function inside_outside(queryTemplate, dimension, instance, sizeOne, sizeTwo, callback) {
+	return result(
+		doubleValue({
+			queryTemplate: queryTemplate,
+			sizeOne: sizeOne,
+			sizeTwo: sizeTwo,
+			dimension: dimension,
+			MQ_instance: instance,
+		}),
+		callback
+	);
+}
+
 // Test if current screen size is between 2 values
 function doubleValue (opts) {
 
@@ -138,3 +151,4 @@ exports.checkBP = checkBP;
 exports.doubleValue = doubleValue;
 exports.check_second_value = check_second_value;
 exports.number_to_ratio = number_to_ratio;
+exports.inside_outside = inside_outside;

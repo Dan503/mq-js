@@ -3,7 +3,7 @@
 var c = require('./_common');
 var result = c.result
 var checkBP = c.checkBP
-var doubleValue = c.doubleValue;
+var inside_outside = c.inside_outside;
 
 function MQ (breakpoints, userSettings) {
 	userSettings = userSettings || {};
@@ -63,24 +63,11 @@ function max (instance, size, callback) {
 }
 
 function inside (instance, sizeOne, sizeTwo, callback) {
-	return inside_outside('(max-width: {large}) and (min-width: {small+1})', instance, sizeOne, sizeTwo, callback);
+	return inside_outside('(max-width: {large}) and (min-width: {small+1})', 'width', instance, sizeOne, sizeTwo, callback);
 }
 
 function outside (instance, sizeOne, sizeTwo, callback) {
-	return inside_outside('(max-width: {small}), (min-width: {large+1})', instance, sizeOne, sizeTwo, callback);
-}
-
-function inside_outside(queryTemplate, instance, sizeOne, sizeTwo, callback) {
-	return result(
-		doubleValue({
-			queryTemplate: queryTemplate,
-			sizeOne: sizeOne,
-			sizeTwo: sizeTwo,
-			dimension: 'width',
-			MQ_instance: instance,
-		}),
-		callback
-	);
+	return inside_outside('(max-width: {small}), (min-width: {large+1})', 'width', instance, sizeOne, sizeTwo, callback);
 }
 
 function checkMQ (instance, opts){
