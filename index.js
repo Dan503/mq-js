@@ -63,22 +63,17 @@ function max (instance, size, callback) {
 }
 
 function inside (instance, sizeOne, sizeTwo, callback) {
-	return result(
-		doubleValue({
-			queryTemplate: '(max-width: {large}) and (min-width: {small+1})',
-			sizeOne: sizeOne,
-			sizeTwo: sizeTwo,
-			dimension: 'width',
-			MQ_instance: instance,
-		}),
-		callback
-	);
+	return inside_outside('(max-width: {large}) and (min-width: {small+1})', instance, sizeOne, sizeTwo, callback);
 }
 
 function outside (instance, sizeOne, sizeTwo, callback) {
+	return inside_outside('(max-width: {small}), (min-width: {large+1})', instance, sizeOne, sizeTwo, callback);
+}
+
+function inside_outside(queryTemplate, instance, sizeOne, sizeTwo, callback) {
 	return result(
 		doubleValue({
-			queryTemplate: '(max-width: {small}), (min-width: {large+1})',
+			queryTemplate: queryTemplate,
 			sizeOne: sizeOne,
 			sizeTwo: sizeTwo,
 			dimension: 'width',
