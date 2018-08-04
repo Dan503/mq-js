@@ -84,8 +84,7 @@
   ],
   "scripts": {
     "clean-deps": "rimraf node_modules",
-    "es-check": "es-check es5 ./index.js ./_common.js ./ultimate.js -v",
-    "tmp": "./plugins/**/*.js"
+    "es-check": "es-check es5 ./index.js ./_common.js ./ultimate.js ./plugins/**/*.js -v"
   },
   "engines": {
     "node": ">=0.12.0"
