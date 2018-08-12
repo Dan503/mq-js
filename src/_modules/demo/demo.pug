@@ -35,7 +35,7 @@ mixin demo__tab(demoMarkup, spec)
           .grid__cell(class=type)
             each js, jsType in markup
               if (jsType === 'es5')
-                details.demo__es5
+                details.demo__details.demo__es5
                   summary ES5 Syntax
                   .demo__markup
                     pre

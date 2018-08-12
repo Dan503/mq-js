@@ -123,17 +123,38 @@ module.exports.mq = mq;
       js: {
         es6: `
 //mq.js file
-"use strict";
-import MQ from "mq-js";
-import breakpoints from './breakpoints.json';
 
-const mq = new MQ(breakpoints);
+import MQ from "mq-js";
+
+//Retrieve your site break points
+import bp from './breakpoints.json';
+
+const mq = new MQ(bp);
 
 //Export mq by default
 export default mq;
 
 //easier access to your site breakpoints
-export { mq, breakpoints }`,
+export { mq, bp }`,
+
+        es5: `
+//mq.js file
+
+var MQ = require('mq-js');
+
+//Retrieve your site break points
+var bp = require('./breakpoints.json');
+
+//Creates the media query functions
+var mq = new MQ(bp);
+
+//Export mq by default
+module.exports.default = mq;
+
+//Gives easy access to your site breakpoints
+module.exports.bp = bp;
+module.exports.mq = mq;
+        `
       }
   })
 
