@@ -148,12 +148,11 @@ var bp = require('./breakpoints.json');
 //Creates the media query functions
 var mq = new MQ(bp);
 
-//Export mq by default
-module.exports.default = mq;
+//Exports the media query functions
+module.exports.mq = mq;
 
 //Gives easy access to your site breakpoints
 module.exports.bp = bp;
-module.exports.mq = mq;
         `
       }
   })
@@ -170,9 +169,14 @@ module.exports.mq = mq;
 import mq from './mq'
 
 //With breakpoints
-import { mq, breakpoints } from './mq'`,
-}
-    })
+import { mq, bp } from './mq'`,
+      es5: `
+//Import mq
+var mq = require('./mq').mq;
+
+//Import breakpoints
+var bp = require('./mq').bp;`,
+    }})
 
   :marked
     Now that you have your break points set up, you can use them when calling the function without having to import them. I'll get to why you might want to import the `breakpoints` variable later. For now, just stick to only importing the `mq` variable on it's own.
