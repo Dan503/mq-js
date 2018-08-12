@@ -3,10 +3,9 @@
 
 'use strict';
 
-import $ from 'jquery';
 import debounce from 'debounce';
-import { mq, breakpoints } from './mq';
-import bp from '../../tests/_helpers/breakpoints';
+import { mq, bp } from './mq';
+import testBreakpoints from '../../tests/_helpers/breakpoints';
 
 import codeLineNumbers from '~on-page-load-js/codeLineNumbers';
 import smoothAnchors from '~on-page-load-js/smoothAnchors';
@@ -14,191 +13,98 @@ import smoothAnchors from '~on-page-load-js/smoothAnchors';
 window.test = ()=>{
   const settings = {
     innerWidth: 1000,
-    innerHeight: bp.large,
+    innerHeight: testBreakpoints.large,
   };
 
   window.open('/test-em.html', 'ems test', settings);
   window.open('/test-px.html', 'px test', settings)
 }
 
-$(() => {
-  codeLineNumbers();
-  smoothAnchors();
+const _$ = selector => document.querySelector(selector);
+// const _$$ = selector => [...document.querySelectorAll(selector)];
 
-  $('#testingBtn').click(window.test)
+function toggler(selector, test){
+  const _$elem = _$(selector);
+  if (_$elem) {
+    _$elem.onclick = function(e){
+       e.preventDefault();
+       if (test()) {
+         this.classList.toggle('-active');
+       }
+     };
+  }
+}
 
-  $('.btn.-one').click(function(e){
-    e.preventDefault();
+codeLineNumbers();
+smoothAnchors();
 
-    mq.max('medium', (screen_size)=>{
-      $(this).toggleClass('-active');
-      console.log(screen_size);
-    })
-  });
+_$('#testingBtn').click(window.test);
 
-  $('.btn.-two').click(function(e){
-    e.preventDefault();
+const toggleActive = elem => elem.classList.toggle('-active');
+const toggleInactive = elem => elem.classList.toggle('-inactive');
 
-    if (mq.max('medium')){
-      $(this).toggleClass('-active');
-    }
-  });
+console.log(_$('.btn.-one'));
+_$('.btn.-one').onclick = function(e){
+  e.preventDefault();
 
-  $('.btn.-three').click(function(e){
-    e.preventDefault();
-
-    mq.min('medium', (screen_size)=>{
-      $(this).toggleClass('-active');
-      console.log(screen_size);
-    })
-  });
-
-
-  $('.btn.-four').click(function(e){
-    e.preventDefault();
-
-    mq.inside('medium', 'small', (screen_size)=>{
-      $(this).toggleClass('-active');
-
-      //log the screen width at the time the button was clicked
-      console.log(screen_size);
-    })
-  });
-
-  $('.btn.-five').click(function(e){
-    e.preventDefault();
-
-    mq.outside('medium', 'small', (screen_size)=>{
-      $(this).toggleClass('-active');
-
-      //log the screen width at the time the button was clicked
-      console.log(screen_size);
-    })
-  });
-
-  const MQ_btn = state => ({
-    active: () => mq.max('medium'),
-    inactive: () => mq.min('medium'),
-  }[state]());
-  $('.btn.-six').click(function(e){
-    e.preventDefault();
-
-    if (MQ_btn('active')){
-      $(this).toggleClass('-active');
-    }
-
-    if (MQ_btn('inactive')){
-      $(this).toggleClass('-inactive');
-    }
-
-  });
-
-
-  $('.btn.-seven').click(function(e){
-    e.preventDefault();
-
-    mq.max(1000, (screen_size)=>{
-      $(this).toggleClass('-active');
-
-      //log the screen width at the time the button was clicked
-      console.log(screen_size);
-    })
+  mq.max('medium', (screen_size)=>{
+    toggleActive(this);
+    console.log(screen_size);
   })
+};
 
-  $('.btn.-eight').click(function(e){
-    e.preventDefault();
+toggler('.btn.-two', ()=> mq.max('medium'));
+toggler('.btn.-three', ()=> mq.min('medium'));
+toggler('.btn.-four', ()=> mq.inside('medium', 'small'));
+toggler('.btn.-five', ()=> mq.outside('medium', 'small'));
 
-    mq.min(1000, (screen_size)=>{
-      $(this).toggleClass('-active');
+const MQ_btn = state => ({
+  active: () => mq.max('medium'),
+  inactive: () => mq.min('medium'),
+}[state]());
 
-      //log the screen width at the time the button was clicked
-      console.log(screen_size);
-    })
-  })
+_$('.btn.-six').onclick = function(e){
+  e.preventDefault();
 
-  $('.btn.-nine').click(function(e){
-    e.preventDefault();
+  if (MQ_btn('active')){
+    toggleActive(this);
+  }
 
-    mq.min(breakpoints.medium + 30, (screen_size)=>{
-      $(this).toggleClass('-active');
+  if (MQ_btn('inactive')){
+    toggleInactive(this);
+  }
 
-      //log the screen width at the time the button was clicked
-      console.log(screen_size);
-    })
-  })
+};
 
-  $('.btn.-ten').click(function(e){
-    e.preventDefault();
-  });
+toggler('.btn.-seven', ()=> mq.max(1000));
+toggler('.btn.-eight', ()=> mq.min(1000));
+toggler('.btn.-nine', ()=> mq.min(bp.medium + 30));
 
-  function toggleBtn(){
-    if (mq.inside('medium', 'small')){
-      $('.btn.-ten').addClass('-active');
-    } else {
-      $('.btn.-ten').removeClass('-active');
-    }
-  };
+_$('.btn.-ten').onclick = (e) => e.preventDefault();
 
-  toggleBtn();
-  window.onresize = debounce(toggleBtn, 200);
+function toggleBtn(){
+  _$('.btn.-ten').classList.toggle('-active', ()=> mq.inside('medium', 'small'));
+};
 
-  $('.btn.-eleven').click(function(e){
-    e.preventDefault();
-    mq.maxHeight(600, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-twelve').click(function(e){
-    e.preventDefault();
-    mq.minHeight(600, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-thirteen').click(function(e){
-    e.preventDefault();
-    mq.insideHeight(800, 400, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-fourteen').click(function(e){
-    e.preventDefault();
-    mq.outsideHeight(800, 400, ()=> $(this).toggleClass('-active'));
-  });
+toggleBtn();
+window.onresize = debounce(toggleBtn, 200);
 
-  $('.btn.-fifteen').click(function(e){
-    e.preventDefault();
-    mq.orientation('landscape', ()=> $(this).toggleClass('-active'));
-  });
-  
-  $('.btn.-sixteen').click(function(e){
-    e.preventDefault();
-    mq.orientation('portrait', ()=> $(this).toggleClass('-active'));
-  });
+toggler('.btn.-eleven', ()=> mq.maxHeight(600));
+toggler('.btn.-twelve', ()=> mq.minHeight(600));
+toggler('.btn.-thirteen', ()=> mq.insideHeight(800, 400));
+toggler('.btn.-fourteen', ()=> mq.outsideHeight(800, 400));
+toggler('.btn.-fifteen', ()=> mq.orientation('landscape'));
+toggler('.btn.-sixteen', ()=> mq.orientation('portrait'));
+toggler('.btn.-exactRatio', ()=> mq.ratio(1 / 2));
+toggler('.btn.-minRatio', ()=> mq.ratio('1 / 2'));
+toggler('.btn.-maxRatio', ()=> mq.ratio(1 / 2));
+toggler('.btn.-insideRatio', ()=> mq.insideRatio(1 / 2, 3 / 2));
+toggler('.btn.-insideRatio', ()=> mq.outsideRatio(1 / 2, 3 / 2));
+toggler('.btn.-maxRatioString', ()=> mq.maxRatio('1 / 2'));
 
-  $('.btn.-exactRatio').click(function(e){
-    e.preventDefault();
-    mq.ratio(1 / 2, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-minRatio').click(function(e){
-    e.preventDefault();
-    mq.minRatio(1 / 2, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-maxRatio').click(function(e){
-    e.preventDefault();
-    mq.maxRatio(1 / 2, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-insideRatio').click(function(e){
-    e.preventDefault();
-    mq.insideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-outsideRatio').click(function(e){
-    e.preventDefault();
-    mq.outsideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
-  });
-
-  $('.btn.-maxRatioString').click(function(e){
-    e.preventDefault();
-    mq.maxRatio('1 / 2', ()=> $(this).toggleClass('-active'));
-  });
-
-  mq.reactTo(()=> mq.inside(800, 900), (is_active, screen_size)=> {
-    $('.btn.-reactTo').toggleClass('-active');
-    console.log(is_active, screen_size)
-  });
-  $('.btn.-reactTo').click(e => e.preventDefault());
-
+mq.reactTo(()=> mq.inside(800, 900), (is_active, screen_size)=> {
+  _$('.btn.-reactTo').classList.toggle('-active');
+  console.log(is_active, screen_size)
 });
+
+_$('.btn.-reactTo').onclick = e => e.preventDefault();
