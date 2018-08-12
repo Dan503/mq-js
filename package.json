@@ -93,7 +93,7 @@
     "type": "git",
     "url": "git+https://github.com/Dan503/mq-js.git"
   },
-  "homepage": "https://github.com/Dan503/mq-js#readme",
+  "homepage": "https://dan503.github.io/mq-js/",
   "author": "Daniel Tonon",
   "license": "MIT",
   "bugs": {
