@@ -31,7 +31,7 @@
 		}
 	}
 	&__result {
-    margin-top: 65px;
+		margin-top: 65px;
 		&:before {
 			content: 'Example';
 
@@ -55,43 +55,38 @@
 	&__markup {
 		background-color: #282c34;
 		position: relative;
-		padding-left: 40px;
 		display: flex;
-    &.html:before {
-      content: 'HTML';
-    }
+		&.html:before {
+			content: 'HTML';
+		}
 		&.scss:before {
 			content: 'Sass';
 		}
-    &.js:before {
-      content: 'JavaScript';
-    }
-    &.json:before {
-      content: 'JSON';
-    }
+		&.js:before {
+			content: 'JavaScript (ES6)';
+		}
+		&.json:before {
+			content: 'JSON';
+		}
 
-    pre {
-      display: flex;
-      flex-grow: 1;
-      &, &.lines {
-        margin: 0;
-      }
+		pre {
+			display: flex;
+			flex-grow: 0;
+			&, &.lines {
+				margin: 0;
+			}
 
-      &.lines {
-        overflow: hidden;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        background: #000;
-        padding-top: 12px;
-      }
-    }
+			&.lines {
+				overflow: hidden;
+				background: #000;
+				padding-top: 12px;
+			}
+		}
 
-    code {
-      margin-top: -20px;
-      padding: {bottom: 10px; top: 10px; }
-    }
+		code {
+			margin-top: -20px;
+			padding: {bottom: 10px; top: 10px; }
+		}
 	}
 
 	.example {

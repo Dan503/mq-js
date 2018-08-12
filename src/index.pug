@@ -8,7 +8,7 @@ block content
   :marked
     This documentation is best viewed on a Desktop computer or laptop for the sake of viewing the examples at all screen sizes.
 
-    This documentation also assumes that you have the ability to use ES6 JavaScript syntax in your project. Try looking into [Yeogurt](https://github.com/larsonjj/generator-yeogurt) or [Babel](https://babeljs.io/) if you aren't already using ES6 syntax in your projects.
+    The JavaScript examples are provided primarily in modern ES6 JavaScript syntax. Click the "ES5 syntax" button to view an ES5 version of the example if working in an environment that doesn't support ES6.
 
     mq-js was inspired by the [mq-scss](https://www.npmjs.com/package/mq-scss) Sass mixin. I wanted to use media queries in JavaScript in a similar sort of way to how I was using media queries in my Sass code.
 
@@ -60,34 +60,57 @@ block content
     Now, create this simple `mq.js` file to set up your website breakpoints.
 
   +demo({
-    js: `
+    js: {
+es6: `
 //mq.js file
-"use strict";
 
 import MQ from "mq-js";
 
 //Define your Site break points here
-const breakpoints = {
+const bp = {
   small: 600,
   medium: 980,
   large: 1200
 }
 
 //Creates the media query functions
-const mq = new MQ(breakpoints);
+const mq = new MQ(bp);
 
 //Export mq by default
 export default mq;
 
 //Gives easy access to your site breakpoints
-export { mq, breakpoints }`,
+export { mq, bp }`,
+
+  es5: `
+//mq.js file
+
+var MQ = require('mq-js');
+
+//Define your Site break points here
+var breakpoints = {
+  small: 600,
+  medium: 980,
+  large: 1200
+}
+
+//Creates the media query functions
+var mq = new MQ(breakpoints);
+
+//Export mq by default
+module.exports.default = mq;
+
+//Gives easy access to your site breakpoints
+module.exports.bp = bp;
+module.exports.mq = mq;
+`
+    }
   })
 
   p(style="text-align: center; font-size: 2em")
     strong OR
 
-  :marked
-    Alternatively you can save the breakpoints into a JSON file, then import them.
+  p Alternatively you can save the breakpoints into a JSON file, then import them.
 
   +demo({
     json: `
@@ -97,7 +120,8 @@ export { mq, breakpoints }`,
   "medium": 980,
   "large": 1200
 }`,
-      js: `
+      js: {
+        es6: `
 //mq.js file
 "use strict";
 import MQ from "mq-js";
@@ -110,6 +134,7 @@ export default mq;
 
 //easier access to your site breakpoints
 export { mq, breakpoints }`,
+      }
   })
 
   :marked
@@ -118,12 +143,14 @@ export { mq, breakpoints }`,
     I'm providing 2 export statements in the examples. This makes it super easy to access your site breakpoints since it is just a matter of switching out your import statement when you need to. It also means that it doesn't matter if you pull the breakpoints in using JSON or define them directly in the `mq.js` file, the code to access them is the same either way.
 
   +demo({
-    js: `
+    js: {
+      es6: `
 //Without breakpoints
 import mq from './mq'
 
 //With breakpoints
 import { mq, breakpoints } from './mq'`,
+}
     })
 
   :marked
@@ -143,7 +170,7 @@ include /_modules/btn/btn
 .example
   +btn({classes:'-one'})
     | Clickable at and below 980px screen width`,
-      js: `
+      js: {es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -160,7 +187,7 @@ $('.btn.-one').click(function(e){
     //logs the screen height, width, and ratio at the time the button was clicked
     console.log(screen_size);
   })
-})`,
+})`},
   })
 
   :marked
@@ -174,7 +201,7 @@ include /_modules/btn/btn
 .example
   +btn({classes:'-two'})
     | Clickable at and below 980px screen width`,
-      js: `
+      js: {es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -188,7 +215,7 @@ $('.btn.-two').click(function(e){
   if (mq.max('medium')){
     $(this).toggleClass('-active');
   }
-})`,
+})`},
   })
 
   :marked
@@ -199,12 +226,12 @@ $('.btn.-two').click(function(e){
     One last thing. If you prefer to explicitly state that the media query is targeting "width", `mq.max` can also be written as `mq.maxWidth`. It has identical functionality, it's just personal preference.
 
   +demo({
-      js: `
+      js: {es6: `
 // This code has identical functionality...
 mq.max('medium', ()=> { /* ... */ });
 
 // ...to this code
-mq.maxWidth('medium', ()=> { /* ... */ });`,
+mq.maxWidth('medium', ()=> { /* ... */ });`},
   })
 
   :marked
@@ -218,7 +245,7 @@ include /_modules/btn/btn
 .example
   +btn({classes:'-three'})
     | Clickable at 981px screen width and above`,
-      js: `
+      js: {es6:`
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -236,7 +263,7 @@ $('.btn.-three').click(function(e){
     //log the screen width at the time the button was clicked
     console.log(screen_size);
   })
-})`,
+})`},
   })
 
   :marked
@@ -249,12 +276,12 @@ $('.btn.-three').click(function(e){
     Also, like with `mq.max`, it can be written like `mq.minWidth` instead if you prefer.
 
   +demo({
-      js: `
+      js: { es6: `
 // This code has identical functionality...
 mq.min('medium', ()=> { /* ... */ });
 
 // ...to this code
-mq.minWidth('medium', ()=> { /* ... */ });`,
+mq.minWidth('medium', ()=> { /* ... */ });`},
   })
 
   :marked
@@ -274,7 +301,7 @@ include /_modules/btn/btn
 .example
   +btn({classes:'-four'})
     | Clickable at and between 980px and 601px screen width`,
-      js: `
+      js: { es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -291,19 +318,19 @@ $('.btn.-four').click(function(e){
     //log the screen width at the time the button was clicked
     console.log(screen_size);
   })
-})`,
+})`},
   })
 
   :marked
     It can also be written as `mq.insideWidth` if you prefer.
 
   +demo({
-      js: `
+      js: { es6: `
 // This code has identical functionality...
 mq.inside('medium', ()=> { /* ... */ });
 
 // ...to this code
-mq.insideWidth('medium', ()=> { /* ... */ });`,
+mq.insideWidth('medium', ()=> { /* ... */ });`},
   })
 
   :marked
@@ -317,7 +344,7 @@ include /_modules/btn/btn
 .example
   +btn({classes:'-five'})
     | Clickable outside of 980px to 601px screen widths`,
-      js: `
+      js: { es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -334,18 +361,18 @@ $('.btn.-five').click(function(e){
     //log the screen width at the time the button was clicked
     console.log(screen_size);
   })
-})`,
+})`},
   })
   :marked
     It can also be written as `mq.outsideWidth` if you prefer.
 
   +demo({
-      js: `
+      js: { es6: `
 // This code has identical functionality...
 mq.outside('medium', ()=> { /* ... */ });
 
 // ...to this code
-mq.outsideWidth('medium', ()=> { /* ... */ });`,
+mq.outsideWidth('medium', ()=> { /* ... */ });`},
   })
 
   :marked
@@ -361,7 +388,7 @@ include /_modules/btn/btn
 .example
   +btn({classes:'-six'})
     | when clicked, turns green at and below a 980px screen width, turns grey above 980px`,
-      js: `
+      js: { es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -386,7 +413,7 @@ $('.btn.-six').click(function(e){
     $(this).toggleClass('-inactive');
   }
 
-})`,
+})`},
   })
 
   :marked
@@ -400,7 +427,7 @@ include /_modules/btn/btn
 .example
   +btn({classes:'-seven'})
     | Clickable at and below 1000px screen width`,
-      js: `
+      js: { es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -417,7 +444,7 @@ $('.btn.-seven').click(function(e){
     //log the screen size at the time the button was clicked
     console.log(screen_size);
   })
-})`,
+})`},
   })
 
   :marked
@@ -429,7 +456,7 @@ include /_modules/btn/btn
 .example
   +btn({classes:'-eight'})
     | Clickable at 1001px screen width and above`,
-      js: `
+      js: { es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -446,7 +473,7 @@ $('.btn.-eight').click(function(e){
     //log the screen width at the time the button was clicked
     console.log(screen_size);
   })
-})`,
+})`},
   })
 
   :marked
@@ -460,7 +487,7 @@ include /_modules/btn/btn
 .example
   +btn({classes:'-nine'})
     | Clickable at 1011px screen width and above`,
-      js: `
+      js: { es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -478,7 +505,7 @@ $('.btn.-nine').click(function(e){
     //log the screen width at the time the button was clicked
     console.log(screen_size);
   })
-})`,
+})`},
   })
 
   :marked
@@ -496,7 +523,7 @@ include /_modules/btn/btn
 .example
   +btn({classes:'-ten'})
     | Activates at and between 980px and 601px screen width`,
-      js: `
+      js: { es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -516,7 +543,7 @@ function toggleBtn(){
 };
 toggleBtn();
 
-window.onresize = debounce(toggleBtn, 200);`,
+window.onresize = debounce(toggleBtn, 200);`},
   })
 
   :marked
@@ -527,7 +554,7 @@ window.onresize = debounce(toggleBtn, 200);`,
     These plugins can be loaded from the mq.js file to avoid the need for loading them every time you wish to use them.
 
   +demo({
-    js: `
+    js: { es6: `
 //Loading plugins in the mq.js file for global usage
 
 "use strict";
@@ -557,16 +584,16 @@ const mq = new MQ(breakpoints);
 export default mq;
 
 //Gives easy access to your site breakpoints
-export { mq, breakpoints }`,
+export { mq, breakpoints }`},
   })
 
   :marked
     Alternatively, you can load all of the plugins in one statement by simply importing `mq-js/ultimate`;
   +demo({
-      js: `
+      js: { es6: `
 //import all of the plugins at once by importing mq-js/ultimate instead of mq-js
 import MQ from "mq-js/ultimate";
-`,
+`},
   })
 
   :marked
@@ -592,7 +619,7 @@ include /_modules/btn/btn
       +btn({classes:'-fourteen'})
         | Clickable outside of 401px and 800px screen height
 `,
-      js: `
+      js: { es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -622,7 +649,7 @@ $('.btn.-thirteen').click(function(e){
 $('.btn.-fourteen').click(function(e){
   e.preventDefault();
   mq.outsideHeight(800, 400, ()=> $(this).toggleClass('-active'));
-});`,
+});`},
   })
 
   :markdown
@@ -645,7 +672,7 @@ include /_modules/btn/btn
       +btn({classes:'-sixteen'})
         | Clickable on portrait and square screens
 `,
-      js: `
+      js: { es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -666,7 +693,7 @@ $('.btn.-sixteen').click(function(e){
   e.preventDefault();
   mq.orientation('portrait', ()=> $(this).toggleClass('-active'));
 });
-`,
+`},
   })
 
   :marked
@@ -697,7 +724,7 @@ include /_modules/btn/btn
       +btn({classes:'-outsideRatio'})
         | Clickable at widths outside ratios "1 / 2" and "3 / 2"
 `,
-      js: `
+      js: { es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -729,7 +756,7 @@ $('.btn.-outsideRatio').click(function(e){
   e.preventDefault();
   mq.outsideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
 });
-`,
+`},
   })
 
   :marked
@@ -742,12 +769,12 @@ include /_modules/btn/btn
   +btn({classes:'-maxRatio'})
     | Clickable at ratios thinner than "1 / 2" (inclusive)
 `,
-      js: `
+      js: { es6: `
 $('.btn.-maxRatioString').click(function(e){
   e.preventDefault();
   mq.maxRatio('1 / 2', ()=> $(this).toggleClass('-active'));
 });
-`,
+`},
   })
 
   :marked
@@ -762,7 +789,7 @@ include /_modules/btn/btn
   +btn({classes:'-reactTo'})(disabled="true")
     | Never clickable, toggles active state when mq changes truthfulness
 `,
-      js: `
+      js: { es6: `
 //module js file
 "use strict";
 import $ from 'jquery';
@@ -783,5 +810,5 @@ mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size)=> {
   console.log(is_active, screen_size)
 });
 $('.btn.-reactTo').click(e => e.preventDefault());
-`,
+`},
   })
