@@ -42,7 +42,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
         ]
       }).on('error', plugins.sass.logError))
       .pipe(plugins.postcss([
-        autoprefixer({browsers: ['last 2 version', '> 5%', 'safari 5', 'ios 6', 'android 4', 'ie >= 9']}),
+        autoprefixer({browsers: ['> 1%'], grid: true}),
         px2rem(px2rem_settings)
       ]))
       .pipe(plugins.rename(function(path) {
