@@ -195,24 +195,25 @@ include /_modules/btn/btn
 .example
   +btn({classes:'-max'})
     | Clickable at and below 980px screen width`,
-      js: {es6: `
+      js: {
+        es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-$('.btn.-max').click(function(e){
+document.querySelector('.btn.-max').onclick = function(e){
   e.preventDefault();
 
+  //Use your breakpoints by parsing in a string
   mq.max('medium', (screen_size)=>{
-    $(this).toggleClass('-active');
+    this.classList.toggle('-active');
 
     //logs the screen height, width, and ratio at the time the button was clicked
     console.log(screen_size);
   })
-})`},
+})`,
+    },
   })
 
   :marked
@@ -228,17 +229,15 @@ include /_modules/btn/btn
     | Clickable at and below 980px screen width`,
       js: {es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-$('.btn.-maxIf').click(function(e){
+document.querySelector('.btn.-maxIf').onclick = function(e){
   e.preventDefault();
 
   if (mq.max('medium')){
-    $(this).toggleClass('-active');
+    this.classList.toggle('-active');
   }
 })`},
   })
@@ -272,18 +271,15 @@ include /_modules/btn/btn
     | Clickable at 981px screen width and above`,
       js: {es6:`
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-$('.btn.-min').click(function(e){
+document.querySelector('.btn.-min').onclick = function(e){
   e.preventDefault();
 
-  //Use your breakpoints by parsing in a string
   mq.min('medium', (screen_size)=>{
-    $(this).toggleClass('-active');
+    this.classList.toggle('-active');
 
     //log the screen width at the time the button was clicked
     console.log(screen_size);
@@ -328,17 +324,15 @@ include /_modules/btn/btn
     | Clickable at and between 980px and 601px screen width`,
       js: { es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-$('.btn.-inside').click(function(e){
+document.querySelector('.btn.-inside').onclick = function(e){
   e.preventDefault();
 
   mq.inside('medium', 'small', (screen_size)=>{
-    $(this).toggleClass('-active');
+    this.classList.toggle('-active');
 
     //log the screen width at the time the button was clicked
     console.log(screen_size);
@@ -371,17 +365,15 @@ include /_modules/btn/btn
     | Clickable outside of 980px to 601px screen widths`,
       js: { es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-$('.btn.-outside').click(function(e){
+document.querySelector('.btn.-outside').onclick = function(e){
   e.preventDefault();
 
   mq.outside('medium', 'small', (screen_size)=>{
-    $(this).toggleClass('-active');
+    this.classList.toggle('-active');
 
     //log the screen width at the time the button was clicked
     console.log(screen_size);
@@ -415,8 +407,6 @@ include /_modules/btn/btn
     | when clicked, turns green at and below a 980px screen width, turns grey above 980px`,
       js: { es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
@@ -427,11 +417,11 @@ const MQ_btn = state => ({
   inactive: () => mq.min('medium'),
 }[state]());
 
-$('.btn.-mqVar').click(function(e){
+document.querySelector('.btn.-mqVar').onclick = function(e){
   e.preventDefault();
 
   if (MQ_btn('active')){
-    $(this).toggleClass('-active');
+    this.classList.toggle('-active');
   }
 
   if (MQ_btn('inactive')){
@@ -454,17 +444,15 @@ include /_modules/btn/btn
     | Clickable at and below 1000px screen width`,
       js: { es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-$('.btn.-pxVal').click(function(e){
+document.querySelector('.btn.-pxVal').onclick = function(e){
   e.preventDefault();
 
   mq.max(1000, (screen_size)=>{
-    $(this).toggleClass('-active');
+    this.classList.toggle('-active');
 
     //log the screen size at the time the button was clicked
     console.log(screen_size);
@@ -483,17 +471,15 @@ include /_modules/btn/btn
     | Clickable at 1001px screen width and above`,
       js: { es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-$('.btn.-pxValMin').click(function(e){
+document.querySelector('.btn.-pxValMin').onclick = function(e){
   e.preventDefault();
 
   mq.min(1000, (screen_size)=>{
-    $(this).toggleClass('-active');
+    this.classList.toggle('-active');
 
     //log the screen width at the time the button was clicked
     console.log(screen_size);
@@ -514,18 +500,16 @@ include /_modules/btn/btn
     | Clickable at 1011px screen width and above`,
       js: { es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import BOTH the mq variable AND the breakpoints variable that were created in the setup stage
 import { mq , breakpoints } from "./mq";
 
-$('.btn.-bpVar').click(function(e){
+document.querySelector('.btn.-bpVar').onclick = function(e){
   e.preventDefault();
 
   //Adding 30px to the base "medium" breakpoint
   mq.min(breakpoints.medium + 30, (screen_size)=>{
-    $(this).toggleClass('-active');
+    this.classList.toggle('-active');
 
     //log the screen width at the time the button was clicked
     console.log(screen_size);
@@ -550,8 +534,6 @@ include /_modules/btn/btn
     | Activates at and between 980px and 601px screen width`,
       js: { es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import debounce for better performance
 import debounce from 'debounce';
@@ -581,8 +563,6 @@ window.onresize = debounce(toggleBtn, 200);`},
   +demo({
     js: { es6: `
 //Loading plugins in the mq.js file for global usage
-
-"use strict";
 
 import MQ from "mq-js";
 
@@ -646,8 +626,6 @@ include /_modules/btn/btn
 `,
       js: { es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
@@ -656,24 +634,24 @@ import mq from "./mq";
 //(unecessary if it has been loaded in the mq.js file)
 import "mq-js/plugins/height";
 
-$('.btn.-maxHeight').click(function(e){
+document.querySelector('.btn.-maxHeight').onclick = function(e){
   e.preventDefault();
-  mq.maxHeight(600, ()=> $(this).toggleClass('-active'));
+  mq.maxHeight(600, ()=> this.classList.toggle('-active'));
 });
 
-$('.btn.-minHeight').click(function(e){
+document.querySelector('.btn.-minHeight').onclick = function(e){
   e.preventDefault();
-  mq.minHeight(600, ()=> $(this).toggleClass('-active'));
+  mq.minHeight(600, ()=> this.classList.toggle('-active'));
 });
 
-$('.btn.-insideHeight').click(function(e){
+document.querySelector('.btn.-insideHeight').onclick = function(e){
   e.preventDefault();
-  mq.insideHeight(800, 400, ()=> $(this).toggleClass('-active'));
+  mq.insideHeight(800, 400, ()=> this.classList.toggle('-active'));
 });
 
-$('.btn.-outsideHeight').click(function(e){
+document.querySelector('.btn.-outsideHeight').onclick = function(e){
   e.preventDefault();
-  mq.outsideHeight(800, 400, ()=> $(this).toggleClass('-active'));
+  mq.outsideHeight(800, 400, ()=> this.classList.toggle('-active'));
 });`},
   })
 
@@ -699,8 +677,6 @@ include /_modules/btn/btn
 `,
       js: { es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
@@ -709,14 +685,14 @@ import mq from "./mq";
 //(unecessary if it has been loaded in the mq.js file)
 import "mq-js/plugins/orientation";
 
-$('.btn.-landscape').click(function(e){
+document.querySelector('.btn.-landscape').onclick = function(e){
   e.preventDefault();
-  mq.orientation('landscape', ()=> $(this).toggleClass('-active'));
+  mq.orientation('landscape', ()=> this.classList.toggle('-active'));
 });
 
-$('.btn.-portrait').click(function(e){
+document.querySelector('.btn.-portrait').onclick = function(e){
   e.preventDefault();
-  mq.orientation('portrait', ()=> $(this).toggleClass('-active'));
+  mq.orientation('portrait', ()=> this.classList.toggle('-active'));
 });
 `},
   })
@@ -751,8 +727,6 @@ include /_modules/btn/btn
 `,
       js: { es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
@@ -761,25 +735,25 @@ import mq from "./mq";
 //(unecessary if it has been loaded in the mq.js file)
 import "mq-js/plugins/orientation";
 
-$('.btn.-exactRatio').click(function(e){
+document.querySelector('.btn.-exactRatio').onclick = function(e){
   e.preventDefault();
-  mq.ratio(1 / 2, ()=> $(this).toggleClass('-active'));
+  mq.ratio(1 / 2, ()=> this.classList.toggle('-active'));
 });
-$('.btn.-minRatio').click(function(e){
+document.querySelector('.btn.-minRatio').onclick = function(e){
   e.preventDefault();
-  mq.minRatio(1 / 2, ()=> $(this).toggleClass('-active'));
+  mq.minRatio(1 / 2, ()=> this.classList.toggle('-active'));
 });
-$('.btn.-maxRatio').click(function(e){
+document.querySelector('.btn.-maxRatio').onclick = function(e){
   e.preventDefault();
-  mq.maxRatio(1 / 2, ()=> $(this).toggleClass('-active'));
+  mq.maxRatio(1 / 2, ()=> this.classList.toggle('-active'));
 });
-$('.btn.-insideRatio').click(function(e){
+document.querySelector('.btn.-insideRatio').onclick = function(e){
   e.preventDefault();
-  mq.insideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
+  mq.insideRatio(1 / 2, 3 / 2, ()=> this.classList.toggle('-active'));
 });
-$('.btn.-outsideRatio').click(function(e){
+document.querySelector('.btn.-outsideRatio').onclick = function(e){
   e.preventDefault();
-  mq.outsideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
+  mq.outsideRatio(1 / 2, 3 / 2, ()=> this.classList.toggle('-active'));
 });
 `},
   })
@@ -795,9 +769,9 @@ include /_modules/btn/btn
     | Clickable at ratios thinner than "1 / 2" (inclusive)
 `,
       js: { es6: `
-$('.btn.-maxRatioString').click(function(e){
+document.querySelector('.btn.-maxRatioString').onclick = function(e){
   e.preventDefault();
-  mq.maxRatio('1 / 2', ()=> $(this).toggleClass('-active'));
+  mq.maxRatio('1 / 2', ()=> this.classList.toggle('-active'));
 });
 `},
   })
@@ -816,8 +790,6 @@ include /_modules/btn/btn
 `,
       js: { es6: `
 //module js file
-"use strict";
-import $ from 'jquery';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
@@ -826,14 +798,17 @@ import mq from "./mq";
 //(unecessary if it has been loaded in the mq.js file)
 import "mq-js/plugins/reactTo";
 
+const button = document.querySelector('.btn.-reactTo');
+
 mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size)=> {
-  // Toggle the "-active" class when crossing one of the mq boundaries
-  $('.btn.-reactTo').toggleClass('-active');
+
+  // Add the "-active" class when active, remove it when inactive
+  button.classList.toggle('-active', is_active);
 
   // is_active = did "mq.inside(800, 1000)" return true?
   // screen_size = an object holding the screen height, width, and ratio at the point when the screen crossed an mq boundary
-  console.log(is_active, screen_size)
+  console.log(is_active, screen_size);
 });
-$('.btn.-reactTo').click(e => e.preventDefault());
+button.onclick = e => e.preventDefault();
 `},
   })

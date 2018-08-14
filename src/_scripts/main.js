@@ -101,9 +101,11 @@ toggler('.btn.-insideRatio', ()=> mq.insideRatio(1 / 2, 3 / 2));
 toggler('.btn.-insideRatio', ()=> mq.outsideRatio(1 / 2, 3 / 2));
 toggler('.btn.-maxRatioString', ()=> mq.maxRatio('1 / 2'));
 
+const _$btn = _$('.btn.-reactTo');
+
 mq.reactTo(()=> mq.inside(800, 900), (is_active, screen_size)=> {
-  _$('.btn.-reactTo').classList.toggle('-active');
+  _$btn.classList.toggle('-active');
   console.log(is_active, screen_size)
 });
 
-_$('.btn.-reactTo').onclick = e => e.preventDefault();
+_$btn.onclick = e => e.preventDefault();
