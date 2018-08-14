@@ -497,7 +497,7 @@ document.querySelector('.btn.-outside').onclick = function(e){
 mq.outside('medium', ()=> { /* ... */ });
 
 // ...to this code
-mq.outsideWidth('medium', ()=> { /* ... */ });`},
+mq.outsideWidth('medium', ()=> { /* ... */ });`,
 
   es5: `
 // This code has identical functionality...
@@ -505,7 +505,8 @@ mq.outside('medium', function() { /* ... */ });
 
 // ...to this code
 mq.outsideWidth('medium', function() { /* ... */ });`,
-  })
+  }
+})
 
   :marked
     ## Creating media query variables
