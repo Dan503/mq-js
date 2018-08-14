@@ -14,54 +14,17 @@ block content
 
     If you haven't looked into [mq-scss](https://www.npmjs.com/package/mq-scss) I highly recommend checking it out. It makes writing media queries far easier than any other method.
 
-  h2 Contents
-  -
-    var headings = {
-      'Setup' : 'setup',
-      'mq.max' : 'mq-max',
-      'mq.min' : 'mq-min',
-      'mq.inside' : 'mq-inside',
-      'mq.outside' : 'mq-outside',
-      'Creating media query variables' : 'creating-media-query-variables',
-      'Using pure pixel values' : 'using-pure-pixel-values',
-      'Running on window resize' : 'running-on-window-resize',
-      'Plugins' : {
-        id: 'plugins',
-        list: {
-          'Height plugin' : '-height-plugin',
-          'Orientation plugin' : '-orientation-plugin',
-          'Ratio plugin' : '-ratio-plugin',
-          'reactTo plugin' : '-reactto-plugin',
-        }
-      },
-    };
+  details
+    summary: h2 Setup
 
-  mixin menuItem(heading, value)
-    -
-      var isObj = typeof value === 'object';
-      var href = `#${isObj ? value.id : value}`;
+    :marked
+      Firstly, use `npm install mq-js --save` to add the npm module to your project. If you haven't used npm before, read through [this documentation](https://docs.npmjs.com/getting-started/installing-node) to get set up.
 
-    li: a(href=href, style='color: #000;')= heading
-      if isObj
-        ol
-          each subId, subHeading in value.list
-            +menuItem(subHeading, subId)
+      Now, create this simple `mq.js` file to set up your website breakpoints.
 
-  ol
-    each id, heading in headings
-      +menuItem(heading, id)
-
-
-  :marked
-    ## Setup
-
-    Firstly, use `npm install mq-js --save` to add the npm module to your project. If you haven't used npm before, read through [this documentation](https://docs.npmjs.com/getting-started/installing-node) to get set up.
-
-    Now, create this simple `mq.js` file to set up your website breakpoints.
-
-  +demo({
-    js: {
-es6: `
+    +demo({
+      js: {
+  es6: `
 //mq.js file
 
 import MQ from "mq-js";
@@ -82,7 +45,7 @@ export default mq;
 //Gives easy access to your site breakpoints
 export { mq, bp }`,
 
-  es5: `
+    es5: `
 //mq.js file
 
 var MQ = require('mq-js');
@@ -104,24 +67,24 @@ module.exports.default = mq;
 module.exports.bp = bp;
 module.exports.mq = mq;
 `
-    }
-  })
+      }
+    })
 
-  p(style="text-align: center; font-size: 2em")
-    strong OR
+    p(style="text-align: center; font-size: 2em")
+      strong OR
 
-  p Alternatively you can save the breakpoints into a JSON file, then import them.
+    p Alternatively you can save the breakpoints into a JSON file, then import them.
 
-  +demo({
-    json: `
+    +demo({
+      json: `
 {
   "//" : "This is the breakpoints.json file",
   "small": 600,
   "medium": 980,
   "large": 1200
 }`,
-    js: {
-      es6: `
+      js: {
+        es6: `
 //mq.js file
 
 import MQ from "mq-js";
@@ -137,7 +100,7 @@ export default mq;
 //easier access to your site breakpoints
 export { mq, bp }`,
 
-      es5: `
+        es5: `
 //mq.js file
 
 var MQ = require('mq-js');
@@ -152,51 +115,50 @@ var mq = new MQ(bp);
 module.exports.mq = mq;
 
 //Gives easy access to your site breakpoints
-module.exports.bp = bp;
-        `
-      }
-  })
+module.exports.bp = bp;`
+        }
+    })
 
-  :marked
-    The above breakpoints are what I will be using throughout the examples in this documentation.
+    :marked
+      The above breakpoints are what I will be using throughout the examples in this documentation.
 
-    I'm providing 2 export statements in the examples. This makes it super easy to access your site breakpoints since it is just a matter of switching out your import statement when you need to. It also means that it doesn't matter if you pull the breakpoints in using JSON or define them directly in the `mq.js` file, the code to access them is the same either way.
+      I'm providing 2 export statements in the examples. This makes it super easy to access your site breakpoints since it is just a matter of switching out your import statement when you need to. It also means that it doesn't matter if you pull the breakpoints in using JSON or define them directly in the `mq.js` file, the code to access them is the same either way.
 
-  +demo({
-    js: {
-      es6: `
+    +demo({
+      js: {
+        es6: `
 //Without breakpoints
 import mq from './mq'
 
 //With breakpoints
 import { mq, bp } from './mq'`,
-      es5: `
+        es5: `
 //Import mq
 var mq = require('./mq').mq;
 
 //Import breakpoints
 var bp = require('./mq').bp;`,
-    }})
+      }})
 
-  :marked
-    Now that you have your break points set up, you can use them when calling the function without having to import them. I'll get to why you might want to import the `breakpoints` variable later. For now, just stick to only importing the `mq` variable on it's own.
+    :marked
+      Now that you have your break points set up, you can use them when calling the function without having to import them. I'll get to why you might want to import the `breakpoints` variable later. For now, just stick to only importing the `mq` variable on it's own.
 
+  details(open)
+    summary: h2 mq.max
 
-  :marked
-    ## mq.max
+    :marked
+      In the following example, the button will only turn green if you click it when the browser window is at a maximum width of 980px wide (ie. at or below the "medium" breakpoint).
 
-    In the following example, the button will only turn green if you click it when the browser window is at a maximum width of 980px wide (ie. at or below the "medium" breakpoint).
+      To help you figure out when the button is able to be clicked, the border of the button will turn green when it is clickable.
 
-    To help you figure out when the button is able to be clicked, the border of the button will turn green when it is clickable.
-
-  +demo({
-    html: `
+    +demo({
+      html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-max'})
     | Clickable at and below 980px screen width`,
-      js: {
-        es6: `
+        js: {
+          es6: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -214,7 +176,7 @@ document.querySelector('.btn.-max').onclick = function(e){
   })
 })`,
 
-  es5: `
+    es5: `
 //import the mq variable that was created in the setup stage
 var mq = require("./mq").mq;
 
@@ -230,21 +192,21 @@ document.querySelector('.btn.-max').onclick = function(e){
     console.log(screen_size);
   })
 })`
-    },
-  })
+      },
+    })
 
-  :marked
-    As you can see, you can easily access the `"medium"` breakpoint that you defined earlier by simply parsing a string as the breakpoint value. There is no need to import the `breakpoints` variable from the `mq.js` file to use the `"medium"` breakpoint.
+    :marked
+      As you can see, you can easily access the `"medium"` breakpoint that you defined earlier by simply parsing a string as the breakpoint value. There is no need to import the `breakpoints` variable from the `mq.js` file to use the `"medium"` breakpoint.
 
-    You can also use it in an if statement sort of format as shown below. All mq-js functions can be used in this `if` statement format. For the sake of brevity though, I'm just showing the `callback` format in the rest of these examples.
+      You can also use it in an if statement sort of format as shown below. All mq-js functions can be used in this `if` statement format. For the sake of brevity though, I'm just showing the `callback` format in the rest of these examples.
 
-  +demo({
-    html: `
+    +demo({
+      html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-maxIf'})
     | Clickable at and below 980px screen width`,
-      js: {es6: `
+        js: {es6: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -258,7 +220,7 @@ document.querySelector('.btn.-maxIf').onclick = function(e){
   }
 })`,
 
-  es5: `
+    es5: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -272,44 +234,45 @@ document.querySelector('.btn.-maxIf').onclick = function(e){
     self.classList.toggle('-active');
   }
 })`},
-  })
+    })
 
-  :marked
-    Notice that using the callback method gives you access to the screen size data at the time the button is clicked. The if statement format does not (or at least not without custom code).
+    :marked
+      Notice that using the callback method gives you access to the screen size data at the time the button is clicked. The if statement format does not (or at least not without custom code).
 
-    Also notice that I'm not binding and unbinding the click function on screen resize. By placing `mq` _**inside**_ the click function, it behaves very similarly to how media queries behave in css.
+      Also notice that I'm not binding and unbinding the click function on screen resize. By placing `mq` _**inside**_ the click function, it behaves very similarly to how media queries behave in css.
 
-    One last thing. If you prefer to explicitly state that the media query is targeting "width", `mq.max` can also be written as `mq.maxWidth`. It has identical functionality, it's just personal preference.
+      One last thing. If you prefer to explicitly state that the media query is targeting "width", `mq.max` can also be written as `mq.maxWidth`. It has identical functionality, it's just personal preference.
 
-  +demo({
-      js: {es6: `
+    +demo({
+        js: {es6: `
 // This code has identical functionality...
 mq.max('medium', ()=> { /* ... */ });
 
 // ...to this code
 mq.maxWidth('medium', ()=> { /* ... */ });`,
 
-  es5: `
+    es5: `
 // This code has identical functionality...
 mq.max('medium', function() { /* ... */ });
 
 // ...to this code
 mq.maxWidth('medium', function() { /* ... */ });`,
-},
-  })
+  },
+    })
 
-  :marked
-    ## mq.min
+  details
+    summary: h2 mq.min
 
-    In the following example, the button will only turn green if you click it when the browser window is at a minimum width of 981px wide (ie. above the "medium" breakpoint).
+    :marked
+      In the following example, the button will only turn green if you click it when the browser window is at a minimum width of 981px wide (ie. above the "medium" breakpoint).
 
-  +demo({
-    html: `
+    +demo({
+      html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-min'})
     | Clickable at 981px screen width and above`,
-      js: {es6:`
+        js: {es6:`
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -326,7 +289,7 @@ document.querySelector('.btn.-min').onclick = function(e){
   })
 })`,
 
-  es5: `
+    es5: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -343,51 +306,52 @@ document.querySelector('.btn.-min').onclick = function(e){
     console.log(screen_size);
   })
 })`},
-  })
+    })
 
-  :marked
-    You might be wondering why 981px instead of 980px. While `mq.max` is _**inclusive**_ of the breakpoint value, `mq.min` is _**exclusive**_ of the breakpoint value. This serves two important purposes:
+    :marked
+      You might be wondering why 981px instead of 980px. While `mq.max` is _**inclusive**_ of the breakpoint value, `mq.min` is _**exclusive**_ of the breakpoint value. This serves two important purposes:
 
-    1. It prevents bugs from occurring in that 1px sweet spot where both would otherwise return true.
+      1. It prevents bugs from occurring in that 1px sweet spot where both would otherwise return true.
 
-    2. It aligns with how [mq-scss](https://www.npmjs.com/package/mq-scss) handles min and max width to prevent odd bugs where JavaScript is firing but the styles aren't there to support it (or vice versa).
+      2. It aligns with how [mq-scss](https://www.npmjs.com/package/mq-scss) handles min and max width to prevent odd bugs where JavaScript is firing but the styles aren't there to support it (or vice versa).
 
-    Also, like with `mq.max`, it can be written like `mq.minWidth` instead if you prefer.
+      Also, like with `mq.max`, it can be written like `mq.minWidth` instead if you prefer.
 
-  +demo({
-      js: { es6: `
+    +demo({
+        js: { es6: `
 // This code has identical functionality...
 mq.min('medium', ()=> { /* ... */ });
 
 // ...to this code
 mq.minWidth('medium', ()=> { /* ... */ });`,
 
-  es5: `
+    es5: `
 // This code has identical functionality...
 mq.min('medium', function() { /* ... */ });
 
 // ...to this code
 mq.minWidth('medium', function() { /* ... */ });`},
-  })
+    })
 
-  :marked
-    ## mq.inside
+  details
+    summary: h2 mq.inside
 
-    `mq.inside` works in much the same way as it does in [mq-scss](https://www.npmjs.com/package/mq-scss).
+    :marked
+      `mq.inside` works in much the same way as it does in [mq-scss](https://www.npmjs.com/package/mq-scss).
 
-    Instead of stating one value then calling the function, you state two values then call the function.
+      Instead of stating one value then calling the function, you state two values then call the function.
 
-    You can state the breakpoint values in any order but the function needs to be called last (if at all). The function will be triggered if the screen width sits between the two breakpoint values when it is called.
+      You can state the breakpoint values in any order but the function needs to be called last (if at all). The function will be triggered if the screen width sits between the two breakpoint values when it is called.
 
-    The smaller value always gets +1 for consistency with the mq-scss mixin and to prevent the issues mentioned above.
+      The smaller value always gets +1 for consistency with the mq-scss mixin and to prevent the issues mentioned above.
 
-  +demo({
-    html: `
+    +demo({
+      html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-inside'})
     | Clickable at and between 980px and 601px screen width`,
-      js: { es6: `
+        js: { es6: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -404,7 +368,7 @@ document.querySelector('.btn.-inside').onclick = function(e){
   })
 })`,
 
-  es5: `
+    es5: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -421,39 +385,42 @@ document.querySelector('.btn.-inside').onclick = function(e){
     console.log(screen_size);
   })
 })`},
-  })
+    })
 
-  :marked
-    It can also be written as `mq.insideWidth` if you prefer.
+    :marked
+      It can also be written as `mq.insideWidth` if you prefer.
 
-  +demo({
-      js: { es6: `
+    +demo({
+        js: { es6: `
 // This code has identical functionality...
 mq.inside('medium', ()=> { /* ... */ });
 
 // ...to this code
 mq.insideWidth('medium', ()=> { /* ... */ });`},
 
-  es5: `
+    es5: `
 // This code has identical functionality...
 mq.inside('medium', function() { /* ... */ });
 
 // ...to this code
 mq.insideWidth('medium', function() { /* ... */ });`,
-  })
+    })
 
-  :marked
-    ## mq.outside
+  details
+    summary: h2 mq.outside
 
-    `mq.outside` does what you would expect. It is the opposite of `mq.inside`. It will only fire if the screen width is outside of the two breakpoint values.
+    :marked
+      ## mq.outside
 
-  +demo({
-      html: `
+      `mq.outside` does what you would expect. It is the opposite of `mq.inside`. It will only fire if the screen width is outside of the two breakpoint values.
+
+    +demo({
+        html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-outside'})
     | Clickable outside of 980px to 601px screen widths`,
-      js: { es6: `
+        js: { es6: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -470,7 +437,7 @@ document.querySelector('.btn.-outside').onclick = function(e){
   })
 })`,
 
-  es5: `
+    es5: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -487,41 +454,43 @@ document.querySelector('.btn.-outside').onclick = function(e){
     console.log(screen_size);
   })
 })`},
-  })
-  :marked
-    It can also be written as `mq.outsideWidth` if you prefer.
+    })
+    :marked
+      It can also be written as `mq.outsideWidth` if you prefer.
 
-  +demo({
-      js: { es6: `
+    +demo({
+        js: { es6: `
 // This code has identical functionality...
 mq.outside('medium', ()=> { /* ... */ });
 
 // ...to this code
 mq.outsideWidth('medium', ()=> { /* ... */ });`,
 
-  es5: `
+    es5: `
 // This code has identical functionality...
 mq.outside('medium', function() { /* ... */ });
 
 // ...to this code
 mq.outsideWidth('medium', function() { /* ... */ });`,
-  }
-})
+    }
+  })
 
-  :marked
-    ## Creating media query variables
+  details
+    summary: h2 Creating media query variables
+    :marked
+      ## Creating media query variables
 
-    One of the big features in mq-scss is that you can easily create meaningful media query variables.
+      One of the big features in mq-scss is that you can easily create meaningful media query variables.
 
-    Here is how to do a similar sort of thing using mq-js:
+      Here is how to do a similar sort of thing using mq-js:
 
-  +demo({
-    html: `
+    +demo({
+      html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-mqVar'})
     | when clicked, turns green at and below a 980px screen width, turns grey above 980px`,
-      js: { es6: `
+        js: { es6: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -546,7 +515,7 @@ document.querySelector('.btn.-mqVar').onclick = function(e){
 
 })`,
 
-  es5: `
+    es5: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -574,20 +543,21 @@ document.querySelector('.btn.-mqVar').onclick = function(e){
   }
 
 })`}
-  })
+    })
 
-  :marked
-    ## Using pure pixel values
+  details
+    summary: h2 Using pure pixel values
 
-    Just because you have access to the breakpoint values, it doesn't mean that you have to use them. mq-js still works if you just parse solid numbers into it.
+    :marked
+      Just because you have access to the breakpoint values, it doesn't mean that you have to use them. mq-js still works if you just parse solid numbers into it.
 
-  +demo({
-    html: `
+    +demo({
+      html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-pxVal'})
     | Clickable at and below 1000px screen width`,
-      js: { es6: `
+        js: { es6: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -604,7 +574,7 @@ document.querySelector('.btn.-pxVal').onclick = function(e){
   })
 })`,
 
-  es5: `
+    es5: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -620,13 +590,13 @@ document.querySelector('.btn.-pxVal').onclick = function(e){
     console.log(screen_size);
   })
 })`},
-  })
+    })
 
-  :marked
-    Remember that if you use `mq.min` it will be like adding 1 pixel to the value that you provide.
+    :marked
+      Remember that if you use `mq.min` it will be like adding 1 pixel to the value that you provide.
 
-  +demo({
-    html: `
+    +demo({
+      html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-pxValMin'})
@@ -648,7 +618,7 @@ document.querySelector('.btn.-pxValMin').onclick = function(e){
   })
 })`,
 
-  es5: `
+    es5: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -665,15 +635,15 @@ document.querySelector('.btn.-pxValMin').onclick = function(e){
     console.log(screen_size);
   })
 })`},
-  })
+    })
 
-  :marked
-    What if you only want to tweak one of the normal breakpoint values so that it is just a few pixels larger than the base break point? That is when it is useful to import the `breakpoint` variable.
+    :marked
+      What if you only want to tweak one of the normal breakpoint values so that it is just a few pixels larger than the base break point? That is when it is useful to import the `breakpoint` variable.
 
-    In the following example, I'm importing the breakpoints variable and using it to add 30px to the `"medium"` breakpoint.
+      In the following example, I'm importing the breakpoints variable and using it to add 30px to the `"medium"` breakpoint.
 
-  +demo({
-    html: `
+    +demo({
+      html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-bpVar'})
@@ -715,24 +685,25 @@ document.querySelector('.btn.-bpVar').onclick = function(e){
     console.log(screen_size);
   })
 })`},
-  })
+    })
 
-  :marked
-    ## Running on window resize
+  details
+    summary: h2 Running on window resize
 
-    mq-js is just a simple function that checks the current window size when it is called. It doesn't do anything fancy when you resize the window. With a little extra code though, you can easily make it run on window resize.
+    :marked
+      mq-js is just a simple function that checks the current window size when it is called. It doesn't do anything fancy when you resize the window. With a little extra code though, you can easily make it run on window resize.
 
-    The following example uses [Debounce](https://www.npmjs.com/package/debounce) to prevent the function from firing until the window has finished resizing. This improves performance and can avoid odd bugs from occurring.
+      The following example uses [Debounce](https://www.npmjs.com/package/debounce) to prevent the function from firing until the window has finished resizing. This improves performance and can avoid odd bugs from occurring.
 
-    The button will activate when the screen is at the correct width and deactivate when not. Clicking the button does nothing.
+      The button will activate when the screen is at the correct width and deactivate when not. Clicking the button does nothing.
 
-  +demo({
-    html: `
+    +demo({
+      html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-onResize'})
     | Activates at and between 980px and 601px screen width`,
-      js: { es6: `
+        js: { es6: `
 //module js file
 
 //import debounce from npm for better performance
@@ -750,7 +721,7 @@ import mq from "./mq";
 
 window.onresize = debounce(toggleBtn, 200);`,
 
-  es5: `
+    es5: `
 //module js file
 
 //import debounce from npm for better performance
@@ -767,17 +738,18 @@ var mq = require("./mq").mq;
 })();
 
 window.onresize = debounce(toggleBtn, 200);`},
-  })
+    })
 
-  :marked
-    ## Plugins
+  details
+    summary: h2 Plugins
 
-    As of version 2.0.0, mq-js now supports various plugins that allow it to fully replicate everything that mq-scss can do.
+    :marked
+      As of version 2.0.0, mq-js now supports various plugins that allow it to fully replicate everything that mq-scss can do.
 
-    These plugins can be loaded from the mq.js file to avoid the need for loading them every time you wish to use them.
+      These plugins can be loaded from the mq.js file to avoid the need for loading them every time you wish to use them.
 
-  +demo({
-    js: { es6: `
+    +demo({
+      js: { es6: `
 //Loading plugins in the mq.js file for global usage
 
 import MQ from "mq-js";
@@ -807,7 +779,7 @@ export default mq;
 //Gives easy access to your site breakpoints
 export { mq, breakpoints }`,
 
-  es5: `
+    es5: `
 //mq.js file
 
 var MQ = require('mq-js');
@@ -839,12 +811,12 @@ module.exports.default = mq;
 module.exports.bp = bp;
 module.exports.mq = mq;
 `},
-  })
+    })
 
-  :marked
-    Alternatively, you can load all of the plugins in one statement by simply importing `mq-js/ultimate`;
-  +demo({
-      js: { es6: `
+    :marked
+      Alternatively, you can load all of the plugins in one statement by simply importing `mq-js/ultimate`;
+    +demo({
+        js: { es6: `
 //import all of the plugins at once by importing mq-js/ultimate instead of mq-js
 import MQ from "mq-js/ultimate";
 `,
@@ -853,15 +825,16 @@ import MQ from "mq-js/ultimate";
 //import all of the plugins at once by importing "mq-js/ultimate" instead of "mq-js"
 var MQ = require("mq-js/ultimate");
 `},
-  })
+    })
 
-  :marked
-    ### `height` plugin
+    details
+      summary: h3 #[code height] plugin
 
-    This one is pretty straight forward, it works in pretty much the same way as `min`, `max`, `inside` and `outside` except it targets height instead of width. Available functions are `mq.minHeight`, `mq.maxHeight`, `mq.insideHeight` and `mq.outsideHeight`.
+      :marked
+        This one is pretty straight forward, it works in pretty much the same way as `min`, `max`, `inside` and `outside` except it targets height instead of width. Available functions are `mq.minHeight`, `mq.maxHeight`, `mq.insideHeight` and `mq.outsideHeight`.
 
-  +demo({
-    html: `
+      +demo({
+        html: `
 include /_modules/btn/btn
 .example
   ul
@@ -878,7 +851,7 @@ include /_modules/btn/btn
       +btn({classes:'-outsideHeight'})
         | Clickable outside of 401px and 800px screen height
 `,
-      js: { es6: `
+        js: { es6: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -908,7 +881,7 @@ document.querySelector('.btn.-outsideHeight').onclick = function(e){
   mq.outsideHeight(800, 400, ()=> this.classList.toggle('-active'));
 });`,
 
-  es5: `
+    es5: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -949,18 +922,19 @@ document.querySelector('.btn.-outsideHeight').onclick = function(e){
     self.classList.toggle('-active');
   });
 });`},
-  })
+    })
 
-  :markdown
-    The height plugin is the main reason why I have provided the alternate names for the width based commands. When you are combining height and width media queries in an if statement it can be easier to read `mq.minWidth(800) && mq.minHeight(400)` than `mq.min(800) && mq.minHeight(400)`.
+      :markdown
+        The height plugin is the main reason why I have provided the alternate names for the width based commands. When you are combining height and width media queries in an if statement it can be easier to read `mq.minWidth(800) && mq.minHeight(400)` than `mq.min(800) && mq.minHeight(400)`.
 
-  :marked
-    ### `orientation` plugin
+    details
+      summary: h3 #[code orientation] plugin
 
-    This one is even simpler. One little gotcha is that there is no "square" orientation type in css. There is only portrait and landscape types. Square screen types seem to fall under `portrait` in css so I've made square screen types fall under `portrait` in mq-js as well.
+      :marked
+        This one is even simpler. One little gotcha is that there is no "square" orientation type in css. There is only portrait and landscape types. Square screen types seem to fall under `portrait` in css so I've made square screen types fall under `portrait` in mq-js as well.
 
-  +demo({
-    html: `
+      +demo({
+        html: `
 include /_modules/btn/btn
 .example
   ul
@@ -971,7 +945,7 @@ include /_modules/btn/btn
       +btn({classes:'-portrait'})
         | Clickable on portrait and square screens
 `,
-      js: { es6: `
+        js: { es6: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -992,7 +966,7 @@ document.querySelector('.btn.-portrait').onclick = function(e){
 });
 `,
 
-  es5: `
+    es5: `
 //import the mq variable that was created in the setup stage
 var mq = require("./mq").mq;
 
@@ -1015,17 +989,18 @@ document.querySelector('.btn.-portrait').onclick = function(e){
   });
 });
 `},
-  })
+    })
 
-  :marked
-    ### `ratio` plugin
+    details
+      summary: h3 #[code ratio] plugin
 
-    This one is a little more complex. The ratio's for mq-js are always formatted as `[width] / [height]`. Ratios work off of width more so than height in CSS so mq-js does as well. So a ratio of `2 / 3` is counted as being _larger_ than a ratio of `1 / 3` since `2 / 3` is wider than `1 / 3`.
+      :marked
+        This one is a little more complex. The ratio's for mq-js are always formatted as `[width] / [height]`. Ratios work off of width more so than height in CSS so mq-js does as well. So a ratio of `2 / 3` is counted as being _larger_ than a ratio of `1 / 3` since `2 / 3` is wider than `1 / 3`.
 
-    With this in mind, the ratio plugin provides you with all the typical ranges but for ratios.
+        With this in mind, the ratio plugin provides you with all the typical ranges but for ratios.
 
-  +demo({
-    html: `
+      +demo({
+        html: `
 include /_modules/btn/btn
 .example
   ul
@@ -1045,7 +1020,7 @@ include /_modules/btn/btn
       +btn({classes:'-outsideRatio'})
         | Clickable at widths outside ratios "1 / 2" and "3 / 2"
 `,
-      js: { es6: `
+        js: { es6: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -1077,7 +1052,7 @@ document.querySelector('.btn.-outsideRatio').onclick = function(e){
 });
 `,
 
-  es5: `
+    es5: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -1123,26 +1098,26 @@ document.querySelector('.btn.-outsideRatio').onclick = function(e){
   });
 });
 `},
-  })
+    })
 
-  :marked
-    You can also provide the ratio as a string instead.
+      :marked
+        You can also provide the ratio as a string instead.
 
-  +demo({
-    html: `
+      +demo({
+        html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-maxRatio'})
     | Clickable at ratios thinner than "1 / 2" (inclusive)
 `,
-      js: { es6: `
+        js: { es6: `
 document.querySelector('.btn.-maxRatioString').onclick = function(e){
   e.preventDefault();
   mq.maxRatio('1 / 2', ()=> this.classList.toggle('-active'));
 });
 `,
 
-  es5: `
+    es5: `
 document.querySelector('.btn.-maxRatioString').onclick = function(e){
   e.preventDefault();
   var self = this;
@@ -1151,21 +1126,22 @@ document.querySelector('.btn.-maxRatioString').onclick = function(e){
   });
 });
 `},
-  })
+      })
 
-  :marked
-    ### `reactTo` plugin
+    details
+      summary: h3 #[code reactTo] plugin
 
-    This plugin is a bit different to the others. The primary purpose of this plugin is to fire off functions when a media query either enters or leaves a defined screen size range.
+      :marked
+        This plugin is a bit different to the others. The primary purpose of this plugin is to fire off functions when a media query either enters or leaves a defined screen size range.
 
-  +demo({
-    html: `
+      +demo({
+        html: `
 include /_modules/btn/btn
 .example
   +btn({classes:'-reactTo'})(disabled="true")
     | Never clickable, toggles active state when mq changes truthfulness
 `,
-      js: { es6: `
+        js: { es6: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -1188,9 +1164,9 @@ mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size)=> {
 });
 
 button.onclick = e => e.preventDefault();
-`,
+  `,
 
-  es5: `
+    es5: `
 //module js file
 
 //import the mq variable that was created in the setup stage
@@ -1222,4 +1198,4 @@ button.onclick = function(e) {
   e.preventDefault()
 };
 `},
-  })
+    })
