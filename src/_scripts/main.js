@@ -82,7 +82,7 @@ toggler('.btn.-bpVar', ()=> mq.min(bp.medium + 30));
 _$('.btn.-onResize').onclick = (e) => e.preventDefault();
 
 function toggleBtn(){
-  _$('.btn.-onResize').classList.toggle('-active', ()=> mq.inside('medium', 'small'));
+  _$('.btn.-onResize').classList.toggle('-active', mq.inside('medium', 'small'));
 };
 
 toggleBtn();
