@@ -213,6 +213,23 @@ document.querySelector('.btn.-max').onclick = function(e){
     console.log(screen_size);
   })
 })`,
+
+  es5: `
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-max').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  //Use your breakpoints by parsing in a string
+  mq.max('medium', function(screen_size) {
+    self.classList.toggle('-active');
+
+    //logs the screen height, width, and ratio at the time the button was clicked
+    console.log(screen_size);
+  })
+})`
     },
   })
 
@@ -239,6 +256,21 @@ document.querySelector('.btn.-maxIf').onclick = function(e){
   if (mq.max('medium')){
     this.classList.toggle('-active');
   }
+})`,
+
+  es5: `
+//module js file
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-maxIf').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  if (mq.max('medium')){
+    self.classList.toggle('-active');
+  }
 })`},
   })
 
@@ -255,7 +287,15 @@ document.querySelector('.btn.-maxIf').onclick = function(e){
 mq.max('medium', ()=> { /* ... */ });
 
 // ...to this code
-mq.maxWidth('medium', ()=> { /* ... */ });`},
+mq.maxWidth('medium', ()=> { /* ... */ });`,
+
+  es5: `
+// This code has identical functionality...
+mq.max('medium', function() { /* ... */ });
+
+// ...to this code
+mq.maxWidth('medium', function() { /* ... */ });`,
+},
   })
 
   :marked
@@ -284,6 +324,24 @@ document.querySelector('.btn.-min').onclick = function(e){
     //log the screen width at the time the button was clicked
     console.log(screen_size);
   })
+})`,
+
+  es5: `
+//module js file
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-min').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  mq.min('medium', function(screen_size) {
+    self.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
 })`},
   })
 
@@ -302,7 +360,14 @@ document.querySelector('.btn.-min').onclick = function(e){
 mq.min('medium', ()=> { /* ... */ });
 
 // ...to this code
-mq.minWidth('medium', ()=> { /* ... */ });`},
+mq.minWidth('medium', ()=> { /* ... */ });`,
+
+  es5: `
+// This code has identical functionality...
+mq.min('medium', function() { /* ... */ });
+
+// ...to this code
+mq.minWidth('medium', function() { /* ... */ });`},
   })
 
   :marked
@@ -337,6 +402,24 @@ document.querySelector('.btn.-inside').onclick = function(e){
     //log the screen width at the time the button was clicked
     console.log(screen_size);
   })
+})`,
+
+  es5: `
+//module js file
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-inside').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  mq.inside('medium', 'small', function(screen_size) {
+    self.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
 })`},
   })
 
@@ -350,6 +433,13 @@ mq.inside('medium', ()=> { /* ... */ });
 
 // ...to this code
 mq.insideWidth('medium', ()=> { /* ... */ });`},
+
+  es5: `
+// This code has identical functionality...
+mq.inside('medium', function() { /* ... */ });
+
+// ...to this code
+mq.insideWidth('medium', function() { /* ... */ });`,
   })
 
   :marked
@@ -378,6 +468,24 @@ document.querySelector('.btn.-outside').onclick = function(e){
     //log the screen width at the time the button was clicked
     console.log(screen_size);
   })
+})`,
+
+  es5: `
+//module js file
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-outside').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  mq.outside('medium', 'small', function(screen_size) {
+    self.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
 })`},
   })
   :marked
@@ -390,6 +498,13 @@ mq.outside('medium', ()=> { /* ... */ });
 
 // ...to this code
 mq.outsideWidth('medium', ()=> { /* ... */ });`},
+
+  es5: `
+// This code has identical functionality...
+mq.outside('medium', function() { /* ... */ });
+
+// ...to this code
+mq.outsideWidth('medium', function() { /* ... */ });`,
   })
 
   :marked
@@ -412,23 +527,52 @@ include /_modules/btn/btn
 import mq from "./mq";
 
 //sets up the MQ_btn media queries
-const MQ_btn = state => ({
-  active: () => mq.max('medium'),
-  inactive: () => mq.min('medium'),
-}[state]());
+const MQ_btn = {
+  active: ()=> mq.max('medium'),
+  inactive: ()=> mq.min('medium'),
+};
 
 document.querySelector('.btn.-mqVar').onclick = function(e){
   e.preventDefault();
 
-  if (MQ_btn('active')){
+  if (MQ_btn.active()){
     this.classList.toggle('-active');
   }
 
-  if (MQ_btn('inactive')){
-    $(this).toggleClass('-inactive');
+  if (MQ_btn.inactive()){
+    this.classList.toggle('-inactive');
   }
 
-})`},
+})`,
+
+  es5: `
+//module js file
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+//sets up the MQ_btn media queries
+const MQ_btn = {
+  active: function() {
+    return mq.max('medium');
+  },
+  inactive: function() {
+    return mq.min('medium');
+  }
+};
+
+document.querySelector('.btn.-mqVar').onclick = function(e){
+  e.preventDefault();
+
+  if (MQ_btn.active()){
+    this.classList.toggle('-active');
+  }
+
+  if (MQ_btn.inactive()){
+    this.classList.toggle('-inactive');
+  }
+
+})`}
   })
 
   :marked
@@ -457,6 +601,23 @@ document.querySelector('.btn.-pxVal').onclick = function(e){
     //log the screen size at the time the button was clicked
     console.log(screen_size);
   })
+})`,
+
+  es5: `
+//module js file
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-pxVal').onclick = function(e){
+  e.preventDefault();
+
+  mq.max(1000, function(screen_size) {
+    this.classList.toggle('-active');
+
+    //log the screen size at the time the button was clicked
+    console.log(screen_size);
+  })
 })`},
   })
 
@@ -480,6 +641,24 @@ document.querySelector('.btn.-pxValMin').onclick = function(e){
 
   mq.min(1000, (screen_size)=>{
     this.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
+})`,
+
+  es5: `
+//module js file
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+document.querySelector('.btn.-pxValMin').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  mq.min(1000, function(screen_size) {
+    self.classList.toggle('-active');
 
     //log the screen width at the time the button was clicked
     console.log(screen_size);
@@ -514,6 +693,26 @@ document.querySelector('.btn.-bpVar').onclick = function(e){
     //log the screen width at the time the button was clicked
     console.log(screen_size);
   })
+})`,
+
+  es5: `
+//module js file
+
+//import BOTH the mq variable AND the breakpoints variable that were created in the setup stage
+var mq = require("./mq").mq;
+var bp = require("./mq").bp;
+
+document.querySelector('.btn.-bpVar').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+
+  //Adding 30px to the base "medium" breakpoint
+  mq.min(bp.medium + 30, function(screen_size) {
+    self.classList.toggle('-active');
+
+    //log the screen width at the time the button was clicked
+    console.log(screen_size);
+  })
 })`},
   })
 
@@ -535,20 +734,36 @@ include /_modules/btn/btn
       js: { es6: `
 //module js file
 
-//import debounce for better performance
+//import debounce from npm for better performance
+//https://www.npmjs.com/package/debounce
+//(needs installing with "npm i debounce")
 import debounce from 'debounce';
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-function toggleBtn(){
-  if (mq.inside('medium', 'small')){
-    $('.btn.-onResize').addClass('-active');
-  } else {
-    $('.btn.-onResize').removeClass('-active');
-  }
-};
-toggleBtn();
+(function toggleBtn(){
+  const button = document.querySelector('.btn.-onResize');
+  button.classList.toggle('-active', mq.inside('medium', 'small'));
+})();
+
+window.onresize = debounce(toggleBtn, 200);`,
+
+  es5: `
+//module js file
+
+//import debounce from npm for better performance
+//https://www.npmjs.com/package/debounce
+//(needs installing with "npm i debounce")
+var debounce = require("debounce");
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+(function toggleBtn(){
+  var button = document.querySelector('.btn.-onResize');
+  button.classList.toggle('-active', mq.inside('medium', 'small'));
+})();
 
 window.onresize = debounce(toggleBtn, 200);`},
   })
@@ -589,7 +804,40 @@ const mq = new MQ(breakpoints);
 export default mq;
 
 //Gives easy access to your site breakpoints
-export { mq, breakpoints }`},
+export { mq, breakpoints }`,
+
+  es5: `
+//mq.js file
+
+var MQ = require('mq-js');
+
+//Enables the height plugin globally
+require('mq-js/plugins/height');
+
+//Enables the orientation plugin globally
+require("mq-js/plugins/orientation");
+
+//Enables the ratio plugin globally
+require("mq-js/plugins/ratio");
+
+
+//Define your Site break points here
+var breakpoints = {
+  small: 600,
+  medium: 980,
+  large: 1200
+}
+
+//Creates the media query functions
+var mq = new MQ(breakpoints);
+
+//Export mq by default
+module.exports.default = mq;
+
+//Gives easy access to your site breakpoints
+module.exports.bp = bp;
+module.exports.mq = mq;
+`},
   })
 
   :marked
@@ -598,6 +846,11 @@ export { mq, breakpoints }`},
       js: { es6: `
 //import all of the plugins at once by importing mq-js/ultimate instead of mq-js
 import MQ from "mq-js/ultimate";
+`,
+
+  es5: `
+//import all of the plugins at once by importing "mq-js/ultimate" instead of "mq-js"
+var MQ = require("mq-js/ultimate");
 `},
   })
 
@@ -631,7 +884,7 @@ include /_modules/btn/btn
 import mq from "./mq";
 
 //enables the use of minHeight, maxHeight, insideHeight and outsideHeight
-//(unecessary if it has been loaded in the mq.js file)
+//(unnecessary if it has been loaded in the mq.js file)
 import "mq-js/plugins/height";
 
 document.querySelector('.btn.-maxHeight').onclick = function(e){
@@ -652,6 +905,48 @@ document.querySelector('.btn.-insideHeight').onclick = function(e){
 document.querySelector('.btn.-outsideHeight').onclick = function(e){
   e.preventDefault();
   mq.outsideHeight(800, 400, ()=> this.classList.toggle('-active'));
+});`,
+
+  es5: `
+//module js file
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+//enables the use of minHeight, maxHeight, insideHeight and outsideHeight
+//(unnecessary if it has been loaded in the mq.js file)
+require("mq-js/plugins/height");
+
+document.querySelector('.btn.-maxHeight').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.maxHeight(600, function(){
+    self.classList.toggle('-active');
+  });
+});
+
+document.querySelector('.btn.-minHeight').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.minHeight(600, function(){
+    self.classList.toggle('-active');
+  });
+});
+
+document.querySelector('.btn.-insideHeight').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.insideHeight(800, 400, function(){
+    self.classList.toggle('-active');
+  });
+});
+
+document.querySelector('.btn.-outsideHeight').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.outsideHeight(800, 400, function(){
+    self.classList.toggle('-active');
+  });
 });`},
   })
 
@@ -682,7 +977,7 @@ include /_modules/btn/btn
 import mq from "./mq";
 
 //enables the use of mq.orientation
-//(unecessary if it has been loaded in the mq.js file)
+//(unnecessary if it has been loaded in the mq.js file)
 import "mq-js/plugins/orientation";
 
 document.querySelector('.btn.-landscape').onclick = function(e){
@@ -693,6 +988,30 @@ document.querySelector('.btn.-landscape').onclick = function(e){
 document.querySelector('.btn.-portrait').onclick = function(e){
   e.preventDefault();
   mq.orientation('portrait', ()=> this.classList.toggle('-active'));
+});
+`,
+
+  es5: `
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+//enables the use of mq.orientation
+require("mq-js/plugins/orientation");
+
+document.querySelector('.btn.-landscape').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.orientation('landscape', function(){
+    self.classList.toggle('-active');
+  });
+});
+
+document.querySelector('.btn.-portrait').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.orientation('portrait', function(){
+    self.classList.toggle('-active');
+  });
 });
 `},
   })
@@ -732,8 +1051,8 @@ include /_modules/btn/btn
 import mq from "./mq";
 
 //Enables the use of ratio, minRatio, maxRatio, insideRatio and outsideRatio
-//(unecessary if it has been loaded in the mq.js file)
-import "mq-js/plugins/orientation";
+//(unnecessary if it has been loaded in the mq.js file)
+import "mq-js/plugins/ratio";
 
 document.querySelector('.btn.-exactRatio').onclick = function(e){
   e.preventDefault();
@@ -755,6 +1074,53 @@ document.querySelector('.btn.-outsideRatio').onclick = function(e){
   e.preventDefault();
   mq.outsideRatio(1 / 2, 3 / 2, ()=> this.classList.toggle('-active'));
 });
+`,
+
+  es5: `
+//module js file
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+//Enables the use of ratio, minRatio, maxRatio, insideRatio and outsideRatio
+//(unnecessary if it has been loaded in the mq.js file)
+require("mq-js/plugins/ratio");
+
+document.querySelector('.btn.-exactRatio').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.ratio(1 / 2, function(){
+    self.classList.toggle('-active');
+  });
+});
+document.querySelector('.btn.-minRatio').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.minRatio(1 / 2, function(){
+    self.classList.toggle('-active')
+  });
+});
+document.querySelector('.btn.-maxRatio').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.maxRatio(1 / 2, function(){
+    self.classList.toggle('-active');
+  });
+});
+document.querySelector('.btn.-insideRatio').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.insideRatio(1 / 2, 3 / 2, function(){
+    self.classList.toggle('-active');
+  });
+});
+document.querySelector('.btn.-outsideRatio').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.outsideRatio(1 / 2, 3 / 2, function(){
+    self.classList.toggle('-active');
+  });
+});
 `},
   })
 
@@ -772,6 +1138,16 @@ include /_modules/btn/btn
 document.querySelector('.btn.-maxRatioString').onclick = function(e){
   e.preventDefault();
   mq.maxRatio('1 / 2', ()=> this.classList.toggle('-active'));
+});
+`,
+
+  es5: `
+document.querySelector('.btn.-maxRatioString').onclick = function(e){
+  e.preventDefault();
+  var self = this;
+  mq.maxRatio('1 / 2', function(){
+    self.classList.toggle('-active');
+  });
 });
 `},
   })
@@ -795,7 +1171,7 @@ include /_modules/btn/btn
 import mq from "./mq";
 
 //Enables the use of reactTo
-//(unecessary if it has been loaded in the mq.js file)
+//(unnecessary if it has been loaded in the mq.js file)
 import "mq-js/plugins/reactTo";
 
 const button = document.querySelector('.btn.-reactTo');
@@ -809,6 +1185,40 @@ mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size)=> {
   // screen_size = an object holding the screen height, width, and ratio at the point when the screen crossed an mq boundary
   console.log(is_active, screen_size);
 });
+
 button.onclick = e => e.preventDefault();
+`,
+
+  es5: `
+//module js file
+
+//import the mq variable that was created in the setup stage
+var mq = require("./mq").mq;
+
+//Enables the use of reactTo
+//(unnecessary if it has been loaded in the mq.js file)
+require("mq-js/plugins/reactTo");
+
+var button = document.querySelector('.btn.-reactTo');
+
+function is_inside(val1, val2) {
+  return function(){
+    return mq.inside(val1, val2);
+  }
+}
+
+mq.reactTo(is_inside(800, 1000), function(is_active, screen_size) {
+
+  // Add the "-active" class when active, remove it when inactive
+  button.classList.toggle('-active', is_active);
+
+  // is_active = did "mq.inside(800, 1000)" return true?
+  // screen_size = an object holding the screen height, width, and ratio at the point when the screen crossed an mq boundary
+  console.log(is_active, screen_size);
+});
+
+button.onclick = function(e) {
+  e.preventDefault()
+};
 `},
   })
