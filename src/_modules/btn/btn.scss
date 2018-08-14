@@ -57,79 +57,79 @@
     }
   }
 
-  &.-one, &.-two, &.-six {
+  &.-max, &.-maxIf, &.-mqVar {
     @include mq(max, bp('medium')){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-three {
+  &.-min {
     @include mq(min, bp('medium')){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-four {
+  &.-inside {
     @include mq(inside, bp('medium'), bp('small')){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-five {
+  &.-outside {
     @include mq(outside, bp('medium'), bp('small')){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-seven {
+  &.-pxVal {
     @include mq(max, 1000px){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-eight {
+  &.-pxValMin {
     @include mq(min, 1000px){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-nine {
+  &.-bpVar {
     @include mq(min, bp('medium') + 30){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-ten {
+  &.-onResize {
     // never activates
   }
 
-  &.-eleven {
+  &.-maxHeight {
     @include mq(max-height, 600){
       border-color: $CB-green-bright;
     }
   }
-  &.-twelve {
+  &.-minHeight {
     @include mq(min-height, 600){
       border-color: $CB-green-bright;
     }
   }
-  &.-thirteen {
+  &.-insideHeight {
     @include mq(inside-height, 800, 400){
       border-color: $CB-green-bright;
     }
   }
-  &.-fourteen {
+  &.-outsideHeight {
     @include mq(outside-height, 800, 400){
       border-color: $CB-green-bright;
     }
   }
 
-  &.-fifteen {
+  &.-landscape {
     @include mq(orientation, 'landscape'){
       border-color: $CB-green-bright;
     }
   }
-  &.-sixteen {
+  &.-portrait {
     @include mq(orientation, 'portrait'){
       border-color: $CB-green-bright;
     }

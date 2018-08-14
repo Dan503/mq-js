@@ -43,8 +43,7 @@ _$('#testingBtn').click(window.test);
 const toggleActive = elem => elem.classList.toggle('-active');
 const toggleInactive = elem => elem.classList.toggle('-inactive');
 
-console.log(_$('.btn.-one'));
-_$('.btn.-one').onclick = function(e){
+_$('.btn.-max').onclick = function(e){
   e.preventDefault();
 
   mq.max('medium', (screen_size)=>{
@@ -53,17 +52,17 @@ _$('.btn.-one').onclick = function(e){
   })
 };
 
-toggler('.btn.-two', ()=> mq.max('medium'));
-toggler('.btn.-three', ()=> mq.min('medium'));
-toggler('.btn.-four', ()=> mq.inside('medium', 'small'));
-toggler('.btn.-five', ()=> mq.outside('medium', 'small'));
+toggler('.btn.-maxIf', ()=> mq.max('medium'));
+toggler('.btn.-min', ()=> mq.min('medium'));
+toggler('.btn.-inside', ()=> mq.inside('medium', 'small'));
+toggler('.btn.-outside', ()=> mq.outside('medium', 'small'));
 
 const MQ_btn = state => ({
   active: () => mq.max('medium'),
   inactive: () => mq.min('medium'),
 }[state]());
 
-_$('.btn.-six').onclick = function(e){
+_$('.btn.-mqVar').onclick = function(e){
   e.preventDefault();
 
   if (MQ_btn('active')){
@@ -76,25 +75,25 @@ _$('.btn.-six').onclick = function(e){
 
 };
 
-toggler('.btn.-seven', ()=> mq.max(1000));
-toggler('.btn.-eight', ()=> mq.min(1000));
-toggler('.btn.-nine', ()=> mq.min(bp.medium + 30));
+toggler('.btn.-pxVal', ()=> mq.max(1000));
+toggler('.btn.-pxValMin', ()=> mq.min(1000));
+toggler('.btn.-bpVar', ()=> mq.min(bp.medium + 30));
 
-_$('.btn.-ten').onclick = (e) => e.preventDefault();
+_$('.btn.-onResize').onclick = (e) => e.preventDefault();
 
 function toggleBtn(){
-  _$('.btn.-ten').classList.toggle('-active', ()=> mq.inside('medium', 'small'));
+  _$('.btn.-onResize').classList.toggle('-active', ()=> mq.inside('medium', 'small'));
 };
 
 toggleBtn();
 window.onresize = debounce(toggleBtn, 200);
 
-toggler('.btn.-eleven', ()=> mq.maxHeight(600));
-toggler('.btn.-twelve', ()=> mq.minHeight(600));
-toggler('.btn.-thirteen', ()=> mq.insideHeight(800, 400));
-toggler('.btn.-fourteen', ()=> mq.outsideHeight(800, 400));
-toggler('.btn.-fifteen', ()=> mq.orientation('landscape'));
-toggler('.btn.-sixteen', ()=> mq.orientation('portrait'));
+toggler('.btn.-maxHeight', ()=> mq.maxHeight(600));
+toggler('.btn.-minHeight', ()=> mq.minHeight(600));
+toggler('.btn.-insideHeight', ()=> mq.insideHeight(800, 400));
+toggler('.btn.-outsideHeight', ()=> mq.outsideHeight(800, 400));
+toggler('.btn.-landscape', ()=> mq.orientation('landscape'));
+toggler('.btn.-portrait', ()=> mq.orientation('portrait'));
 toggler('.btn.-exactRatio', ()=> mq.ratio(1 / 2));
 toggler('.btn.-minRatio', ()=> mq.ratio('1 / 2'));
 toggler('.btn.-maxRatio', ()=> mq.ratio(1 / 2));
