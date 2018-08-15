@@ -79,10 +79,12 @@ toggler('.btn.-pxVal', ()=> mq.max(1000));
 toggler('.btn.-pxValMin', ()=> mq.min(1000));
 toggler('.btn.-bpVar', ()=> mq.min(bp.medium + 30));
 
-_$('.btn.-onResize').onclick = (e) => e.preventDefault();
+const _$resizeBtn = _$('.btn.-onResize');
+
+_$resizeBtn.onclick = (e) => e.preventDefault();
 
 function toggleBtn(){
-  _$('.btn.-onResize').classList.toggle('-active', mq.inside('medium', 'small'));
+  _$resizeBtn.classList.toggle('-active', mq.inside('medium', 'small'));
 };
 
 toggleBtn();
