@@ -2,15 +2,13 @@
 
 mq-js was inspired by the [mq-scss](https://www.npmjs.com/package/mq-scss) Sass mixin. I wanted to use media queries in JavaScript in a similar sort of way to how I was using media queries in my Sass code.
 
-If you haven't looked into [mq-scss](https://www.npmjs.com/package/mq-scss) I highly recommend checking it out. It makes writing media queries far easier than any other method.
-
 Full documentation for mq-js can be found at https://dan503.github.io/mq-js/
 
 ## Quick start guide
 
-This documentation assumes that you have the ability to use ES6 JavaScript syntax in your project. mq-js will work in environments that don't support es6 JavaScript syntax however the syntax will be different to what is documented. Try out [Babel](https://babeljs.io/) if you aren't using ES6 in your projects yet.
+This documentation assumes that you have the ability to use ES6 JavaScript syntax in your project. mq-js will work in environments that don't support es6 JavaScript syntax however the syntax will be different to what is documented. [View the full documentation](https://dan503.github.io/mq-js/#quick-start) for ES5 (IE friendly) examples.
 
-First, npm install mq-js.
+First, install mq-js using npm. (If you are new to Node and npm, [read this beginners guide](https://codeburst.io/getting-started-with-node-js-a-beginners-guide-b03e25bca71b))
 
     npm install mq-js --save
 
@@ -108,7 +106,7 @@ The height plugin provides these methods:
 - mq.insideHeight
 - mq.outsideHeight
 
-[Read the full height plugin documentation.](https://dan503.github.io/mq-js/#-height-plugin)
+[Read the full height plugin documentation.](https://dan503.github.io/mq-js/#height-plugin)
 
 
 ### Orientation plugin
@@ -121,7 +119,7 @@ The orientation plugin provides these methods:
 
 - mq.orientation
 
-[Read the full orientation plugin documentation.](https://dan503.github.io/mq-js/#-orientation-plugin)
+[Read the full orientation plugin documentation.](https://dan503.github.io/mq-js/#orientation-plugin)
 
 
 ### Ratio plugin
@@ -138,7 +136,7 @@ The ratio plugin provides these methods:
 - mq.insideRatio
 - mq.outsideRatio
 
-[Read the full ratio plugin documentation.](https://dan503.github.io/mq-js/#-ratio-plugin)
+[Read the full ratio plugin documentation.](https://dan503.github.io/mq-js/#ratio-plugin)
 
 
 ### reactTo plugin
@@ -161,6 +159,6 @@ mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size) => {
 });
 ````
 
-[Read the full reactTo plugin documentation.](https://dan503.github.io/mq-js/#-reactto-plugin)
+[Read the full reactTo plugin documentation.](https://dan503.github.io/mq-js/#react-to-plugin)
 
 The mq-js change log is available on the [mq-js GitHub releases page](https://github.com/Dan503/mq-js/releases)
