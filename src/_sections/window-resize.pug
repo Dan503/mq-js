@@ -27,16 +27,18 @@ import debounce from 'debounce';
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
 
-(function toggleBtn(){
-  const button = document.querySelector('.btn.-onResize');
-  button.classList.toggle('-active', mq.inside('medium', 'small'));
-})();
+const button = document.querySelector('.btn.-onResize');
 
+function toggleBtn(){
+  button.classList.toggle('-active', mq.inside('medium', 'small'));
+};
+
+toggleBtn();
 window.onresize = debounce(toggleBtn, 200);`,
 
     es5: `
-//////////////////////// 
-// Component js file // 
+////////////////////////
+// Component js file //
 //////////////////////
 
 //import debounce from npm for better performance
@@ -47,10 +49,12 @@ var debounce = require("debounce");
 //import the mq variable that was created in the setup stage
 var mq = require("./mq").mq;
 
-(function toggleBtn(){
-  var button = document.querySelector('.btn.-onResize');
-  button.classList.toggle('-active', mq.inside('medium', 'small'));
-})();
+var button = document.querySelector('.btn.-onResize');
 
+function toggleBtn(){
+  button.classList.toggle('-active', mq.inside('medium', 'small'));
+};
+
+toggleBtn()
 window.onresize = debounce(toggleBtn, 200);`},
     })
