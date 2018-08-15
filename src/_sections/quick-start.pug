@@ -145,3 +145,54 @@ document.querySelector('#button').onclick = function(e) {
 
   :marked
     **Note:** `mq.max` is _inclusive_ of the given screen size and `mq.min` is _exclusive_ of the given screen size. This is to avoid any potential 1px overlap issues where both statements return true at the same time. It is also designed to align with how mq-scss works.
+
+    It is also worth noting that you can save your breakpoints into a json file and import that instead. This can make the breakpoints a bit more portable.
+
+  +demo({
+    json: `
+{
+  "//" : "Saving breakpoints to a json file instead",
+  "small": 600,
+  "medium": 980,
+  "large": 1200
+}`,
+      js: {
+        es6: `
+///////////////////
+// "mq.js" file //
+/////////////////
+
+import MQ from "mq-js";
+
+// Retrieve your site break points
+import bp from './breakpoints.json';
+
+const mq = new MQ(bp);
+
+// Export mq by default
+export default mq;
+
+// easier access to your site breakpoints
+export { mq, bp }`,
+
+        es5: `
+///////////////////
+// "mq.js" file //
+/////////////////
+
+var MQ = require('mq-js');
+
+// Retrieve your site break points
+var bp = require('./breakpoints.json');
+
+// Creates the media query functions
+var mq = new MQ(bp);
+
+// Exports the media query functions
+module.exports.mq = mq;
+
+// Gives easy access to your site breakpoints
+module.exports.bp = bp;`
+        }
+    })
+
