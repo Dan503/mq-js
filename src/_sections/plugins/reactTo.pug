@@ -31,7 +31,9 @@ mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size)=> {
   button.classList.toggle('-active', is_active);
 
   // is_active = did "mq.inside(800, 1000)" return true?
-  // screen_size = an object holding the screen height, width, and ratio at the point when the screen crossed an mq boundary
+  // screen_size = an object holding the screen height, width,
+  //   and ratio (ratio in both string and number format) at the
+  //   point when the screen crossed an mq boundary
   console.log(is_active, screen_size);
 });
 
@@ -39,8 +41,8 @@ button.onclick = e => e.preventDefault();
   `,
 
     es5: `
-//////////////////////// 
-// Component js file // 
+////////////////////////
+// Component js file //
 //////////////////////
 
 //import the mq variable that was created in the setup stage
@@ -64,7 +66,9 @@ mq.reactTo(is_inside(800, 1000), function(is_active, screen_size) {
   button.classList.toggle('-active', is_active);
 
   // is_active = did "mq.inside(800, 1000)" return true?
-  // screen_size = an object holding the screen height, width, and ratio at the point when the screen crossed an mq boundary
+  // screen_size = an object holding the screen height, width,
+  //   and ratio (ratio in both string and number format) at the
+  //   point when the screen crossed an mq boundary
   console.log(is_active, screen_size);
 });
 
