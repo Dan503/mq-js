@@ -13,7 +13,9 @@ include /_modules/btn/btn
   +btn({classes:'-outside'})
     | Clickable outside of 980px to 601px screen widths`,
         js: { es6: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
@@ -30,7 +32,9 @@ document.querySelector('.btn.-outside').onclick = function(e){
 })`,
 
     es5: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 var mq = require("./mq").mq;

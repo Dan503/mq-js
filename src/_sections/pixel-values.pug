@@ -11,7 +11,9 @@ include /_modules/btn/btn
   +btn({classes:'-pxVal'})
     | Clickable at and below 1000px screen width`,
         js: { es6: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
@@ -28,7 +30,9 @@ document.querySelector('.btn.-pxVal').onclick = function(e){
 })`,
 
     es5: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 var mq = require("./mq").mq;
@@ -55,7 +59,9 @@ include /_modules/btn/btn
   +btn({classes:'-pxValMin'})
     | Clickable at 1001px screen width and above`,
       js: { es6: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
@@ -72,7 +78,9 @@ document.querySelector('.btn.-pxValMin').onclick = function(e){
 })`,
 
     es5: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 var mq = require("./mq").mq;
@@ -102,7 +110,9 @@ include /_modules/btn/btn
   +btn({classes:'-bpVar'})
     | Clickable at 1011px screen width and above`,
       js: { es6: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import BOTH the mq variable AND the breakpoints variable that were created in the setup stage
 import { mq , breakpoints } from "./mq";
@@ -120,7 +130,9 @@ document.querySelector('.btn.-bpVar').onclick = function(e){
 })`,
 
   es5: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import BOTH the mq variable AND the breakpoints variable that were created in the setup stage
 var mq = require("./mq").mq;

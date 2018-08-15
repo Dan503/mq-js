@@ -13,7 +13,9 @@ include /_modules/btn/btn
   +btn({classes:'-mqVar'})
     | when clicked, turns green at and below a 980px screen width, turns grey above 980px`,
         js: { es6: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
@@ -38,7 +40,9 @@ document.querySelector('.btn.-mqVar').onclick = function(e){
 })`,
 
     es5: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 var mq = require("./mq").mq;

@@ -11,7 +11,9 @@ include /_modules/btn/btn
   +btn({classes:'-min'})
     | Clickable at 981px screen width and above`,
         js: {es6:`
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
@@ -28,7 +30,9 @@ document.querySelector('.btn.-min').onclick = function(e){
 })`,
 
     es5: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 var mq = require("./mq").mq;

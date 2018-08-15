@@ -17,7 +17,9 @@ include /_modules/btn/btn
   +btn({classes:'-inside'})
     | Clickable at and between 980px and 601px screen width`,
         js: { es6: `
-//module js file
+////////////////////////
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 import mq from "./mq";
@@ -34,7 +36,9 @@ document.querySelector('.btn.-inside').onclick = function(e){
 })`,
 
     es5: `
-//module js file
+//////////////////////// 
+// Component js file // 
+//////////////////////
 
 //import the mq variable that was created in the setup stage
 var mq = require("./mq").mq;
