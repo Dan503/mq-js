@@ -3,9 +3,9 @@ mixin a-btn(spec)
 		spec = spec || {};
 		spec = Object.assign({
 			classes : '',
-			elem : 'a',
+			elem : 'button',
 			href : '#',
-			type : 'a',
+			type : 'button',
 			icon: false,
 			arrow: false,
 			download: false,
@@ -24,11 +24,11 @@ mixin a-btn(spec)
 			attr = {type : spec.type};
 		}
 
-		attr = Object.assign(attr, spec.attr);
+		attr = Object.assign(attr, spec.attr, attributes);
 
 		var hasIconClass = spec.icon ? ' -hasIcon' : '';
 
-	#{elem}.btn(class=spec.classes+hasIconClass)&attributes(attr)
+	#{elem}.a-btn(class=spec.classes+hasIconClass)&attributes(attr)
 		if block
 			block
 		else
