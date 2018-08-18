@@ -16,18 +16,18 @@ $brand: (
 
 //*Second most prominent brand color etc. */
 (
+	color: $CB-lime-light,
+	hover: $CB-lime-light--hover,
+	text: #000,
+),
+(
+	color: $CB-yellow-light,
+	hover: $CB-yellow-light--hover,
+	text: #000,
+),
+(
 	color: $CB-green-light,
-	hover: $CB-green-light--hover,
-	text: #000,
-),
-(
-	color: $CB-aqua-light,
 	hover: $CB-aqua-light--hover,
-	text: #000,
-),
-(
-	color: $CB-blue-light,
-	hover: $CB-blue-light--hover,
 	text: #000,
 ),
 (
