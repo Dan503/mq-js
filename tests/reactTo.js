@@ -11,7 +11,7 @@ import resize from './_helpers/windowResize';
 
 export default function(){
 
-	let reactValue = { isActive: false, isEqual: false };
+	let reactValue = { isActive: false, isEqual: ()=> false, screen_size: ()=> undefined };
 	let hasReacted = false;
 	let allowReactions = false;
 
