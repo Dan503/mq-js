@@ -8,23 +8,23 @@ details
 
   +o-demo({
         html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
   ul
     li
-      +btn({classes:'-exactRatio'})
+      +a-btn({classes:'-exactRatio'})
         | Clickable at exactly ratio "1 / 2"
     li
-      +btn({classes:'-minRatio'})
+      +a-btn({classes:'-minRatio'})
         | Clickable at ratios wider than "1 / 2" (exclusive)
     li
-      +btn({classes:'-maxRatio'})
+      +a-btn({classes:'-maxRatio'})
         | Clickable at ratios thinner than "1 / 2" (inclusive)
     li
-      +btn({classes:'-insideRatio'})
+      +a-btn({classes:'-insideRatio'})
         | Clickable at widths between ratios "1 / 2" and "3 / 2"
     li
-      +btn({classes:'-outsideRatio'})
+      +a-btn({classes:'-outsideRatio'})
         | Clickable at widths outside ratios "1 / 2" and "3 / 2"
 `,
         js: { es6: `
@@ -116,9 +116,9 @@ document.querySelector('.btn.-outsideRatio').onclick = function(e){
 
   +o-demo({
         html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-maxRatio'})
+  +a-btn({classes:'-maxRatio'})
     | Clickable at ratios thinner than "1 / 2" (inclusive)
 `,
         js: { es6: `

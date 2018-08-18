@@ -6,9 +6,9 @@ details
 
   +o-demo({
       html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-pxVal'})
+  +a-btn({classes:'-pxVal'})
     | Clickable at and below 1000px screen width`,
         js: { es6: `
 //////////////////////// 
@@ -54,9 +54,9 @@ document.querySelector('.btn.-pxVal').onclick = function(e){
 
   +o-demo({
       html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-pxValMin'})
+  +a-btn({classes:'-pxValMin'})
     | Clickable at 1001px screen width and above`,
       js: { es6: `
 //////////////////////// 
@@ -105,9 +105,9 @@ document.querySelector('.btn.-pxValMin').onclick = function(e){
 
   +o-demo({
       html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-bpVar'})
+  +a-btn({classes:'-bpVar'})
     | Clickable at 1011px screen width and above`,
       js: { es6: `
 //////////////////////// 

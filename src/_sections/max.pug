@@ -8,9 +8,9 @@ details
 
   +o-demo({
       html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-max'})
+  +a-btn({classes:'-max'})
     | Clickable at and below 980px screen width`,
         js: {
           es6: `
@@ -59,9 +59,9 @@ document.querySelector('.btn.-max').onclick = function(e){
 
   +o-demo({
       html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-maxIf'})
+  +a-btn({classes:'-maxIf'})
     | Clickable at and below 980px screen width`,
         js: {es6: `
 //////////////////////// 

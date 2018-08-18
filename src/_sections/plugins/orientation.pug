@@ -6,14 +6,14 @@ details
 
   +o-demo({
         html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
   ul
     li
-      +btn({classes:'-landscape'})
+      +a-btn({classes:'-landscape'})
         | Clickable on landscape screens
     li
-      +btn({classes:'-portrait'})
+      +a-btn({classes:'-portrait'})
         | Clickable on portrait and square screens
 `,
         js: { es6: `

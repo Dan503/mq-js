@@ -6,20 +6,20 @@ details
 
   +o-demo({
         html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
   ul
     li
-      +btn({classes:'-maxHeight'})
+      +a-btn({classes:'-maxHeight'})
         | Clickable at and below 600px screen height
     li
-      +btn({classes:'-minHeight'})
+      +a-btn({classes:'-minHeight'})
         | Clickable at and above 601px screen height
     li
-      +btn({classes:'-insideHeight'})
+      +a-btn({classes:'-insideHeight'})
         | Clickable between 401px and 800px screen height
     li
-      +btn({classes:'-outsideHeight'})
+      +a-btn({classes:'-outsideHeight'})
         | Clickable outside of 401px and 800px screen height
 `,
         js: { es6: `
