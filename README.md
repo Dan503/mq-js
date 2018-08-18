@@ -1,4 +1,4 @@
-# mq-js
+[![Visit the mq-js website](readme-logo-image.jpg)](https://dan503.github.io/mq-js/)
 
 mq-js was inspired by the [mq-scss](https://www.npmjs.com/package/mq-scss) Sass mixin. I wanted to use media queries in JavaScript in a similar sort of way to how I was using media queries in my Sass code.
 
@@ -8,7 +8,7 @@ Full documentation for mq-js can be found at https://dan503.github.io/mq-js/
 
 This documentation assumes that you have the ability to use ES6 JavaScript syntax in your project. mq-js will work in environments that don't support es6 JavaScript syntax however the syntax will be different to what is documented. [View the full documentation](https://dan503.github.io/mq-js/#quick-start) for ES5 (IE friendly) examples.
 
-First, install mq-js using npm. (If you are new to Node and npm, [read this beginners guide](https://codeburst.io/getting-started-with-node-js-a-beginners-guide-b03e25bca71b))
+First, install mq-js using npm. (If you are new to Node and npm, [read this beginners guide](https://codeburst.io/getting-started-with-node-js-a-beginners-guide-b03e25bca71b) to get set up)
 
     npm install mq-js --save
 
@@ -75,7 +75,8 @@ document.querySelector('#button').onclick = function(e) {
 
   //If you imported the breakpoints, you can use tweaked versions of them
   if (mq.inside(bp.small + 50, bp.medium - 100)) {
-    // Do stuff for screens that are between the "small" breakpoint + 50px and the "medium" breakpoint - 100px
+    // Do stuff for screens that are between the "small" breakpoint + 50px
+    // and the "medium" breakpoint - 100px
   }
 }
 `````
@@ -84,8 +85,8 @@ document.querySelector('#button').onclick = function(e) {
 
 ## Core methods
 
-- [mq.min](https://dan503.github.io/mq-js/#mq-min)
 - [mq.max](https://dan503.github.io/mq-js/#mq-max)
+- [mq.min](https://dan503.github.io/mq-js/#mq-min)
 - [mq.inside](https://dan503.github.io/mq-js/#mq-inside)
 - [mq.outside](https://dan503.github.io/mq-js/#mq-outside)
 
@@ -159,6 +160,6 @@ mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size) => {
 });
 ````
 
-[Read the full reactTo plugin documentation.](https://dan503.github.io/mq-js/#react-to-plugin)
+[Read the full reactTo plugin documentation.](https://dan503.github.io/mq-js/#reactto-plugin)
 
 The mq-js change log is available on the [mq-js GitHub releases page](https://github.com/Dan503/mq-js/releases)
