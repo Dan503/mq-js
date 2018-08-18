@@ -26,9 +26,6 @@ html, body {
   //unless set otherwise, all elements will recieve border box box sizing
   box-sizing: border-box;
 
-  //required for best scroll animation results
-  height: 100%;
-
   //removes default spacing around the edges of the web page
   margin: 0;
   padding: 0;
@@ -72,6 +69,7 @@ body {
   color: $CF-body__text;
   font-family: $font-1;
   font-weight: $normal;
+  padding-bottom: 100px;
 
   &::before, &::after {
     content: '';
