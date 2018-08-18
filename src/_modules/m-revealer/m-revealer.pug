@@ -10,7 +10,7 @@ mixin m-revealer(heading, spec)
 		//- #{`h${spec.h}`}.m-revealer__heading(id=id, tabindex="0", aria-expanded="false")= heading || 'No heading provided'
 		summary: #{`h${spec.h}`}.m-revealer__heading(id=id)!= headingText || 'No heading provided'
 		.m-revealer__content
-			+bodyContent
+			+m-bodyContent
 				if block
 					block
 				else
