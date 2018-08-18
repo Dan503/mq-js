@@ -1,10 +1,10 @@
 
 .a-btn {
   font-family: $font-2;
-  font-weight: $bold;
-  font-size: 14px;
-  background-color: $CB-red-dark;
-  color: #fff;
+  font-weight: normal;
+  font-size: 1.2em;
+  background-color: #000;
+  color: $brand--primary;
   transition: 0.3s;
   padding: 15px 20px;
   display: inline-block;
@@ -13,20 +13,22 @@
   text-align: left;
   line-height: 1;
   letter-spacing: 0.5px;
-  border: 3px solid brand(1);
+  border: 3px solid currentColor;
   text-decoration: none !important;
+  outline: 1px solid transparent;
 
   &:hover {
-    background-color: #000;
-    color: #fff;
+    background-color: hsl(0, 0%, 10%);
+  }
 
-    svg {
-      fill: brand(1);
-    }
+  &:hover, &:focus {
+    color: #fff;
+    outline: 1px solid $brand--primary;
+    outline-offset: 5px;
   }
 
 	svg {
-		fill: brand(1);
+		fill: currentColor;
 		@include centered(v);
 		right: 20px;
 		height: 10px;
@@ -43,7 +45,7 @@
 
   &.-active {
     background-color: brand(2);
-    color: brand(2, text);
+    color: brand(2, text) !important;
     &:hover {
       background-color: brand(2, hover);
     }
@@ -54,110 +56,6 @@
     color: brand(2, text);
     &:hover {
       background-color: gray;
-    }
-  }
-
-  &.-max, &.-maxIf, &.-mqVar {
-    @include mq(max, bp('medium')){
-      border-color: $CB-green-bright;
-    }
-  }
-
-  &.-min {
-    @include mq(min, bp('medium')){
-      border-color: $CB-green-bright;
-    }
-  }
-
-  &.-inside {
-    @include mq(inside, bp('medium'), bp('small')){
-      border-color: $CB-green-bright;
-    }
-  }
-
-  &.-outside {
-    @include mq(outside, bp('medium'), bp('small')){
-      border-color: $CB-green-bright;
-    }
-  }
-
-  &.-pxVal {
-    @include mq(max, 1000px){
-      border-color: $CB-green-bright;
-    }
-  }
-
-  &.-pxValMin {
-    @include mq(min, 1000px){
-      border-color: $CB-green-bright;
-    }
-  }
-
-  &.-bpVar {
-    @include mq(min, bp('medium') + 30){
-      border-color: $CB-green-bright;
-    }
-  }
-
-  &.-onResize {
-    // never activates
-  }
-
-  &.-maxHeight {
-    @include mq(max-height, 600){
-      border-color: $CB-green-bright;
-    }
-  }
-  &.-minHeight {
-    @include mq(min-height, 600){
-      border-color: $CB-green-bright;
-    }
-  }
-  &.-insideHeight {
-    @include mq(inside-height, 800, 400){
-      border-color: $CB-green-bright;
-    }
-  }
-  &.-outsideHeight {
-    @include mq(outside-height, 800, 400){
-      border-color: $CB-green-bright;
-    }
-  }
-
-  &.-landscape {
-    @include mq(orientation, 'landscape'){
-      border-color: $CB-green-bright;
-    }
-  }
-  &.-portrait {
-    @include mq(orientation, 'portrait'){
-      border-color: $CB-green-bright;
-    }
-  }
-
-  &.-exactRatio {
-    @include mq(ratio, '1 / 2'){
-      border-color: $CB-green-bright;
-    }
-  }
-  &.-minRatio {
-    @include mq(min-ratio, '1 / 2'){
-      border-color: $CB-green-bright;
-    }
-  }
-  &.-maxRatio, &.-maxRatioString {
-    @include mq(max-ratio, '1 / 2'){
-      border-color: $CB-green-bright;
-    }
-  }
-  &.-insideRatio {
-    @include mq(inside-ratio, '1 / 2', '3 / 2'){
-      border-color: $CB-green-bright;
-    }
-  }
-  &.-outsideRatio {
-    @include mq(outside-ratio, '1 / 2', '3 / 2'){
-      border-color: $CB-green-bright;
     }
   }
 

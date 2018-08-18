@@ -17,7 +17,7 @@ $hoverModifier--small: 20%;
 
 //green
 $CB-green-light: #98f181;
-$CB-green-bright: #00C000;
+$CB-green-bright: #29eb29;
 $CB-green-dark: #08705e;//quaternary
 	//green hover states
 	$CB-green-light--hover: shade($CB-green-light, 20%);
@@ -49,8 +49,8 @@ $CB-yellow-light--hover: tint($CB-yellow-light, $hoverModifier);
 
 //red
 //$CB-red-pale: #FFD1D1;
-//$CB-red-light: #D76860;
-$CB-red-mid: #CF1730; //primary
+$CB-red-light: #ff5151;
+$CB-red-mid: #CF1730;
 $CB-red-dim: #B11235;
 $CB-red-dark: #5B1223;
 	//red hover states

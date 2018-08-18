@@ -1,3 +1,17 @@
+@mixin clickable {
+	color: $CB-green-bright;
+	pointer-events: auto;
+
+	&::after {
+		content: '(currently clickable)';
+	}
+
+	&:hover, &:focus {
+		color: #fff;
+	}
+}
+
+
 .o-demo {
 	margin: 25px 0 35px;
 	&__segment {
@@ -103,6 +117,124 @@
 		ul, li {
 			list-style: none;
 			padding-left: 0 !important;
+		}
+	}
+
+	.a-btn {
+		color: $CB-red-light;
+
+		&::after {
+			content: '(currently not clickable)';
+			display: block;
+			margin-top: 0.3em;
+			font-family: $code;
+			font-size: 0.9em;
+		}
+
+		&.-max, &.-maxIf, &.-mqVar {
+			@include mq(max, bp('medium')){
+				@include clickable;
+			}
+		}
+
+		&.-min {
+			@include mq(min, bp('medium')){
+				@include clickable;
+			}
+		}
+	
+		&.-inside {
+			@include mq(inside, bp('medium'), bp('small')){
+				@include clickable;
+			}
+		}
+	
+		&.-outside {
+			@include mq(outside, bp('medium'), bp('small')){
+				@include clickable;
+			}
+		}
+	
+		&.-pxVal {
+			@include mq(max, 1000px){
+				@include clickable;
+			}
+		}
+	
+		&.-pxValMin {
+			@include mq(min, 1000px){
+				@include clickable;
+			}
+		}
+	
+		&.-bpVar {
+			@include mq(min, bp('medium') + 30){
+				@include clickable;
+			}
+		}
+	
+		&.-onResize {
+			// never activates
+			pointer-events: none;
+			&::after { content: "(does not activate on click)" }
+		}
+
+		&.-maxHeight {
+			@include mq(max-height, 600){
+				@include clickable;
+			}
+		}
+		&.-minHeight {
+			@include mq(min-height, 600){
+				@include clickable;
+			}
+		}
+		&.-insideHeight {
+			@include mq(inside-height, 800, 400){
+				@include clickable;
+			}
+		}
+		&.-outsideHeight {
+			@include mq(outside-height, 800, 400){
+				@include clickable;
+			}
+		}
+	
+		&.-landscape {
+			@include mq(orientation, 'landscape'){
+				@include clickable;
+			}
+		}
+		&.-portrait {
+			@include mq(orientation, 'portrait'){
+				@include clickable;
+			}
+		}
+	
+		&.-exactRatio {
+			@include mq(ratio, '1 / 2'){
+				@include clickable;
+			}
+		}
+		&.-minRatio {
+			@include mq(min-ratio, '1 / 2'){
+				@include clickable;
+			}
+		}
+		&.-maxRatio, &.-maxRatioString {
+			@include mq(max-ratio, '1 / 2'){
+				@include clickable;
+			}
+		}
+		&.-insideRatio {
+			@include mq(inside-ratio, '1 / 2', '3 / 2'){
+				@include clickable;
+			}
+		}
+		&.-outsideRatio {
+			@include mq(outside-ratio, '1 / 2', '3 / 2'){
+				@include clickable;
+			}
 		}
 	}
 }
