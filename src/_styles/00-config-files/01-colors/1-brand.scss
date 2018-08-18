@@ -5,10 +5,10 @@ $V-hoverModifier: 60%;
 //Greys do not belong in this list unless it is a MAJOR brand color
 $brand: (
 	//*Main color*/
-	color: $CB-red-mid,
+	color: $CB-blue-light,
 
 	//*Most likely hover state color for the main color*/
-	hover: $CB-red-mid--hover,
+	hover: $CB-blue-light--hover,
 
 	/*if set as a background color, the text inside will most likely be this color*/
 	text: #fff,
@@ -50,6 +50,8 @@ $brand: (
 	@return map-get($colorGroup, $type);
 }
 
+$blue--brand: brand(1);
+// $red--brand: brand(1);
 
 
 /*

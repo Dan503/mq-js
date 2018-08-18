@@ -66,11 +66,48 @@ body {
   background-color: $CF-body__bg;
   position: relative;
   margin: 0;
+  padding-top: 1px;
   font-size: 16px;
   line-height: 1.5;
   color: $CF-body__text;
   font-family: $font-1;
   font-weight: $normal;
+
+  &::before, &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  &::before {
+    opacity: 0.3;
+
+    $hex-size-x: 24px;
+    $hex-size-y: $hex-size-x * 1.5;
+
+    /* http://lea.verou.me/css3patterns/#honeycomb */
+    background:
+    radial-gradient(circle farthest-side at 0% 50%,$CF-body__bg 23.5%,rgba(240,166,17,0) 0) ($hex-size-x * 0.5 + 1) ($hex-size-y * 0.5),
+    radial-gradient(circle farthest-side at 0% 50%,$blue--brand 24%,rgba(240,166,17,0) 0) ($hex-size-x * 0.5 - 1) ($hex-size-y * 0.5),
+    linear-gradient($CF-body__bg 14%,rgba(240,166,17,0) 0, rgba(240,166,17,0) 85%,$CF-body__bg 0)0 0,
+    linear-gradient(150deg,$CF-body__bg 24%,$blue--brand 0,$blue--brand 26%,rgba(240,166,17,0) 0,rgba(240,166,17,0) 74%,$blue--brand 0,$blue--brand 76%,$CF-body__bg 0) 0 0,
+    linear-gradient(30deg,$CF-body__bg 24%,$blue--brand 0,$blue--brand 26%,rgba(240,166,17,0) 0,rgba(240,166,17,0) 74%,$blue--brand 0,$blue--brand 76%,$CF-body__bg 0) 0 0,
+    linear-gradient(90deg,$blue--brand 2%,$CF-body__bg 0,$CF-body__bg 98%,$blue--brand 0%)0 0 $CF-body__bg;
+    background-size: $hex-size-x $hex-size-y;
+  }
+
+  &::after {
+    background: radial-gradient(circle at top, transparent, $CF-body__bg);
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 p, ul, ol {
