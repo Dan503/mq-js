@@ -5,7 +5,7 @@ mixin m-revealer(heading, spec)
 			h: 2,
 		}, spec)
 		var headingText = heading.replace(/`([A-z\W]+?)`/g,'<code>$1</code>');
-		var id = heading.replace(/[\W]/g,'-').toLowerCase();
+		var id = heading.replace(/`/g,'').replace(/[\W]/g,'-').toLowerCase();
 	details.m-revealer&attributes(attributes)
 		//- #{`h${spec.h}`}.m-revealer__heading(id=id, tabindex="0", aria-expanded="false")= heading || 'No heading provided'
 		summary: #{`h${spec.h}`}.m-revealer__heading(id=id)!= headingText || 'No heading provided'
