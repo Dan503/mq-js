@@ -1,4 +1,50 @@
 
 .m-logo {
-	//
+	position: relative;
+
+	&__heading {
+		display: grid;
+		grid-template-columns: 1fr auto auto 1fr;
+		grid-template-areas: ".. mq js ..";
+		justify-content: center;
+		font-size: 7rem;
+		line-height: 1;
+	}
+
+	&__hex {
+		grid-area: mq;
+		width: 15rem;
+		stroke-width: 7%;
+		stroke: $brand--primary;
+		overflow: visible !important;
+		padding: 7%;
+	}
+
+	&__mq, &__js {
+		margin-top: -7%;
+		align-self: center;
+	}
+
+	&__mq {
+		grid-area: mq;
+		display: block;
+		text-align: center;
+	}
+
+	&__js {
+		grid-area: js;
+		text-align: left;
+		margin-left: 2.5rem;
+	}
+
+	&__version {
+		font-family: $code;
+		color: $brand--secondary;
+		position: absolute;
+		top: -2.5rem;
+		left: 45.5%;
+		left: calc(50% - 4.5rem);
+		transform: rotate(28deg);
+		transform-origin: bottom left;
+	}
 }

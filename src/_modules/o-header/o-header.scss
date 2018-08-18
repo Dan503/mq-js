@@ -1,15 +1,4 @@
 .o-header {
   padding-top: 50px;
   padding-bottom: 30px;
-
-  &__heading {
-    margin: 0 0 10px;
-  }
-
-  &__version {
-    text-align: center;
-    font-style: italic;
-    font-family: $code;
-    margin-bottom: 10px;
-  }
 }
