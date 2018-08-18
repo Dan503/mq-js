@@ -180,7 +180,7 @@
 			}
 		}
 	
-		&.-onResize {
+		&.-onResize, &.-reactTo {
 			// never activates
 			pointer-events: none;
 			&::after { content: "(does not activate on click)" }
