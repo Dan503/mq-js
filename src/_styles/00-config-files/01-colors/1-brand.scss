@@ -50,7 +50,8 @@ $brand: (
 	@return map-get($colorGroup, $type);
 }
 
-$blue--brand: brand(1);
+$brand--primary: brand(1);
+$brand--secondary: brand(2);
 // $red--brand: brand(1);
 
 
