@@ -34,7 +34,8 @@
 	&__js {
 		grid-area: js;
 		text-align: left;
-		margin-left: 2.5rem;
+		margin-left: 2rem;
+		font-size: 0.8em;
 	}
 
 	&__version {
@@ -43,7 +44,7 @@
 		position: absolute;
 		top: -2.5rem;
 		left: 45.5%;
-		left: calc(50% - 4.5rem);
+		left: calc(50% - 3.5rem);
 		transform: rotate(28deg);
 		transform-origin: bottom left;
 	}
