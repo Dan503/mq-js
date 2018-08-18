@@ -6,7 +6,7 @@ block includes
   include /_modules/pageContainer/pageContainer
   include /_modules/demo/demo
   include /_modules/bodyContent/bodyContent
-  include /_modules/header/header
+  include /_modules/o-header/o-header
 
 doctype html
 
@@ -42,8 +42,8 @@ body
   p.browsehappy You are using an #[strong outdated] browser. Please #[a(href='http://browsehappy.com/') upgrade your browser] to improve your experience.
   <![endif]-->
 
-  +pageContainer()
-    +header()
+  +pageContainer
+    +o-header
     +bodyContent()
       block content
 
