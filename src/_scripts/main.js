@@ -9,6 +9,7 @@ import testBreakpoints from '../../tests/_helpers/breakpoints';
 
 import codeLineNumbers from '~on-page-load-js/codeLineNumbers';
 import smoothAnchors from '~on-page-load-js/smoothAnchors';
+import revealer from '../_modules/m-revealer/m-revealer';
 
 window.test = ()=>{
   const settings = {
@@ -37,6 +38,7 @@ function toggler(selector, test){
 
 codeLineNumbers();
 smoothAnchors();
+revealer();
 
 _$('#testingBtn').click(window.test);
 
