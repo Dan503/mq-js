@@ -29,6 +29,10 @@
 			background: #000;
 			color: #fff;
 			border-radius: 5px 5px 0 0;
+			font-family: $font-2;
+			font-size: 16px;
+			color: $brand--secondary;
+			// box-shadow: 0 -1px 2px 0px $brand--primary;
 		}
 	}
 	&__summary {
