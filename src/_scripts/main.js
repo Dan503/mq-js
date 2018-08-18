@@ -40,7 +40,7 @@ codeLineNumbers();
 smoothAnchors();
 revealer();
 
-_$('#testingBtn').click(window.test);
+_$('#testingBtn').onclick = window.test;
 
 const toggleActive = elem => elem.classList.toggle('-active');
 const toggleInactive = elem => elem.classList.toggle('-inactive');
