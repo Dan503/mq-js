@@ -67,7 +67,7 @@ body {
   position: relative;
   margin: 0;
   padding-top: 1px;
-  font-size: 16px;
+  font-size: 20px;
   line-height: 1.5;
   color: $CF-body__text;
   font-family: $font-1;
@@ -76,7 +76,7 @@ body {
   &::before, &::after {
     content: '';
     display: block;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100%;
@@ -84,7 +84,7 @@ body {
   }
 
   &::before {
-    opacity: 0.3;
+    opacity: 0.2;
 
     $hex-size-x: 24px;
     $hex-size-y: $hex-size-x * 1.5;
@@ -122,24 +122,21 @@ p, ul, ol {
 /*HEADINGS*/
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-2;
-  font-weight: $bold;
+  font-weight: normal;
   line-height: 1;
   letter-spacing: -0.5px;
   margin-bottom: 15px;
   margin-top: $VG-p__spacing;
+  color: brand(1);
 
   &:first-child { margin-top: 0; }
   &:last-child { margin-bottom: 0; }
   + {
     p, ul, ol { margin-top: 0; }
   }
-  .-theme--dark & {
-    color: brand(2);
-  }
-
 }
 h1 {
-  font-size: 30px;
+  font-size: 50px;
   text-align: center;
   + h2 { margin-top: 30px; }
 }
@@ -221,6 +218,7 @@ pre {
 
   &.lines {
     font-size: 12px;
+    line-height: 2.35rem;
     padding: 10px;
     float:  left;
     display: block !important;
@@ -229,11 +227,14 @@ pre {
     background-color: #000;
     padding: {top: 7px; bottom: 7px;}
     text-align: center !important;
+    font-family: $code;
   }
 
   code {
     padding: 10px 5px;
-    font-size: 1em;
+    font-size: 1.2em;
+    line-height: 1.5;
+    font-family: $code;
   }
 
   .no-flexbox & {
