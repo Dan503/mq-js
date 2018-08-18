@@ -84,6 +84,9 @@
 		&.js:before {
 			content: 'JavaScript (ES6)';
 		}
+		&.js.basic:before {
+			content: 'JavaScript';
+		}
 		&.json:before {
 			content: 'JSON';
 		}

@@ -41,7 +41,7 @@ mixin o-demo__tab(demoMarkup, spec)
                     pre
                       code(class=type)= js
               else
-                .o-demo__markup.o-demo__segment.js
+                .o-demo__markup.o-demo__segment.js(class=jsType)
                   pre
                     code(class=type)= js
         else if (type === 'html' && spec.showHTML || type !== 'html')
