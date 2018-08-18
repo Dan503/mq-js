@@ -1,6 +1,5 @@
 
 mixin o-header(spec)
   header.o-header&attributes(attributes)
-    h1.o-header__heading mq-js
-    p.o-header__version= 'v'+pkg.version
+    +m-logo
     +a-installation

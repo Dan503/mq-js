@@ -1,0 +1,9 @@
+
+mixin m-logo
+	.m-logo
+		h1.m-logo__heading
+			svg.m-logo__hex(aria-hidden="true")
+				polygon(points='300,150 225,280 75,280 0,150 75,20 225,20')
+			span.m-logo__mq mq
+			span.m-logo__js js
+		p.m-logo__version= 'v'+pkg.version
