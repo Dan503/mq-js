@@ -16,4 +16,4 @@ mixin header(spec)
   header.header(class=spec.classes)&attributes(spec.attr)
     h1 mq-js
     p.version= 'v'+pkg.version
-    pre.no-lines: code(style='text-align: center;') npm install mq-js --save
+    +a-installation
