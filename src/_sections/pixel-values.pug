@@ -4,7 +4,7 @@ details
   :marked
     Just because you have access to the breakpoint values, it doesn't mean that you have to use them. mq-js still works if you just parse solid numbers into it.
 
-  +demo({
+  +o-demo({
       html: `
 include /_modules/btn/btn
 .example
@@ -52,7 +52,7 @@ document.querySelector('.btn.-pxVal').onclick = function(e){
   :marked
     Remember that if you use `mq.min` it will be like adding 1 pixel to the value that you provide.
 
-  +demo({
+  +o-demo({
       html: `
 include /_modules/btn/btn
 .example
@@ -103,7 +103,7 @@ document.querySelector('.btn.-pxValMin').onclick = function(e){
 
     In the following example, I'm importing the breakpoints variable and using it to add 30px to the `"medium"` breakpoint.
 
-  +demo({
+  +o-demo({
       html: `
 include /_modules/btn/btn
 .example

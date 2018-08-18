@@ -20,9 +20,11 @@
 
 //module imports
 @import '../_modules/pageContainer/pageContainer';
-@import '../_modules/demo/demo';
 @import '../_modules/tabs/tabs';
 @import '../_modules/bodyContent/bodyContent';
 @import '../_modules/btn/btn';
 @import '../_modules/a-installation/a-installation';
+
+// Organisms
 @import '../_modules/o-header/o-header';
+@import '../_modules/o-demo/o-demo';

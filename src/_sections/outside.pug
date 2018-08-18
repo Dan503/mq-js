@@ -4,7 +4,7 @@ details
   :marked
     `mq.outside` does what you would expect. It is the opposite of `mq.inside`. It will only fire if the screen width is outside of the two breakpoint values.
 
-  +demo({
+  +o-demo({
         html: `
 include /_modules/btn/btn
 .example
@@ -52,7 +52,7 @@ document.querySelector('.btn.-outside').onclick = function(e){
   :marked
     It can also be written as `mq.outsideWidth` if you prefer.
 
-  +demo({
+  +o-demo({
         js: { es6: `
 // This code has identical functionality...
 mq.outside('medium', ()=> { /* ... */ });

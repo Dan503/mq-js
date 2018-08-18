@@ -6,7 +6,7 @@ details
 
     To help you figure out when the button is able to be clicked, the border of the button will turn green when it is clickable.
 
-  +demo({
+  +o-demo({
       html: `
 include /_modules/btn/btn
 .example
@@ -57,7 +57,7 @@ document.querySelector('.btn.-max').onclick = function(e){
 
     You can also use it in an if statement sort of format as shown below. All mq-js functions can be used in this `if` statement format. For the sake of brevity though, I'm just showing the `callback` format in the rest of these examples.
 
-  +demo({
+  +o-demo({
       html: `
 include /_modules/btn/btn
 .example
@@ -104,7 +104,7 @@ document.querySelector('.btn.-maxIf').onclick = function(e){
 
     One last thing. If you prefer to explicitly state that the media query is targeting "width", `mq.max` can also be written as `mq.maxWidth`. It has identical functionality, it's just personal preference.
 
-  +demo({
+  +o-demo({
         js: {es6: `
 // This code has identical functionality...
 mq.max('medium', ()=> { /* ... */ });
