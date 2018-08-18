@@ -1,0 +1,13 @@
+
+.a-mobileWarning {
+	padding: 20px;
+	background: rgba(0,0,0,0.5);
+
+	@media (hover: hover) {
+		display: none;
+
+		+ p {
+			margin-top: 0;
+		}
+	}
+}
