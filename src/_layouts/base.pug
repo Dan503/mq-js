@@ -2,10 +2,12 @@
 block config
 
 block includes
-  include /_modules/a-installation/a-installation
-  include /_modules/pageContainer/pageContainer
-  include /_modules/o-demo/o-demo
   include /_modules/bodyContent/bodyContent
+  include /_modules/a-installation/a-installation
+  include /_modules/a-safetyPadding/a-safetyPadding
+  include /_modules/a-restrictor/a-restrictor
+  include /_modules/m-pageContainer/m-pageContainer
+  include /_modules/o-demo/o-demo
   include /_modules/o-header/o-header
 
 doctype html
@@ -42,7 +44,7 @@ body
   p.browsehappy You are using an #[strong outdated] browser. Please #[a(href='http://browsehappy.com/') upgrade your browser] to improve your experience.
   <![endif]-->
 
-  +pageContainer
+  +m-pageContainer
     +o-header
     +bodyContent()
       block content
