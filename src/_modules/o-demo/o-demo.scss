@@ -91,23 +91,8 @@
 			content: 'JSON';
 		}
 
-		pre {
-			display: flex;
-			flex-grow: 0;
-			&, &.lines {
-				margin: 0;
-			}
-
-			&.lines {
-				overflow: hidden;
-				background: #000;
-				padding-top: 12px;
-			}
-		}
-
 		code {
-			margin-top: -20px;
-			padding: {bottom: 10px; top: 10px; }
+			margin-top: -23px;
 		}
 	}
 

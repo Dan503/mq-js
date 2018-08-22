@@ -8,8 +8,8 @@ import { mq, bp } from './_helpers/mq';
 import testBreakpoints from '../../tests/_helpers/breakpoints';
 import { _$ } from './_helpers/_$selector';
 
-import codeLineNumbers from '~on-page-load-js/codeLineNumbers';
-import revealer from '../_modules/m-revealer/m-revealer';
+import a_codeNumbers from '../_modules/a-codeNumbers/a-codeNumbers';
+import m_revealer from '../_modules/m-revealer/m-revealer';
 
 window.test = ()=>{
   const settings = {
@@ -33,8 +33,8 @@ function toggler(selector, test){
   }
 }
 
-codeLineNumbers();
-revealer();
+a_codeNumbers()
+m_revealer();
 
 _$('#testingBtn').onclick = window.test;
 
