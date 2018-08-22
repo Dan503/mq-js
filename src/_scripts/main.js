@@ -4,8 +4,9 @@
 'use strict';
 
 import debounce from 'debounce';
-import { mq, bp } from './mq';
+import { mq, bp } from './_helpers/mq';
 import testBreakpoints from '../../tests/_helpers/breakpoints';
+import { _$ } from './_helpers/_$selector';
 
 import codeLineNumbers from '~on-page-load-js/codeLineNumbers';
 import revealer from '../_modules/m-revealer/m-revealer';
@@ -19,9 +20,6 @@ window.test = ()=>{
   window.open('/test-em.html', 'ems test', settings);
   window.open('/test-px.html', 'px test', settings)
 }
-
-const _$ = selector => document.querySelector(selector);
-// const _$$ = selector => [...document.querySelectorAll(selector)];
 
 function toggler(selector, test){
   const _$elem = _$(selector);
