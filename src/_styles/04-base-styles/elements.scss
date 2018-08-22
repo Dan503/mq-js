@@ -32,8 +32,11 @@ html, body {
 }
 
 html {
-  //Makes it easier to alter font size with rem's. 1.3rem = 13px
+  // Makes it easier to alter font size with rem's. 1.3rem = 13px
   font-size: 62.5%;
+
+  // Smooth scrolling to position
+  scroll-behavior: smooth;
 }
 
 //counteracts * margin styling
