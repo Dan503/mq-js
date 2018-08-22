@@ -1,26 +1,35 @@
-import $ from 'jquery';
+
+import _$$ from '../../_scripts/_helpers/_$selector';
 
 export default function(){
 
   // putting lines by the pre blocks
-  $("pre:not(.no-lines)").each(function(){
-    var pre = $(this).text().split("\n");
-    var lines = new Array(pre.length);
-    var modifier = $(this).closest('.demo').length ? -1 : 0;
-    for(var i = 0; i < pre.length + modifier; i++) {
-      var wrap = Math.floor(pre[i].split("").length / 70)
-      if (pre[i]==""&&i==pre.length-1) {
-        lines.splice(i, 1);
-      } else {
-        lines[i] = i+1;
-        for(var j = 0; j < wrap - 1; j++) {
-          lines[i] += "\n";
+  _$$("pre:not(.no-lines)").forEach(function(_$code, index, listObj){
+    const lines = _$code.innerText.split("\n");
+
+    const numbers = lines.map((text, i) => i+1);
+
+    const remove_empty_ends = (numbersArr, linesArr) => {
+      numbersArr.pop();
+      const reversed = [...linesArr].reverse();
+      reversed.some(line => {
+        if (line === '') {
+          numbersArr.pop();
+          return false;
         }
-      }
+        return true;
+      })
     }
-    $(this)
-      //.wrap('<div class="code"></div>')
-      .before("<pre class='lines'>" + lines.join("\n") + "</pre>");
+
+    remove_empty_ends(numbers, lines);
+
+    const originalHTML = _$code.outerHTML;
+
+    _$code.outerHTML = `
+    <div class="code-lines">
+      <pre class="lines">${numbers.join("\n")}</pre>
+      ${originalHTML}
+    </div>`;
   });
 
 }
