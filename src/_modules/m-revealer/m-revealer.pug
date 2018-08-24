@@ -9,9 +9,9 @@ mixin m-revealer(heading, spec)
 		var id = heading.replace(/`/g,'').replace(/[\W]/g,'-').toLowerCase();
 	.m-revealer(open=spec.open)&attributes(attributes)
 		#{`h${spec.h}`}.m-revealer__heading
-			button.m-revealer__trigger(id=id, tabindex="0", aria-expanded="false")= heading || 'No heading provided'
+			button.m-revealer__trigger(id=id, tabindex="0", aria-expanded="false", aria-controls=id+'-content')!= headingText || 'No heading provided'
 		//- summary: #{`h${spec.h}`}.m-revealer__heading(id=id)!= headingText || 'No heading provided'
-		.m-revealer__slider
+		.m-revealer__slider(id=id+'-content')
 			.m-revealer__content
 				+m-bodyContent
 					if block
