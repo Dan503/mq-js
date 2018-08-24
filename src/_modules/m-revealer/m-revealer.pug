@@ -1,4 +1,7 @@
 
+- var all_ids = [];
+- var tieBreak = 1;
+
 mixin m-revealer(heading, spec)
 	-
 		spec = Object.assign({
@@ -6,7 +9,7 @@ mixin m-revealer(heading, spec)
 			open: false,
 		}, spec)
 		var headingText = heading.replace(/`([A-z\W]+?)`/g,'<code>$1</code>');
-		var id = heading.replace(/`/g,'').replace(/[\W]/g,'-').toLowerCase();
+		var id = safe_id(heading);
 	.m-revealer(open=spec.open)&attributes(attributes)
 		#{`h${spec.h}`}.m-revealer__heading
 			button.m-revealer__trigger(id=id, tabindex="0", aria-expanded="false", aria-controls=id+'-content')!= headingText || 'No heading provided'
@@ -18,3 +21,16 @@ mixin m-revealer(heading, spec)
 						block
 					else
 						p No content provided
+
+-
+	function safe_id(string){
+		var safe_string = string.replace(/`/g,'').replace(/[\W]/g,'-').toLowerCase();
+		var unique_string = ensure_unique(safe_string);
+		return unique_string;
+	}
+
+	function ensure_unique(id){
+		id = all_ids.indexOf(id) > -1 ? `${id}-${tieBreak++}` : id;
+		all_ids.push(id);
+		return id;
+	}
