@@ -13,7 +13,6 @@ class Revealer {
 		this.isReady = false;
 		this.timer;
 		this.relevantIDs = this.gather_ids();
-		console.log(this.relevantIDs);
 		this.initialise();
 	}
 
@@ -78,7 +77,6 @@ class Revealer {
 	check_url(){
 		const hash = window.location.hash.replace('#','');
 		const hasID = this.relevantIDs.some(id => id === hash);
-		console.log({hasID})
 		return hasID;
 	}
 
