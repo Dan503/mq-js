@@ -2,6 +2,10 @@
 - var all_ids = [];
 - var tieBreak = 1;
 
+mixin m-revealer__trigger(id, text)
+	button.m-revealer__trigger(id=id, tabindex="0", aria-expanded="false", aria-controls=id+'-content')
+		!= text || 'No text provided'
+
 mixin m-revealer(heading, spec)
 	-
 		spec = Object.assign({
@@ -11,8 +15,12 @@ mixin m-revealer(heading, spec)
 		var headingText = heading.replace(/`([A-z\W]+?)`/g,'<code>$1</code>');
 		var id = safe_id(heading);
 	.m-revealer(open=spec.open)&attributes(attributes)
-		#{`h${spec.h}`}.m-revealer__heading
-			button.m-revealer__trigger(id=id, tabindex="0", aria-expanded="false", aria-controls=id+'-content')!= headingText || 'No heading provided'
+		if spec.h > 0
+			#{`h${spec.h}`}.m-revealer__heading
+				+m-revealer__trigger(id, headingText)
+		else
+			+m-revealer__trigger(id, headingText)
+
 		//- summary: #{`h${spec.h}`}.m-revealer__heading(id=id)!= headingText || 'No heading provided'
 		.m-revealer__slider(id=id+'-content')
 			.m-revealer__content

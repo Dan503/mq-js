@@ -33,7 +33,7 @@ mixin o-demo__tab(demoMarkup, spec)
           .grid__cell(class=type)
             each js, jsType in markup
               if (jsType === 'es5')
-                +m-revealer('ES5 Syntax')(class="o-demo__details o-demo__es5")
+                +m-revealer('ES5 Syntax', {h:0})(class="o-demo__details o-demo__es5")
                   .o-demo__markup
                     pre
                       code(class=type)= js
