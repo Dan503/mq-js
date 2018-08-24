@@ -58,18 +58,20 @@ class Revealer {
 		this._$slider.style.maxHeight = 'none';
 	}
 
-	delay(delay){
+	delay(delay, timeout){
 		return new Promise(resolve => {
+			if (timeout) {
+				timeout = setTimeout(resolve, delay);
+			} else {
 			setTimeout(resolve, delay);
+			}
 		})
 	}
 
 	wait_for_animation(){
 		clearTimeout(this.timer);
 		this.isReady = false;
-		return new Promise(resolve => {
-			this.timer = setTimeout(resolve, 500);
-		}).then(()=> {
+		return this.delay(500, this.timer).then(()=> {
 			return Promise.resolve(()=> this.isReady = true);
 		});
 	}
