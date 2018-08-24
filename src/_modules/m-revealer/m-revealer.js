@@ -3,6 +3,7 @@ import _$$ from '../../_scripts/_helpers/_$selector';
 
 const m = 'm-revealer';
 const _m = '.'+m;
+const hash = window.location.hash.replace('#','');
 
 class Revealer {
 	constructor(wrapperElem){
@@ -11,6 +12,7 @@ class Revealer {
 		this._$slider = this._$wrapper.querySelector(`${_m}__slider`);
 		this._$content = this._$wrapper.querySelector(`${_m}__content`);
 		this.isReady = false;
+		this.id = this._$trigger.id;
 		this.timer;
 		this.relevantIDs = this.gather_ids();
 		this.initialise();
@@ -20,6 +22,14 @@ class Revealer {
 		this.isOpen = this.check_url();
 		if (!this.isOpen) {
 			this.close();
+		} else if (hash === this.id) {
+			this.wait_for_animation(100)
+			.then(()=>{
+				this._$trigger.scrollIntoView(true);
+				return this.delay(500);
+			}).then(()=>{
+				this._$trigger.focus();
+			})
 		}
 		this._$wrapper.classList.add('-set');
 		this._$trigger.onclick = ()=> this.toggle();
@@ -63,21 +73,20 @@ class Revealer {
 			if (timeout) {
 				timeout = setTimeout(resolve, delay);
 			} else {
-			setTimeout(resolve, delay);
+				setTimeout(resolve, delay);
 			}
 		})
 	}
 
-	wait_for_animation(){
+	wait_for_animation(extension = 0){
 		clearTimeout(this.timer);
 		this.isReady = false;
-		return this.delay(500, this.timer).then(()=> {
+		return this.delay(500 + extension, this.timer).then(()=> {
 			return Promise.resolve(()=> this.isReady = true);
 		});
 	}
 
 	check_url(){
-		const hash = window.location.hash.replace('#','');
 		const hasID = this.relevantIDs.some(id => id === hash);
 		return hasID;
 	}
@@ -86,7 +95,7 @@ class Revealer {
 		const children = _$$(_m, this._$content);
 		const child_trigger_ids = children.map(get_id);
 
-		return [this._$trigger.id, ...child_trigger_ids];
+		return [this.id, ...child_trigger_ids];
 
 		function get_id (_$wrapper) {
 			const _$trigger = _$wrapper.querySelector(`${_m}__trigger`);
