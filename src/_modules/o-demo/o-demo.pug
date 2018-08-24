@@ -29,12 +29,11 @@ mixin o-demo__tab(demoMarkup, spec)
     - const colsClass = keyCount > 0 ? `grid--cols-${keyCount}` : '';
     .o-demo__grid.grid(class=colsClass)
       each markup, type in demoMarkup
-        if (type === 'js')
+        if type === 'js'
           .grid__cell(class=type)
             each js, jsType in markup
               if (jsType === 'es5')
-                details.o-demo__details.o-demo__es5
-                  summary ES5 Syntax
+                +m-revealer('ES5 Syntax')(class="o-demo__details o-demo__es5")
                   .o-demo__markup
                     pre
                       code(class=type)= js
