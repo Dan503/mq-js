@@ -22,7 +22,8 @@
 		}
 
 		.-closed & {
-			transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+			$ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+			transition-timing-function: $ease-out;
 			max-height: 0 !important;
 		}
 	}
