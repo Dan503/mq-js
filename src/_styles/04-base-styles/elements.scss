@@ -265,5 +265,6 @@ p, li, h1, h2, h3, h4, h5 {
     border: 1px solid currentColor;
     // border: 1px solid $brand--primary;
     box-shadow: 0 0 0 1px $brand--primary;
+    white-space: nowrap;
   }
 }
