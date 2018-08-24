@@ -23,7 +23,7 @@ class Revealer {
 		if (!this.isOpen) {
 			this.close();
 		} else if (hash === this.id) {
-			this.wait_for_animation(100)
+			this.wait_for_animation(500)
 			.then(()=>{
 				this._$trigger.scrollIntoView(true);
 				return this.delay(500);
