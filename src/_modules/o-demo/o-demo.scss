@@ -14,6 +14,11 @@
 
 .o-demo {
 	margin: 25px 0 35px;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
 	&__segment {
 		position: relative;
 		margin-top: 35px;
