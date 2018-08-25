@@ -103,7 +103,6 @@ document.querySelector('#button').onclick = function(e) {
 }`,
 
     es5: `
-
 ////////////////////////
 // Component js file //
 //////////////////////
@@ -136,7 +135,8 @@ document.querySelector('#button').onclick = function(e) {
 
   // If you imported the breakpoints, you can use tweaked versions of them
   if (mq.inside(bp.small + 50, bp.medium - 100)) {
-    // Do stuff for screens that are between the "small" breakpoint + 50px and the "medium" breakpoint - 100px
+    // Do stuff for screens that are between the "small" breakpoint + 50px
+    // and the "medium" breakpoint - 100px
   }
 }`},
     })
@@ -149,7 +149,7 @@ document.querySelector('#button').onclick = function(e) {
   +o-demo({
     json: `
 {
-  "//" : "Saving breakpoints to a json file instead",
+  "//" : "breakpoints.json file",
   "small": 600,
   "medium": 980,
   "large": 1200
