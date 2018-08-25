@@ -217,27 +217,10 @@ pre {
   box-shadow: inset 0 0 5px #000;
   word-wrap: break-word;
   color: #d6d6d6;
-  background-color: #282c34;
+  background-color: #19191b;
   padding: 0;
-
-  &, &.lines {
-    margin: 0;
-    padding:{left: 0; right: 0;}
-  }
-
-  &.lines {
-    font-size: 12px;
-    line-height: 2.35rem;
-    padding: 10px;
-    float:  left;
-    display: block !important;
-    box-shadow: none;
-    color: #d6d6d6;
-    background-color: #000;
-    padding: {top: 7px; bottom: 7px;}
-    text-align: center !important;
-    font-family: $code;
-  }
+  margin: 0;
+  padding:{left: 0; right: 0;}
 
   code {
     padding: 10px 5px;

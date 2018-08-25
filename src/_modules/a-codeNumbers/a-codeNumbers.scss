@@ -24,6 +24,7 @@
 		pre {
 			display: flex;
 			flex-grow: 1;
+			box-shadow: inset 0 0 5px rgba($brand--primary, 0.5);
 		}
 		code {
 			width: 100%;
