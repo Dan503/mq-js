@@ -90,7 +90,8 @@ body {
   }
 
   &::before {
-    opacity: 0.2;
+    z-index: 2;
+    opacity: 0.15;
 
     $hex-size-x: 24px;
     $hex-size-y: $hex-size-x * 1.5;
@@ -107,12 +108,13 @@ body {
   }
 
   &::after {
-    background: radial-gradient(circle at top, transparent, $CF-body__bg);
+    z-index: 1;
+    background: radial-gradient(circle at top, rgba(#000, 0.8), transparent);
   }
 
   > * {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 }
 
