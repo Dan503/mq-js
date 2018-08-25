@@ -13,7 +13,7 @@
 
 
 .o-demo {
-	margin: 25px 0 35px;
+	margin: 2.5em 0 3em;
 
 	&:last-child {
 		margin-bottom: 0;
@@ -21,8 +21,8 @@
 
 	&__segment {
 		position: relative;
-		margin-top: 35px;
-		margin-bottom: 10px;
+		margin-top: 4rem;
+		margin-bottom: 1.5em;
 		&:last-child, &.grid__cell {
 			margin-bottom: 0;
 		}

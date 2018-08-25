@@ -3,7 +3,7 @@
 	$this: &;
 
 	+ #{$this} {
-		margin-top: 0.5em;
+		margin-top: 1em;
 		position: relative;
 
 		// &::before {
@@ -103,8 +103,8 @@
 	&__content {
 		position: relative;
 		background-color: rgba(#000, 0.25);
-		padding: 20px;
-		padding-bottom: 2em;
+		padding: 2em 20px 3em;
+		// padding-bottom: 2em;
 		border-left: 40px solid #000;
 
 		&::before {
