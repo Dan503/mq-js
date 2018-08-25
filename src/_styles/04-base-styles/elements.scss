@@ -120,7 +120,8 @@ body {
 
 p, ul, ol {
   //margin top becomes the default paragraph spacer
-  margin: $VG-p__spacing 0;
+  margin: $VG-p__spacing auto;
+  max-width: 70ch;
 
   //allows body elements to sit hard up against their parent element top and bottom sides
   &:first-child { margin-top: 0; }
