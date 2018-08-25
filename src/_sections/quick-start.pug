@@ -1,7 +1,11 @@
 
 +m-revealer('Quick start guide')
   :marked
-    First, install mq-js using npm. (If you are new to Node and npm, [read this beginners guide](https://codeburst.io/getting-started-with-node-js-a-beginners-guide-b03e25bca71b) to get set up)
+    This documentation assumes that you have the ability to use ES6 JavaScript syntax in your project. mq-js will work in environments that don't support es6 JavaScript syntax however the syntax will be different to what is documented. [View the full documentation](https://dan503.github.io/mq-js/#quick-start) for ES5 (IE friendly) examples.
+
+    If you are new to Node and npm, [read this beginners guide on how to get set up](https://codeburst.io/getting-started-with-node-js-a-beginners-guide-b03e25bca71b). You will also need JavaScript bundling software such as [Browserify](http://browserify.org/), [Rollup](https://rollupjs.org/guide/en), or [Webpack](https://webpack.js.org/) integrated into your build process for mq-js to work.
+
+    Once that is all set up, install mq-js using npm.
 
   +a-installation
 
@@ -57,9 +61,7 @@ module.exports.bp = bp;
     })
 
   :marked
-    Now import the `mq` variable into your main/module JavaScript file.
-
-
+    Now import the `mq` variable into your main/component JavaScript file.
 
   +o-demo({
       js: { es6: `
@@ -67,7 +69,7 @@ module.exports.bp = bp;
 // Component js file //
 //////////////////////
 
-// import the mq variable that was created in the setup stage
+// Import the mq variable that was created in the setup stage
 import mq from "../mq";
 
 // Alternatively import both the mq variable and the website breakpoints
@@ -81,7 +83,7 @@ document.querySelector('#button').onclick = function(e) {
   mq.min('medium', screen_size => {
     this.classList.toggle('-active');
 
-    // log the screen height, width and ratio at the time the button was clicked
+    // Log the screen height, width and ratio at the time the button was clicked
     console.log(screen_size);
   })
 
@@ -107,7 +109,7 @@ document.querySelector('#button').onclick = function(e) {
 // Component js file //
 //////////////////////
 
-// import the mq and bp variables that were created in the setup stage
+// Import the mq and bp variables that were created in the setup stage
 var mq = require("../mq").mq;
 var bp = require("../mq").bp; // this line is optional
 
@@ -119,7 +121,7 @@ document.querySelector('#button').onclick = function(e) {
   mq.min('medium', function(screen_size) {
     self.classList.toggle('-active');
 
-    // log the screen height, width and ratio at the time the button was clicked
+    // Log the screen height, width and ratio at the time the button was clicked
     console.log(screen_size);
   })
 
@@ -170,7 +172,7 @@ const mq = new MQ(bp);
 // Export mq by default
 export default mq;
 
-// easier access to your site breakpoints
+// Easier access to your site breakpoints
 export { mq, bp }`,
 
         es5: `

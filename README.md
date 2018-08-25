@@ -4,11 +4,28 @@ mq-js was inspired by the [mq-scss](https://www.npmjs.com/package/mq-scss) Sass 
 
 Full documentation for mq-js can be found at https://dan503.github.io/mq-js/
 
+```scss
+// MQ-SCSS
+
+@include mq(inside, 600px, 1000px) {
+  // Styles for screens between 600px and 1000px
+}
+```
+```js
+// MQ-JS
+
+if (mq.inside(600, 1000)) {
+  // Functionality for screens between 600px and 1000px
+}
+```
+
 ## Quick start guide
 
 This documentation assumes that you have the ability to use ES6 JavaScript syntax in your project. mq-js will work in environments that don't support es6 JavaScript syntax however the syntax will be different to what is documented. [View the full documentation](https://dan503.github.io/mq-js/#quick-start) for ES5 (IE friendly) examples.
 
-First, install mq-js using npm. (If you are new to Node and npm, [read this beginners guide](https://codeburst.io/getting-started-with-node-js-a-beginners-guide-b03e25bca71b) to get set up)
+If you are new to Node and npm, [read this beginners guide on how to get set up](https://codeburst.io/getting-started-with-node-js-a-beginners-guide-b03e25bca71b). You will also need JavaScript bundling software such as [Browserify](http://browserify.org/), [Rollup](https://rollupjs.org/guide/en), or [Webpack](https://webpack.js.org/) integrated into your build process for mq-js to work.
+
+Once that is all set up, install mq-js using npm.
 
     npm install mq-js --save
 
@@ -21,31 +38,31 @@ Now, create this simple mq.js file to set up your website breakpoints.
 
 import MQ from "mq-js";
 
-//Define your Site break points here
+// Define your Site break points here
 const bp = {
   small: 600,
   medium: 980,
   large: 1200
 }
 
-//Creates the media query functions
+// Creates the media query functions
 const mq = new MQ(bp);
 
-//Export mq by default
+// Export mq by default
 export default mq;
 
-//Gives easy access to your site breakpoints
+// Gives easy access to your site breakpoints
 export { mq, bp }
 `````````````
 
-Now import the `mq` variable into your main/module JavaScript file.
+Now import the `mq` variable into your main/component JavaScript file.
 
 `````js
 ////////////////////////
 // Component js file //
 //////////////////////
 
-// import the mq variable that was created in the setup stage
+// Import the mq variable that was created in the setup stage
 import mq from "../mq";
 
 // Alternatively import both the mq variable and the website breakpoints
@@ -55,25 +72,25 @@ import { mq, bp } from "../mq";
 document.querySelector('#button').onclick = function(e) {
   e.preventDefault();
 
-  //Use your breakpoints by parsing in a string
+  // Use your breakpoints by parsing in a string
   mq.min('medium', screen_size => {
     this.classList.toggle('-active');
 
-    //log the screen height, width and ratio at the time the button was clicked
+    // Log the screen height, width and ratio at the time the button was clicked
     console.log(screen_size);
   })
 
-  //Alternatively, use it in an if statement
+  // Alternatively, use it in an if statement
   if (mq.max('small')) {
     // Do stuff for screens that are up to (and including) the "small" breakpoint width
   }
 
-  //You can also use custom values
+  // You can also use custom values
   if (mq.min(1000)) {
     // Do stuff for screens that are greater than 1000px wide
   }
 
-  //If you imported the breakpoints, you can use tweaked versions of them
+  // If you imported the breakpoints, you can use tweaked versions of them
   if (mq.inside(bp.small + 50, bp.medium - 100)) {
     // Do stuff for screens that are between the "small" breakpoint + 50px
     // and the "medium" breakpoint - 100px
@@ -82,6 +99,35 @@ document.querySelector('#button').onclick = function(e) {
 `````
 
 **Note:** `mq.max` is _inclusive_ of the given screen size and `mq.min` is _exclusive_ of the given screen size. This is to avoid any potential 1px overlap issues where both statements return true at the same time. It is also designed to align with how mq-scss works.
+
+It is also worth noting that you can save your breakpoints into a json file and import that instead. This can make the breakpoints a bit more portable.
+
+```json
+{
+  "//" : "breakpoints.json file",
+  "small": 600,
+  "medium": 980,
+  "large": 1200
+}
+```
+```js
+///////////////////
+// "mq.js" file //
+/////////////////
+
+import MQ from "mq-js";
+
+// Retrieve your site break points
+import bp from './breakpoints.json';
+
+const mq = new MQ(bp);
+
+// Export mq by default
+export default mq;
+
+// Easier access to your site breakpoints
+export { mq, bp }
+```
 
 ## Core methods
 
@@ -155,7 +201,9 @@ This plugin is a bit different. It takes a function that returns an mq-js screen
 ````js
 mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size) => {
   // is_active = did "mq.inside(800, 1000)" return true?
-  // screen_size = an object holding the screen height, width, and ratio at the point when the callback was called
+  // screen_size = an object holding the screen height, width,
+  //   and ratio (ratio in both string and number format) at the
+  //   point when the screen crossed an mq boundary
   console.log(is_active, screen_size);
 });
 ````
