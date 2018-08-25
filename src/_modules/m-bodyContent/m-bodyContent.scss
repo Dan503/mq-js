@@ -66,7 +66,7 @@ $C-dots: $C-numbers;
 						content: '';
 						display: block;
 						position: absolute;
-						top: 15px;
+						top: 1.6rem;
 						left: 0;
 					}
 				}
@@ -76,26 +76,26 @@ $C-dots: $C-numbers;
 				> li {
 					&:before {
 						border-radius: 50%;
-						height: 6px;
-						width: 6px;
-						background: $C-dots;
-						top: 6px;
+						height: 1rem;
+						width: 1rem;
+						border: 2px solid $C-dots;
+						top: 1.5rem;
 					}
 					> ul > li {
 						&:before {
-							height: 2px;
+							height: 0;
 							width: 10px;
-							background: $C-dots;
-							top: 9px;
+							border-bottom: 2px solid $C-dots;
+							top: 1.9rem;
 						}
 
 						> ul > li {
 							&:before {
 								border-radius: 50%;
-								height: 6px;
-								width: 6px;
-								border: 1px solid $C-dots;
-								top: 5px;
+								height: 1rem;
+								width: 1rem;
+								border: 2px solid $brand--secondary;
+								top: 1.5rem;
 							}
 						}
 					}
