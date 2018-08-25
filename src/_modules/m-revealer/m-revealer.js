@@ -20,7 +20,7 @@ class Revealer {
 	}
 
 	initialise(){
-		this.isOpen = this.check_url();
+		this.isOpen = this.check_url() || this._$wrapper.dataset.open;
 		if (!this.isOpen) {
 			this.close();
 		} else if (hash === this.id) {

@@ -17,7 +17,7 @@ mixin m-revealer(heading, spec)
 		}, spec)
 		var headingText = heading.replace(/`([A-z\W]+?)`/g,'<code>$1</code>');
 		var id = safe_id(heading);
-	.m-revealer(open=spec.open)&attributes(attributes)
+	.m-revealer(data-open=spec.open)&attributes(attributes)
 		if spec.h > 0
 			#{`h${spec.h}`}.m-revealer__heading
 				+m-revealer__trigger(id, headingText)
