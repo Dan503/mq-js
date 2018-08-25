@@ -1,5 +1,6 @@
 
 import _$$ from '../../_scripts/_helpers/_$selector';
+import ga from '../../_scripts/_helpers/ga';
 
 const m = 'm-revealer';
 const _m = '.'+m;
@@ -11,7 +12,7 @@ class Revealer {
 		this._$trigger = this._$wrapper.querySelector(`${_m}__trigger`);
 		this._$slider = this._$wrapper.querySelector(`${_m}__slider`);
 		this._$content = this._$wrapper.querySelector(`${_m}__content`);
-		this.isReady = false;
+		this.isLoaded = false;
 		this.id = this._$trigger.id;
 		this.timer;
 		this.relevantIDs = this.gather_ids();
@@ -33,10 +34,11 @@ class Revealer {
 		}
 		this._$wrapper.classList.add('-set');
 		this._$trigger.onclick = ()=> this.toggle();
-		this.isReady = true;
+		this.isLoaded = true;
 	}
 
 	open(){
+		if (this.isLoaded) ga(this.id, 'open');
 		this._$wrapper.classList.remove('-closed');
 		this.wait_for_animation().then(()=>{
 			this.isOpen = true;
@@ -45,6 +47,7 @@ class Revealer {
 	}
 
 	close() {
+		if (this.isLoaded) ga(this.id, 'close');
 		this.set_max_height();
 		this.delay(1).then(()=>{
 			this._$wrapper.classList.add('-closed');
