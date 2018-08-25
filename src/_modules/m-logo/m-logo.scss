@@ -24,10 +24,10 @@
 	&__hex {
 		grid-area: mq;
 		width: 15rem;
+		height: 18rem;
 		stroke-width: 7%;
 		stroke: $brand--primary;
 		overflow: visible !important;
-		padding: 7%;
 		display: none;
 
 		@supports (display: grid) {

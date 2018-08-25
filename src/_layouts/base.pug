@@ -2,6 +2,7 @@
 block config
 
 block includes
+  include /_modules/a-svg/a-svg
   include /_modules/a-installation/a-installation
   include /_modules/a-safetyPadding/a-safetyPadding
   include /_modules/a-btn/a-btn
@@ -63,6 +64,13 @@ body
   <!--[if lt IE 10]>
   p.browsehappy You are using an #[strong outdated] browser. Please #[a(href='http://browsehappy.com/') upgrade your browser] to improve your experience.
   <![endif]-->
+
+
+  .svg-sprite(style="display: none")
+    svg(xmlns='http://www.w3.org/2000/svg')
+      defs
+        symbol(id='hex' viewBox="0 0 115.57 133.45")
+          polygon(points="5.79 36.7 5.79 96.75 57.78 126.77 109.78 96.75 109.78 36.7 57.78 6.68 5.79 36.7")
 
   +m-pageContainer
     +o-header

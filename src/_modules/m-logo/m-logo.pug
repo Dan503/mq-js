@@ -2,8 +2,7 @@
 mixin m-logo
 	.m-logo
 		h1.m-logo__heading
-			svg.m-logo__hex(xmlns='http://www.w3.org/2000/svg' viewbox='0 0 271 312.92' aria-hidden="true" focusable="false")
-				polygon(points='271 234.69 271 78.23 135.5 0 0 78.23 0 234.69 135.5 312.92 271 234.69')
+			+a-svg('hex')(class="m-logo__hex")
 			span.m-logo__mq mq
 			span.m-logo__js js
 		p.m-logo__version= 'v'+pkg.version
