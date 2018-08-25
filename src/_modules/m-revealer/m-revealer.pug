@@ -4,7 +4,10 @@
 
 mixin m-revealer__trigger(id, text)
 	button.m-revealer__trigger(id=id, tabindex="0", aria-expanded="false", aria-controls=id+'-content')
-		!= text || 'No text provided'
+		span.m-revealer__triggerIcon(aria-hidden="true")
+			+a-svg('hex')(class="m-revealer__triggerHex -one")
+			+a-svg('hex')(class="m-revealer__triggerHex -two")
+		span.m-revealer__triggerText!= text || 'No text provided'
 
 mixin m-revealer(heading, spec)
 	-

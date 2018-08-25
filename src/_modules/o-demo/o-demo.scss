@@ -104,6 +104,11 @@
 	&__es5 {
 		.m-revealer__content {
 			padding: 0;
+			border: 0;
+
+			&::before {
+				display: none;
+			}
 		}
 	}
 
