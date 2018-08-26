@@ -124,6 +124,11 @@ p, ul, ol {
   margin: $VG-p__spacing auto;
   max-width: 70ch;
 
+  .ie & {
+    //IE backup
+    max-width: 78rem;
+  }
+
   //allows body elements to sit hard up against their parent element top and bottom sides
   &:first-child { margin-top: 0; }
   &:last-child { margin-bottom: 0; }
