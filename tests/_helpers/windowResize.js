@@ -1,5 +1,6 @@
 
 import { using_ems } from './mq_style';
+import mq from './mq';
 
 // Do not run test in Chrome, Chrome resize is unstable
 // Firefox resize is stable and predictable :D
@@ -26,7 +27,7 @@ function get_multiplier(){
 	if (using_ems) {
 		const $document = document.querySelector('body');
 		const fontSize = parseFloat( getComputedStyle($document).fontSize );
-		return fontSize / 16;
+		return fontSize / mq.settings.emBase;
 	}
 	return 1;
 }
