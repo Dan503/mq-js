@@ -12,4 +12,8 @@
 			margin-top: 0;
 		}
 	}
+
+	.ie & {
+		display: none;
+	}
 }
