@@ -14,8 +14,8 @@ export default function windowResize (width, height = width) {
 	const multiplier = get_multiplier();
 
 	const final = {
-		width: (width * multiplier) + difference.width,
-		height: (height * multiplier) + difference.height,
+		width: parseInt(width * multiplier) + difference.width,
+		height: parseInt(height * multiplier) + difference.height,
 	}
 
 	window.resizeTo(final.width, final.height);
