@@ -132,7 +132,7 @@ function finalValue (instance, px) {
 }
 
 function convertToEMs (instance, px){
-	return px / instance.settings.emBase+"em";
+	return (px / instance.settings.emBase)+"em";
 }
 
 function overide(defaults, overides){
