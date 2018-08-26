@@ -47,23 +47,23 @@
 		}
 	}
 
+	$iconSize: 30px;
+	$iconSize--small: $iconSize * 0.6;
 	&__triggerIcon {
-		display: block;
-		height: 30px;
-		width: 30px;
+		height: $iconSize;
+		width: $iconSize;
 		margin-right: 15px;
 		display: grid;
-		align-items: center;
-		justify-items: center;
+		grid-template: 1fr ($iconSize--small) 1fr / 1fr ($iconSize--small) 1fr;
 	}
 
 	&__triggerHex {
 		$stroke: 4px;
 		transition: 0.5s;
-		grid-column: 1;
-		grid-row: 1;
-		height: 100%;
-		width: 100%;
+		grid-column: 1 / 3;
+		grid-row: 1 / 3;
+		height: $iconSize;
+		width: $iconSize;
 		stroke: $brand--primary;
 		stroke-width: $stroke;
 
@@ -72,8 +72,10 @@
 		}
 
 		&.-two {
-			height: 60%;
-			width: 60%;
+			grid-column: 2;
+			grid-row: 2;
+			height: $iconSize--small;
+			width: $iconSize--small;
 			stroke-width: $stroke * 2;
 			stroke: $brand--secondary;
 
