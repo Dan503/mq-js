@@ -3,6 +3,7 @@
 
 'use strict';
 
+import './_helpers/is_ie';
 import debounce from 'debounce';
 import { mq, bp } from './_helpers/mq';
 import testBreakpoints from '../../tests/_helpers/breakpoints';
