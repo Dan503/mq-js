@@ -4,18 +4,18 @@ mq-js was inspired by the [mq-scss](https://www.npmjs.com/package/mq-scss) Sass 
 
 Full documentation for mq-js can be found at https://dan503.github.io/mq-js/
 
-```scss
-// MQ-SCSS
-
-@include mq(inside, 600px, 1000px) {
-  // Styles for screens between 600px and 1000px
-}
-```
 ```js
 // MQ-JS
 
 if (mq.inside(600, 1000)) {
   // Functionality for screens between 600px and 1000px
+}
+```
+```scss
+// MQ-SCSS
+
+@include mq(inside, 600px, 1000px) {
+  // Styles for screens between 600px and 1000px
 }
 ```
 

@@ -5,14 +5,6 @@
 
 
 +o-demo({
-  scss: `
-// MQ-SCSS
-
-@include mq(inside, 600px, 1000px) {
-  // styles for screens
-  // between 600px and 1000px
-}
-`,
   js: {
     basic: `
 // MQ-JS
@@ -23,4 +15,12 @@ if (mq.inside(600, 1000)) {
 }
 `,
   },
+  scss: `
+// MQ-SCSS
+
+@include mq(inside, 600px, 1000px) {
+  // styles for screens
+  // between 600px and 1000px
+}
+`,
 })
