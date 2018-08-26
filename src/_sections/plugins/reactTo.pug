@@ -3,6 +3,8 @@
   :marked
     This plugin is a bit different to the others. The primary purpose of this plugin is to fire off functions when a media query either enters or leaves a defined screen size range.
 
+    It takes a function that returns an mq-js screen-check result as it's first parameter and a callback function as it's second parameter. It will then call the callback function every time the screen-check result changes from `true` to `false` or `false` to `true`.
+
   +o-demo({
         html: `
 include /_modules/a-btn/a-btn
@@ -11,7 +13,7 @@ include /_modules/a-btn/a-btn
     | Toggles active state when mq changes truthfulness
 `,
         js: { es6: `
-//////////////////////// 
+////////////////////////
 // Component js file // 
 //////////////////////
 
