@@ -1,80 +1,134 @@
-'use strict';
 
-var _index = require('../index');
+var MQ = require('../index');
+var c = require('../_common');
+var result = c.result;
+var check_second_value = c.check_second_value;
+var number_to_ratio = c.number_to_ratio;
 
-var _index2 = _interopRequireDefault(_index);
+// format = " 2 / 1 "; width / height (spaces optional)
+var ratio_regex = /^\s*([0-9\.]+)\s*?\/\s*?([0-9\.]+)\s*$/;
 
-var _common = require('../_common');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_index2.default.prototype.ratio = function (ratio, callback) {
-	return (0, _common.result)(checkRatio(ratio, 'exact'), callback);
-};
-
-_index2.default.prototype.minRatio = function (ratio, callback) {
-	return (0, _common.result)(checkRatio(ratio, 'min'), callback);
-};
-
-_index2.default.prototype.maxRatio = function (ratio, callback) {
-	return (0, _common.result)(checkRatio(ratio, 'max'), callback);
-};
-
-_index2.default.prototype.insideRatio = function (large, small, callback) {
-	return (0, _common.result)(insideRatio(large, small), callback);
-};
-
-_index2.default.prototype.outsideRatio = function (large, small, callback) {
-	return (0, _common.result)(!insideRatio(large, small), callback);
-};
-
-function insideRatio(largeRatio, smallRatio) {
-	return (0, _common.inside)(convertRatio(largeRatio), convertRatio(smallRatio), 'ratio', {});
+MQ.prototype.ratio = function (ratio, callback){
+	return result(
+		checkRatio(ratio, 'exact'),
+		callback
+	);
 }
 
-function checkRatio(ratio, style) {
-	var ratios = getRatios(ratio);
+MQ.prototype.minRatio = function (ratio, callback){
+	return result(
+		checkRatio(ratio, 'min'),
+		callback
+	);
+}
+
+MQ.prototype.maxRatio = function (ratio, callback){
+	return result(
+		checkRatio(ratio, 'max'),
+		callback
+	);
+}
+
+MQ.prototype.insideRatio = function (one, two, callback){
+	return result(
+		insideRatio(one, two),
+		callback
+	)
+}
+
+MQ.prototype.outsideRatio = function (one, two, callback){
+	return result(
+		outsideRatio(one, two),
+		callback
+	);
+}
+
+function checkRatio (ratio, style) {
+	check_ratio_validity(ratio);
+
+	var stringRatio = convert_to('string', ratio);
 	return {
-		exact: function exact() {
-			return ratios.converted === ratios.screen;
-		},
-		min: function min() {
-			return ratios.converted < ratios.screen;
-		},
-		max: function max() {
-			return ratios.converted >= ratios.screen;
-		}
+		exact: function(){ return window.matchMedia('(aspect-ratio: '+stringRatio+')').matches },
+		min: function(){ return window.matchMedia('(min-aspect-ratio: '+stringRatio+')').matches },
+		max: function(){ return window.matchMedia('(max-aspect-ratio: '+stringRatio+')').matches },
 	}[style]();
 }
 
-function exactRatioCheck(ratio) {
-	var ratios = getRatios(ratio);
-	return ratios.converted === ratios.screen;
+function insideRatio (ratio_one, ratio_two) {
+	return doubleValueRatio({ratio_one: ratio_one, ratio_two: ratio_two, queryTemplate: '(max-aspect-ratio: {wide}) and (min-aspect-ratio: {thin})'});
 }
 
-function minRatio() {
-	return ratios.converted === ratios.screen;
+function outsideRatio (ratio_one, ratio_two) {
+	return doubleValueRatio({ratio_one: ratio_one, ratio_two: ratio_two, queryTemplate: '(min-aspect-ratio: {wide}), (max-aspect-ratio: {thin})'});
 }
 
-function getRatios(ratio) {
-	return {
-		converted: convertRatio(ratio),
-		screen: (0, _common.screenSize)().ratio
-	};
+function doubleValueRatio(opts){
+	var ratio_one = opts.ratio_one;
+	var ratio_two = opts.ratio_two;
+	var queryTemplate = opts.queryTemplate;
+
+	[ratio_one, ratio_two].forEach(check_ratio_validity);
+	check_second_value(ratio_one, ratio_two, 'ratio');
+	var sortedRatios = get_sorted_string_ratios(ratio_one, ratio_two);
+	var queryString = queryTemplate.replace('{thin}', sortedRatios.small).replace('{wide}', sortedRatios.large);
+	// Un-comment to debug
+	// console.log(queryString);
+	return window.matchMedia(queryString).matches;
 }
 
-function convertRatio(ratio) {
+function get_sorted_string_ratios(ratio_one, ratio_two){
+	var stringRatios = [
+		convert_to('string', ratio_one),
+		convert_to('string', ratio_two),
+	]
+	return sort_ratios.apply(this, stringRatios);
+}
 
-	var isNumber = typeof ratio === 'number';
-	var isFormattedString = typeof ratio === 'string' && !ratio.match(/[0-9\.]+\s*?\/\s*?[0-9\.]+/);
+function sort_ratios(ratio_one, ratio_two){
+	var numberOne = convert_to('number', ratio_one);
+	var numberTwo = convert_to('number', ratio_two);
 
-	if (!isNumber && !isFormattedString) {
-		throw new Error('"' + ratio + '" must be either a number or a string in the format "[width] / [height]"');
+	if (numberOne < numberTwo) {
+		return {
+			large: ratio_two,
+			small: ratio_one,
+		}
 	}
 
-	if (isNumber) {
-		return ratio;
-	} else {
-		return eval(ratio);
+	return {
+		large: ratio_one,
+		small: ratio_two,
+	}
+}
+
+function convert_to (style, ratio) {
+	var isNumber = is_number(ratio);
+	var styles = {
+		number: function(){ return isNumber ? ratio : calculate(ratio) },
+		string: function(){ return !isNumber ? ratio : number_to_ratio(ratio) },
+	};
+	return styles[style]();
+}
+
+function calculate(ratio){
+	if (is_ratio(ratio)){
+		var regResult = ratio_regex.exec(ratio);
+		return regResult[1] / regResult[2];
+	}
+	return ratio
+}
+
+function is_ratio(ratio) {
+	// format = " 2 / 1 "; width / height (spaces optional)
+	return typeof ratio === 'string' && ratio_regex.test(ratio);
+}
+
+function is_number(ratio) {
+	return typeof ratio === 'number';
+}
+
+function check_ratio_validity(ratio) {
+	if (!is_ratio(ratio) && !is_number(ratio)) {
+		throw new Error('"'+ratio+'" must be either a number or a string in the format "[width] / [height]"');
 	}
 }

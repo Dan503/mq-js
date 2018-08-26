@@ -12,4 +12,4 @@ require('./plugins/orientation');
 require('./plugins/ratio');
 require('./plugins/reactTo');
 
-exports.default =  MQ.default;
+module.exports = MQ;

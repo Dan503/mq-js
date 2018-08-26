@@ -1,33 +1,18 @@
-'use strict';
+var MQ = require('../index');
+var result = require('../_common').result;
 
-var _index = require('../index');
+MQ.prototype.orientation = function (orientation, callback) {
 
-var _index2 = _interopRequireDefault(_index);
+	var orientations = ['portrait', 'landscape'];
 
-var _common = require('../_common');
+	if (orientations.indexOf(orientation) < 0) {
+		throw new Error([
+			'"',orientation,'" not supported, valid orientations: "',orientations.join('", "'),'"'
+		].join(''));
+	}
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_index2.default.prototype.orientation = function (orientation, callback) {
-	return (0, _common.result)(checkOrientation(orientation), callback);
-};
-
-function checkOrientation(orientation) {
-	var _screenSize = (0, _common.screenSize)(),
-	    width = _screenSize.width,
-	    height = _screenSize.height;
-
-	var orientations = {
-		//Square counts as portrait in css media queries
-		portrait: function portrait() {
-			return width <= height;
-		},
-		landscape: function landscape() {
-			return width > height;
-		}
-	};
-
-	if (!orientations[orientation]) throw new Error('"' + orientation + '" not supported, valid orientations: ' + Object.keys(orientations));
-
-	return orientations[orientation]();
+	return result(
+		window.matchMedia('(orientation: '+orientation+')').matches,
+		callback
+	);
 }

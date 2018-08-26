@@ -49,8 +49,7 @@ gulp.task('compile', gulp.series(
     'imagemin',
     'sass',
     'modernizr',
-    'browserify',
-    'babelify'
+    'browserify'
   )
 ));
 

@@ -3,189 +3,142 @@
 
 'use strict';
 
-import $ from 'jquery';
+import './_helpers/is_ie';
 import debounce from 'debounce';
-import { mq, breakpoints } from './mq';
+import { mq, bp } from './_helpers/mq';
+import testBreakpoints from '../../tests/_helpers/breakpoints';
+import { _$ } from './_helpers/_$selector';
 
-import codeLineNumbers from '~on-page-load-js/codeLineNumbers';
-import smoothAnchors from '~on-page-load-js/smoothAnchors';
+import a_codeNumbers from '../_modules/a-codeNumbers/a-codeNumbers';
+import m_revealer from '../_modules/m-revealer/m-revealer';
 
-$(() => {
-  codeLineNumbers();
-  smoothAnchors();
+window.test = ()=>{
+  const settings = {
+    innerWidth: 1000,
+    innerHeight: testBreakpoints.large,
+  };
 
-  $('.btn.-one').click(function(e){
-    e.preventDefault();
+  window.open('/test-em.html', 'ems test', settings);
+  window.open('/test-px.html', 'px test', settings)
+}
 
-    mq.max('medium', (screen_size)=>{
-      $(this).toggleClass('-active');
-      console.log(screen_size);
-    })
-  });
+//https://philipwalton.com/articles/loading-polyfills-only-when-needed/
+if (browser_supports_all_features()) {
+  // Browsers that support all features run `run_code()` immediately.
+  run_code();
+} else {
+  console.log('Loading polyfills...')
+  // All other browsers loads polyfills and then run `run_code()`.
+  loadScript('assets/scripts/polyfills.js', run_code);
+}
 
-  $('.btn.-two').click(function(e){
-    e.preventDefault();
+function run_code(){
+  a_codeNumbers()
+  m_revealer();
+  run_demos();
+}
 
-    if (mq.max('medium')){
-      $(this).toggleClass('-active');
+function run_demos(){
+  function toggler(selector, test){
+    const _$elem = _$(selector);
+    if (_$elem) {
+      _$elem.onclick = function(e){
+         e.preventDefault();
+         if (test()) {
+           this.classList.toggle('-active');
+         }
+       };
     }
-  });
+  }
 
-  $('.btn.-three').click(function(e){
+  _$('#testingBtn').onclick = window.test;
+
+  const toggleActive = elem => elem.classList.toggle('-active');
+  const toggleInactive = elem => elem.classList.toggle('-inactive');
+  
+  _$('.a-btn.-max').onclick = function(e){
     e.preventDefault();
-
-    mq.min('medium', (screen_size)=>{
-      $(this).toggleClass('-active');
+  
+    mq.max('medium', (screen_size)=>{
+      toggleActive(this);
       console.log(screen_size);
     })
-  });
-
-
-  $('.btn.-four').click(function(e){
-    e.preventDefault();
-
-    mq.inside('medium', 'small', (screen_size)=>{
-      $(this).toggleClass('-active');
-
-      //log the screen width at the time the button was clicked
-      console.log(screen_size);
-    })
-  });
-
-  $('.btn.-five').click(function(e){
-    e.preventDefault();
-
-    mq.outside('medium', 'small', (screen_size)=>{
-      $(this).toggleClass('-active');
-
-      //log the screen width at the time the button was clicked
-      console.log(screen_size);
-    })
-  });
-
+  };
+  
+  toggler('.a-btn.-maxIf', ()=> mq.max('medium'));
+  toggler('.a-btn.-min', ()=> mq.min('medium'));
+  toggler('.a-btn.-inside', ()=> mq.inside('medium', 'small'));
+  toggler('.a-btn.-outside', ()=> mq.outside('medium', 'small'));
+  
   const MQ_btn = state => ({
     active: () => mq.max('medium'),
     inactive: () => mq.min('medium'),
   }[state]());
-  $('.btn.-six').click(function(e){
+  
+  _$('.a-btn.-mqVar').onclick = function(e){
     e.preventDefault();
-
+  
     if (MQ_btn('active')){
-      $(this).toggleClass('-active');
+      toggleActive(this);
     }
-
+  
     if (MQ_btn('inactive')){
-      $(this).toggleClass('-inactive');
+      toggleInactive(this);
     }
-
-  });
-
-
-  $('.btn.-seven').click(function(e){
-    e.preventDefault();
-
-    mq.max(1000, (screen_size)=>{
-      $(this).toggleClass('-active');
-
-      //log the screen width at the time the button was clicked
-      console.log(screen_size);
-    })
-  })
-
-  $('.btn.-eight').click(function(e){
-    e.preventDefault();
-
-    mq.min(1000, (screen_size)=>{
-      $(this).toggleClass('-active');
-
-      //log the screen width at the time the button was clicked
-      console.log(screen_size);
-    })
-  })
-
-  $('.btn.-nine').click(function(e){
-    e.preventDefault();
-
-    mq.min(breakpoints.medium + 30, (screen_size)=>{
-      $(this).toggleClass('-active');
-
-      //log the screen width at the time the button was clicked
-      console.log(screen_size);
-    })
-  })
-
-  $('.btn.-ten').click(function(e){
-    e.preventDefault();
-  });
-
-  function toggleBtn(){
-    if (mq.inside('medium', 'small')){
-      $('.btn.-ten').addClass('-active');
-    } else {
-      $('.btn.-ten').removeClass('-active');
-    }
+  
   };
-
+  
+  toggler('.a-btn.-pxVal', ()=> mq.max(1000));
+  toggler('.a-btn.-pxValMin', ()=> mq.min(1000));
+  toggler('.a-btn.-bpVar', ()=> mq.min(bp.medium + 30));
+  
+  const _$resizeBtn = _$('.a-btn.-onResize');
+  
+  _$resizeBtn.onclick = (e) => e.preventDefault();
+  
+  function toggleBtn(){
+    _$resizeBtn.classList.toggle('-active', mq.inside('medium', 'small'));
+  };
+  
   toggleBtn();
   window.onresize = debounce(toggleBtn, 200);
-
-  $('.btn.-eleven').click(function(e){
-    e.preventDefault();
-    mq.maxHeight(600, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-twelve').click(function(e){
-    e.preventDefault();
-    mq.minHeight(600, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-thirteen').click(function(e){
-    e.preventDefault();
-    mq.insideHeight(800, 400, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-fourteen').click(function(e){
-    e.preventDefault();
-    mq.outsideHeight(800, 400, ()=> $(this).toggleClass('-active'));
-  });
-
-  $('.btn.-fifteen').click(function(e){
-    e.preventDefault();
-    mq.orientation('landscape', ()=> $(this).toggleClass('-active'));
-  });
   
-  $('.btn.-sixteen').click(function(e){
-    e.preventDefault();
-    mq.orientation('portrait', ()=> $(this).toggleClass('-active'));
-  });
-
-  $('.btn.-exactRatio').click(function(e){
-    e.preventDefault();
-    mq.ratio(1 / 2, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-minRatio').click(function(e){
-    e.preventDefault();
-    mq.minRatio(1 / 2, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-maxRatio').click(function(e){
-    e.preventDefault();
-    mq.maxRatio(1 / 2, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-insideRatio').click(function(e){
-    e.preventDefault();
-    mq.insideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
-  });
-  $('.btn.-outsideRatio').click(function(e){
-    e.preventDefault();
-    mq.outsideRatio(1 / 2, 3 / 2, ()=> $(this).toggleClass('-active'));
-  });
-
-  $('.btn.-maxRatioString').click(function(e){
-    e.preventDefault();
-    mq.maxRatio('1 / 2', ()=> $(this).toggleClass('-active'));
-  });
-
+  toggler('.a-btn.-maxHeight', ()=> mq.maxHeight(600));
+  toggler('.a-btn.-minHeight', ()=> mq.minHeight(600));
+  toggler('.a-btn.-insideHeight', ()=> mq.insideHeight(800, 400));
+  toggler('.a-btn.-outsideHeight', ()=> mq.outsideHeight(800, 400));
+  toggler('.a-btn.-landscape', ()=> mq.orientation('landscape'));
+  toggler('.a-btn.-portrait', ()=> mq.orientation('portrait'));
+  toggler('.a-btn.-exactRatio', ()=> mq.ratio(1 / 2));
+  toggler('.a-btn.-minRatio', ()=> mq.ratio('1 / 2'));
+  toggler('.a-btn.-maxRatio', ()=> mq.ratio(1 / 2));
+  toggler('.a-btn.-insideRatio', ()=> mq.insideRatio(1 / 2, 3 / 2));
+  toggler('.a-btn.-insideRatio', ()=> mq.outsideRatio(1 / 2, 3 / 2));
+  toggler('.a-btn.-maxRatioString', ()=> mq.maxRatio('1 / 2'));
+  
+  const _$btn = _$('.a-btn.-reactTo');
+  
   mq.reactTo(()=> mq.inside(800, 900), (is_active, screen_size)=> {
-    $('.btn.-reactTo').toggleClass('-active');
+    _$btn.classList.toggle('-active');
     console.log(is_active, screen_size)
   });
-  $('.btn.-reactTo').click(e => e.preventDefault());
+  
+  _$btn.onclick = e => e.preventDefault();
 
-});
+}
+
+function browser_supports_all_features() {
+  return window.Promise && Object.assign && Array.from;
+}
+
+function loadScript(src, done) {
+  var js = document.createElement('script');
+  js.src = src;
+  js.onload = function() {
+    done();
+  };
+  js.onerror = function() {
+    throw new Error('Failed to load script ' + src);
+  };
+  document.head.appendChild(js);
+}

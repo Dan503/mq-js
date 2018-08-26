@@ -29,7 +29,8 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
         debug: true,
         paths: [
           './src/_modules',
-          './src/_scripts'
+          './src/_scripts',
+          './tests/',
         ],
         transform: [
           babelify, // Enable ES6 features
@@ -81,6 +82,8 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
               + plugins.util.colors.magenta(time + 's'));
             browserSync.reload('*.js');
 
+            es5_test();
+
             done();
           });
       };
@@ -93,9 +96,23 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
     });
   };
 
+  function es5_test(){
+    plugins.run('npm run es-check').exec()
+    .on('error', function (err) {
+      notifier.notify({title: 'ES5 Error', message: err.loc ? `${path.basename(err.filename)} line ${err.loc.line}` : 'ES5 error detected', icon: notification_icon_location+'gulp-error.png'});
+      plugins.util.log(
+        plugins.util.colors.red.bold('ES5 syntax error:'),
+        '\n',
+        plugins.util.colors.yellow(err.stack),
+        '\n'
+      );
+      this.emit('end');
+    })
+  }
+
   // Browserify Task
   gulp.task('browserify', (done) => {
-    return glob('./' + path.join(dirs.source, dirs.scripts, entries.js), function(err, files) {
+    return glob('./' + [dirs.source, dirs.scripts, `{${entries.js},run_tests.js,polyfills.js}`].join('/'), function(err, files) {
       if (err) {
         done(err);
       }
