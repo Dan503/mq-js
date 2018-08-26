@@ -76,6 +76,7 @@ body {
 
   > * {
     // Increasing font size to 20px on the first child elements instead
+    // (This is only an issue with the testing framework, the plugin itself has no issue with this)
     font-size: 20px;
   }
 
