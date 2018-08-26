@@ -1,14 +1,12 @@
-details
-  summary: h2#using-pure-pixel-values Using pure pixel values
-
++m-revealer('Using pure pixel values')
   :marked
     Just because you have access to the breakpoint values, it doesn't mean that you have to use them. mq-js still works if you just parse solid numbers into it.
 
-  +demo({
+  +o-demo({
       html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-pxVal'})
+  +a-btn({classes:'-pxVal'})
     | Clickable at and below 1000px screen width`,
         js: { es6: `
 //////////////////////// 
@@ -52,11 +50,11 @@ document.querySelector('.btn.-pxVal').onclick = function(e){
   :marked
     Remember that if you use `mq.min` it will be like adding 1 pixel to the value that you provide.
 
-  +demo({
+  +o-demo({
       html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-pxValMin'})
+  +a-btn({classes:'-pxValMin'})
     | Clickable at 1001px screen width and above`,
       js: { es6: `
 //////////////////////// 
@@ -103,18 +101,18 @@ document.querySelector('.btn.-pxValMin').onclick = function(e){
 
     In the following example, I'm importing the breakpoints variable and using it to add 30px to the `"medium"` breakpoint.
 
-  +demo({
+  +o-demo({
       html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-bpVar'})
+  +a-btn({classes:'-bpVar'})
     | Clickable at 1011px screen width and above`,
       js: { es6: `
 //////////////////////// 
 // Component js file // 
 //////////////////////
 
-//import BOTH the mq variable AND the breakpoints variable that were created in the setup stage
+// import BOTH the mq variable AND the breakpoints variable
 import { mq , breakpoints } from "./mq";
 
 document.querySelector('.btn.-bpVar').onclick = function(e){
@@ -134,7 +132,7 @@ document.querySelector('.btn.-bpVar').onclick = function(e){
 // Component js file // 
 //////////////////////
 
-//import BOTH the mq variable AND the breakpoints variable that were created in the setup stage
+// import BOTH the mq variable AND the breakpoints variable
 var mq = require("./mq").mq;
 var bp = require("./mq").bp;
 

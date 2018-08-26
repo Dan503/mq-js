@@ -1,19 +1,18 @@
-details
-  summary: h3#orientation-plugin #[code orientation] plugin
 
++m-revealer('orientation plugin', {h:3})
   :marked
     This one is even simpler. One little gotcha is that there is no "square" orientation type in css. There is only portrait and landscape types. Square screen types seem to fall under `portrait` in css so I've made square screen types fall under `portrait` in mq-js as well.
 
-  +demo({
+  +o-demo({
         html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
   ul
     li
-      +btn({classes:'-landscape'})
+      +a-btn({classes:'-landscape'})
         | Clickable on landscape screens
     li
-      +btn({classes:'-portrait'})
+      +a-btn({classes:'-portrait'})
         | Clickable on portrait and square screens
 `,
         js: { es6: `

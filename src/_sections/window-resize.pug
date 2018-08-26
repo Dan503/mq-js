@@ -1,6 +1,5 @@
-details
-  summary: h2#running-on-window-resize Running on window resize
 
++m-revealer('Running on window resize')
   :marked
     mq-js is just a simple function that checks the current window size when it is called. It doesn't do anything fancy when you resize the window. With a little extra code though, you can easily make it run on window resize.
 
@@ -8,11 +7,11 @@ details
 
     The button will activate when the screen is at the correct width and deactivate when not. Clicking the button does nothing.
 
-  +demo({
+  +o-demo({
       html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-onResize'})
+  +a-btn({classes:'-onResize'})
     | Activates at and between 980px and 601px screen width`,
         js: { es6: `
 //////////////////////// 

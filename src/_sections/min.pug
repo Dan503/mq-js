@@ -1,14 +1,12 @@
-details
-  summary: h2#mq-min mq.min
-
++m-revealer('mq.min')
   :marked
     In the following example, the button will only turn green if you click it when the browser window is at a minimum width of 981px wide (ie. above the "medium" breakpoint).
 
-  +demo({
+  +o-demo({
       html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-min'})
+  +a-btn({classes:'-min'})
     | Clickable at 981px screen width and above`,
         js: {es6:`
 //////////////////////// 
@@ -59,7 +57,7 @@ document.querySelector('.btn.-min').onclick = function(e){
 
     Also, like with `mq.max`, it can be written like `mq.minWidth` instead if you prefer.
 
-  +demo({
+  +o-demo({
         js: { es6: `
 // This code has identical functionality...
 mq.min('medium', ()=> { /* ... */ });

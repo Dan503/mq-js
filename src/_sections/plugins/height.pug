@@ -1,25 +1,23 @@
-details
-  summary: h3#height-plugin #[code height] plugin
-
++m-revealer('height plugin', {h:3})
   :marked
     This one is pretty straight forward, it works in pretty much the same way as `min`, `max`, `inside` and `outside` except it targets height instead of width. Available functions are `mq.minHeight`, `mq.maxHeight`, `mq.insideHeight` and `mq.outsideHeight`.
 
-  +demo({
+  +o-demo({
         html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
   ul
     li
-      +btn({classes:'-maxHeight'})
+      +a-btn({classes:'-maxHeight'})
         | Clickable at and below 600px screen height
     li
-      +btn({classes:'-minHeight'})
+      +a-btn({classes:'-minHeight'})
         | Clickable at and above 601px screen height
     li
-      +btn({classes:'-insideHeight'})
+      +a-btn({classes:'-insideHeight'})
         | Clickable between 401px and 800px screen height
     li
-      +btn({classes:'-outsideHeight'})
+      +a-btn({classes:'-outsideHeight'})
         | Clickable outside of 401px and 800px screen height
 `,
         js: { es6: `

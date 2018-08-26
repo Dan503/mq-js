@@ -1,6 +1,4 @@
-details
-  summary: h2#mq-inside mq.inside
-
++m-revealer('mq.inside')
   :marked
     `mq.inside` works in much the same way as it does in [mq-scss](https://www.npmjs.com/package/mq-scss).
 
@@ -10,11 +8,11 @@ details
 
     The smaller value always gets +1 for consistency with the mq-scss mixin and to prevent 1px overlap issues.
 
-  +demo({
+  +o-demo({
       html: `
-include /_modules/btn/btn
+include /_modules/a-btn/a-btn
 .example
-  +btn({classes:'-inside'})
+  +a-btn({classes:'-inside'})
     | Clickable at and between 980px and 601px screen width`,
         js: { es6: `
 ////////////////////////
@@ -59,7 +57,7 @@ document.querySelector('.btn.-inside').onclick = function(e){
   :marked
     It can also be written as `mq.insideWidth` if you prefer.
 
-  +demo({
+  +o-demo({
         js: { es6: `
 // This code has identical functionality...
 mq.inside('medium', ()=> { /* ... */ });
