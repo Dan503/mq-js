@@ -136,7 +136,7 @@ export { mq, bp }
 - [mq.inside](https://dan503.github.io/mq-js/#mq-inside)
 - [mq.outside](https://dan503.github.io/mq-js/#mq-outside)
 
-**Note:** You can add `Width` to the end of any of those methods and it will still be valid. For example, it is safe to use `mq.minWidth` instead of `mq.min` if you prefer the `minWidth` syntax as they have identical functionality.
+**Note:** You can add `Width` to the end of any of those methods and it will still be valid. For example, it is safe to use `mq.minWidth` instead of `mq.min`. The `mq.minWidth` method has identical functionality to `mq.min`.
 
 ## Plugins
 
@@ -196,7 +196,9 @@ This gives you access to:
 
 - mq.reactTo
 
-This plugin is a bit different. It takes a function that returns an mq-js screen-check result as it's first parameter and a callback function as it's second parameter. It will then call the callback function every time the screen-check result changes from true to false or false to true.
+This plugin is a bit different. The primary purpose of this plugin is to fire off a function when a media query either enters or leaves a defined screen size range.
+
+It takes a function that returns an mq-js screen-check result as it's first parameter and a callback function as it's second parameter. It will then call the callback function every time the screen-check result changes from `true` to `false` or `false` to `true`.
 
 ````js
 mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size) => {
@@ -208,6 +210,6 @@ mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size) => {
 });
 ````
 
-[Read the full reactTo plugin documentation.](https://dan503.github.io/mq-js/#reactto-plugin)
+[See a reactTo plugin demo in the full documentation.](https://dan503.github.io/mq-js/#reactto-plugin)
 
 The mq-js change log is available on the [mq-js GitHub releases page](https://github.com/Dan503/mq-js/releases)
