@@ -1,6 +1,6 @@
 {
   "name": "mq-js",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Media Queries in JavaScript inspired by the mq-scss Sass mixin",
   "main": "index.js",
   "devDependencies": {
