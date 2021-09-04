@@ -69,7 +69,7 @@ gulp.task(
 	gulp.series(
 		'clean',
 		(done) => {
-			jsWatch.isEnabled = true
+			jsWatch.isEnabled = false
 			done()
 		},
 		'compile'
