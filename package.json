@@ -86,7 +86,9 @@
   "scripts": {
     "clean-deps": "rimraf node_modules",
     "es-check": "es-check es5 ./index.js ./_common.js ./ultimate.js ./plugins/**/*.js -v",
-    "prepare": "npx gulp --gulpfile gulpPrep.ts"
+    "prepare": "npx gulp --gulpfile gulpPrep.ts",
+    "start": "npx gulp --open",
+    "build": "npx gulp build --production"
   },
   "engines": {
     "node": ">=0.12.0"
