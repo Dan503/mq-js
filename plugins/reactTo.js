@@ -14,6 +14,8 @@ MQ.prototype.reactTo = function (query, callback) {
 	var oldStatus = query();
 	callbackList.push(callback);
 
+	check_query(query, null)();
+
 	window.addEventListener("resize", check_query(query, oldStatus), true);
 }
 
