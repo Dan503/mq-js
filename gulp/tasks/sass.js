@@ -6,6 +6,10 @@ import px2rem from 'postcss-pxtorem';
 import gulpif from 'gulp-if';
 import notifier from 'node-notifier';
 import { notification_icon_location } from '../config/shared-vars';
+import gulpSass from 'gulp-sass'
+import dartSass from 'sass'
+
+const sass = gulpSass(dartSass);
 
 export default function(gulp, plugins, args, config, taskTarget, browserSync) {
   let dirs = config.directories;
@@ -32,7 +36,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
       .pipe(plugins.wait(100))//Helps prevent odd file not found error
       .pipe(plugins.sourcemaps.init())
       .pipe(plugins.sassGlob())
-      .pipe(plugins.sass({
+      .pipe(sass({
         outputStyle: 'expanded',
         precision: 10,
         includePaths: [
@@ -40,7 +44,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
           [dirs.source, dirs.modules].join('/'),
           ['node_modules'].join('/')
         ]
-      }).on('error', plugins.sass.logError))
+      }).on('error', sass.logError))
       .pipe(plugins.postcss([
         autoprefixer({browsers: ['> 1%'], grid: true}),
         px2rem(px2rem_settings)
