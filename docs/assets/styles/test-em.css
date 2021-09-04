@@ -1,2 +1,86 @@
-body{background:transparent;overflow:hidden;color:#000}header{display:none}@media (max-height:37.5em) and (min-height:18.8125em){html.insideHeight{background-color:#bee0be}}@media (max-height:37.5em){html.maxHeight{background-color:#bee0be}}@media (min-height:37.5625em){html.minHeight{background-color:#bee0be}}@media (max-height:18.75em),(min-height:37.5625em){html.outsideHeight{background-color:#bee0be}}@media (orientation:landscape){html.landscape{background-color:#bee0be}}@media (orientation:portrait){html.portrait{background-color:#bee0be}}@media (max-aspect-ratio:1/1) and (min-aspect-ratio:1/2){html.insideRatio{background-color:#bee0be}}@media (max-aspect-ratio:1/2){html.maxRatio{background-color:#bee0be}}@media (min-aspect-ratio:1/2){html.minRatio{background-color:#bee0be}}@media (max-aspect-ratio:1/2),(min-aspect-ratio:1/1){html.outsideRatio{background-color:#bee0be}}@media (aspect-ratio:1/2){html.ratio{background-color:#bee0be}}@media (max-width:37.5em) and (min-width:18.8125em){html.inside{background-color:#bee0be}}@media (max-width:37.5em){html.max{background-color:#bee0be}}@media (min-width:37.5625em){html.min{background-color:#bee0be}}@media (max-width:18.75em),(min-width:37.5625em){html.outside{background-color:#bee0be}}
+body {
+  background: transparent;
+  overflow: hidden;
+  color: #000;
+}
+
+header {
+  display: none;
+}
+
+@media (max-height: 37.5em) and (min-height: 18.8125em) {
+  html.insideHeight {
+    background-color: #bee0be;
+  }
+}
+@media (max-height: 37.5em) {
+  html.maxHeight {
+    background-color: #bee0be;
+  }
+}
+@media (min-height: 37.5625em) {
+  html.minHeight {
+    background-color: #bee0be;
+  }
+}
+@media (max-height: 18.75em), (min-height: 37.5625em) {
+  html.outsideHeight {
+    background-color: #bee0be;
+  }
+}
+@media (orientation: landscape) {
+  html.landscape {
+    background-color: #bee0be;
+  }
+}
+@media (orientation: portrait) {
+  html.portrait {
+    background-color: #bee0be;
+  }
+}
+@media (max-aspect-ratio: 1 / 1) and (min-aspect-ratio: 1/2) {
+  html.insideRatio {
+    background-color: #bee0be;
+  }
+}
+@media (max-aspect-ratio: 1 / 2 ) {
+  html.maxRatio {
+    background-color: #bee0be;
+  }
+}
+@media (min-aspect-ratio: 1 / 2 ) {
+  html.minRatio {
+    background-color: #bee0be;
+  }
+}
+@media (max-aspect-ratio: 1/2), (min-aspect-ratio: 1 / 1) {
+  html.outsideRatio {
+    background-color: #bee0be;
+  }
+}
+@media (aspect-ratio: 1 / 2 ) {
+  html.ratio {
+    background-color: #bee0be;
+  }
+}
+@media (max-width: 37.5em) and (min-width: 18.8125em) {
+  html.inside {
+    background-color: #bee0be;
+  }
+}
+@media (max-width: 37.5em) {
+  html.max {
+    background-color: #bee0be;
+  }
+}
+@media (min-width: 37.5625em) {
+  html.min {
+    background-color: #bee0be;
+  }
+}
+@media (max-width: 18.75em), (min-width: 37.5625em) {
+  html.outside {
+    background-color: #bee0be;
+  }
+}
 /*# sourceMappingURL=test-em.css.map */
