@@ -18,8 +18,8 @@ window.test = () => {
 		innerHeight: testBreakpoints.large,
 	}
 
-	window.open('/test-em.html', 'ems test', settings)
-	window.open('/test-px.html', 'px test', settings)
+	window.open('./test-em.html', 'ems test', settings)
+	window.open('./test-px.html', 'px test', settings)
 }
 
 //https://philipwalton.com/articles/loading-polyfills-only-when-needed/
