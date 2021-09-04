@@ -1,12 +1,12 @@
 'use strict'
 
-import fs from 'fs'
-import path from 'path'
-import foldero from 'foldero'
-import pug from 'pug'
-import yaml from 'js-yaml'
-import notifier from 'node-notifier'
+import * as fs from 'fs'
+import * as foldero from 'foldero'
+import * as pug from 'pug'
+import * as notifier from 'node-notifier'
 import { notification_icon_location, pjson } from '../config/shared-vars'
+import * as chalk from 'chalk'
+import * as marked from 'marked'
 
 export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 	let dirs = config.directories
@@ -24,11 +24,7 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 				loader: function loadAsString(file) {
 					let json = {}
 					try {
-						if (path.extname(file).match(/^.ya?ml$/)) {
-							json = yaml.safeLoad(fs.readFileSync(file, 'utf8'))
-						} else {
-							json = JSON.parse(fs.readFileSync(file, 'utf8'))
-						}
+						json = JSON.parse(fs.readFileSync(file, 'utf8'))
 					} catch (e) {
 						console.log('Error Parsing DATA file: ' + file)
 						console.log('==== Details Below ====')
@@ -51,7 +47,7 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 			console.log(config)
 		}
 
-		const pugFilters = [require('marked')]
+		const pugFilters = [marked]
 
 		let itteration = 0
 
@@ -60,33 +56,14 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 				[dirs.source, '**/*.pug'].join('/'),
 				'!' + [dirs.source, '{**/_*,**/_*/**}'].join('/'),
 			])
-			.pipe(plugins.changed(dest))
-			.pipe(
-				plugins.plumber((error) => {
-					if (itteration === 0) {
-						console.log(
-							`\n ${plugins.util.colors.red.bold(
-								'Pug failed to compile:'
-							)} ${plugins.util.colors.yellow(error.message)}\n`
-						)
-
-						console.log(error.stack)
-
-						itteration++
-						return notifier.notify({
-							title: 'Pug Error',
-							message: 'Pug compilation error',
-							icon: notification_icon_location + 'gulp-error.png',
-						})
-					}
-				})
-			)
 			.pipe(
 				plugins.pug({
 					//pug: pug,
 					pretty: true,
 					basedir: './' + [dirs.source].join('/'),
-					filters: pugFilters,
+					filters: {
+						markdown: marked,
+					},
 					locals: {
 						args,
 						require,

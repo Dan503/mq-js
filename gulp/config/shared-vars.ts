@@ -1,8 +1,8 @@
-import gulp from 'gulp'
-import gulpLoadPlugins from 'gulp-load-plugins'
-import browserSyncLib from 'browser-sync'
-import pjson from '../../package.json'
-import minimist from 'minimist'
+import * as gulp from 'gulp'
+import * as gulpLoadPlugins from 'gulp-load-plugins'
+import * as browserSyncLib from 'browser-sync'
+import * as pjson from '../../package.json'
+import * as minimist from 'minimist'
 
 let config = pjson.config
 //args.argName can be set to true by adding " --argName" when running console commands

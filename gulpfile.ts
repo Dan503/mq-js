@@ -1,13 +1,14 @@
 'use strict'
 
-import gulp from 'gulp'
-import gulpLoadPlugins from 'gulp-load-plugins'
-import browserSyncLib from 'browser-sync'
-import pjson from './package.json'
-import minimist from 'minimist'
-import wrench from 'wrench'
+import * as gulp from 'gulp'
+import * as gulpLoadPlugins from 'gulp-load-plugins'
+import * as browserSyncLib from 'browser-sync'
+import * as minimist from 'minimist'
+
+import * as pjson from './package.json'
 
 import { jsWatch } from './gulp/config/shared-vars'
+import createTasks from './gulp/tasks/auto-imports'
 
 // Load all gulp plugins based on their names
 // EX: gulp-copy -> copy
@@ -22,7 +23,7 @@ const defaultNotification = function (err) {
 	}
 }
 
-let config = Object.assign({}, pjson.config, defaultNotification)
+let config = { ...pjson.config, ...defaultNotification }
 
 let args = minimist(process.argv.slice(2))
 let dirs = config.directories
@@ -31,25 +32,7 @@ let taskTarget = args.production ? dirs.destination : dirs.temporary
 // Create a new browserSync instance
 let browserSync = browserSyncLib.create()
 
-// This will grab all js in the `gulp` directory
-// in order to load all gulp tasks
-wrench
-	.readdirSyncRecursive('./gulp/tasks')
-	.filter((file) => {
-		return /\.(js)$/i.test(file)
-	})
-	.map(function (file) {
-		require('./gulp/tasks/' + file)(
-			gulp,
-			plugins,
-			args,
-			config,
-			taskTarget,
-			browserSync
-		)
-	})
-
-let watch = false
+createTasks(gulp, plugins, args, config, taskTarget, browserSync)
 
 // Compiles all the code
 gulp.task(

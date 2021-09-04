@@ -1,6 +1,6 @@
 
 +m-revealer('Quick start guide')
-  :marked
+  :markdown
     This documentation assumes that you have the ability to use ES6 JavaScript syntax in your project. mq-js will work in environments that don't support es6 JavaScript syntax however the syntax will be different to what is documented. [View the full documentation](https://dan503.github.io/mq-js/#quick-start) for ES5 (IE friendly) examples.
 
     If you are new to Node and npm, [read this beginners guide on how to get set up](https://codeburst.io/getting-started-with-node-js-a-beginners-guide-b03e25bca71b). You will also need JavaScript bundling software such as [Browserify](http://browserify.org/), [Rollup](https://rollupjs.org/guide/en), or [Webpack](https://webpack.js.org/) integrated into your build process for mq-js to work.
@@ -9,7 +9,7 @@
 
   +a-installation
 
-  :marked
+  :markdown
     Now, create this simple mq.js file to set up your website breakpoints.
 
   +o-demo({
@@ -60,7 +60,7 @@ module.exports.bp = bp;
 `},
     })
 
-  :marked
+  :markdown
     Now import the `mq` variable into your main/component JavaScript file.
 
   +o-demo({
@@ -143,7 +143,7 @@ document.querySelector('#button').onclick = function(e) {
 }`},
     })
 
-  :marked
+  :markdown
     **Note:** `mq.max` is _inclusive_ of the given screen size and `mq.min` is _exclusive_ of the given screen size. This is to avoid any potential 1px overlap issues where both statements return true at the same time. It is also designed to align with how mq-scss works.
 
     It is also worth noting that you can save your breakpoints into a json file and import that instead. This can make the breakpoints a bit more portable.

@@ -1,7 +1,3 @@
-'use strict'
-
-import path from 'path'
-
 export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 	let dirs = config.directories
 	let modernizr_settings = {

@@ -1,7 +1,3 @@
-'use strict'
-
-import path from 'path'
-
 import { jsWatch } from '../config/shared-vars'
 
 export default function (gulp, plugins, args, config, taskTarget, browserSync) {

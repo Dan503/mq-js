@@ -1,7 +1,5 @@
 'use strict'
 
-import path from 'path'
-
 export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 	let dirs = config.directories
 	let dest = [taskTarget].join('/')
@@ -22,7 +20,6 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 					'!' + [dirs.source, '{**/_*,**/_*/**}'].join('/'),
 					'!' + [dirs.source, '**/*.pug'].join('/'),
 				])
-				.pipe(plugins.changed(dest))
 				.pipe(gulp.dest(dest))
 		})
 	)

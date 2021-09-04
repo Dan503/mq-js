@@ -1,13 +1,14 @@
 'use strict'
 
-import path from 'path'
-import autoprefixer from 'autoprefixer'
-import px2rem from 'postcss-pxtorem'
-import gulpif from 'gulp-if'
-import notifier from 'node-notifier'
+import * as path from 'path'
+import * as autoprefixer from 'autoprefixer'
+import * as px2rem from 'postcss-pxtorem'
+import * as gulpif from 'gulp-if'
+import * as notifier from 'node-notifier'
+import * as chalk from 'chalk'
 import { notification_icon_location } from '../config/shared-vars'
-import gulpSass from 'gulp-sass'
-import dartSass from 'sass'
+import * as gulpSass from 'gulp-sass'
+import * as dartSass from 'sass'
 
 const sass = gulpSass(dartSass)
 
@@ -29,21 +30,6 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 				[dirs.source, dirs.styles, '*.scss'].join('/'),
 				'!' + [dirs.source, dirs.styles, '_*.scss'].join('/'),
 			])
-			.pipe(
-				plugins.plumber((error) => {
-					console.log(
-						`\n ${plugins.util.colors.red.bold(
-							'Sass failed to compile:'
-						)} ${plugins.util.colors.yellow(error.message)}\n`
-					)
-					//console.error(error.stack);
-					return notifier.notify({
-						title: 'Sass Error',
-						message: `${path.basename(error.file)} line ${error.line}`,
-						icon: notification_icon_location + 'gulp-error.png',
-					})
-				})
-			)
 			.pipe(plugins.wait(100)) //Helps prevent odd file not found error
 			.pipe(plugins.sourcemaps.init())
 			.pipe(plugins.sassGlob())
@@ -60,7 +46,7 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 			)
 			.pipe(
 				plugins.postcss([
-					autoprefixer({ browsers: ['> 1%'], grid: true }),
+					autoprefixer({ grid: 'autoplace' }),
 					px2rem(px2rem_settings),
 				])
 			)
@@ -73,7 +59,6 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 						.replace('_', '')
 				})
 			)
-			.pipe(gulpif(args.production, plugins.cssnano({ rebase: false })))
 			.pipe(plugins.sourcemaps.write('./'))
 			.pipe(gulp.dest(dest))
 			.pipe(browserSync.stream({ match: '**/*.css' }))

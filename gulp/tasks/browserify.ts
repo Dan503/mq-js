@@ -1,16 +1,17 @@
 'use strict'
 
-import path from 'path'
-import glob from 'glob'
-import browserify from 'browserify'
-import watchify from 'watchify'
-import envify from 'envify'
-import babelify from 'babelify'
-import _ from 'lodash'
-import vsource from 'vinyl-source-stream'
-import buffer from 'vinyl-buffer'
-import gulpif from 'gulp-if'
-import notifier from 'node-notifier'
+import * as path from 'path'
+import * as glob from 'glob'
+import * as browserify from 'browserify'
+import * as watchify from 'watchify'
+import * as envify from 'envify'
+import * as babelify from 'babelify'
+import * as _ from 'lodash'
+import * as vsource from 'vinyl-source-stream'
+import * as buffer from 'vinyl-buffer'
+import * as gulpif from 'gulp-if'
+import * as notifier from 'node-notifier'
+import * as chalk from 'chalk'
 
 import { jsWatch, notification_icon_location } from '../config/shared-vars'
 
@@ -58,10 +59,10 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 								: 'JS failed to compile',
 							icon: notification_icon_location + 'gulp-error.png',
 						})
-						plugins.util.log(
-							plugins.util.colors.red.bold('Browserify compile error:'),
+						console.log(
+							chalk.red.bold('Browserify compile error:'),
 							'\n',
-							plugins.util.colors.yellow(err.stack),
+							chalk.yellow(err.stack),
 							'\n'
 						)
 						this.emit('end')
@@ -85,9 +86,9 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 					.on('end', function () {
 						let time = (new Date().getTime() - startTime) / 1000
 						console.log(
-							plugins.util.colors.cyan(entry) +
+							chalk.cyan(entry) +
 								' was browserified: ' +
-								plugins.util.colors.magenta(time + 's')
+								chalk.magenta(time + 's')
 						)
 						browserSync.reload('*.js')
 
@@ -99,7 +100,7 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 
 			if (!args.production) {
 				bundler.on('update', rebundle) // on any dep update, runs the bundler
-				bundler.on('log', plugins.util.log) // output build logs to terminal
+				bundler.on('log', console.log) // output build logs to terminal
 			}
 			return rebundle()
 		})
@@ -117,10 +118,10 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 						: 'ES5 error detected',
 					icon: notification_icon_location + 'gulp-error.png',
 				})
-				plugins.util.log(
-					plugins.util.colors.red.bold('ES5 syntax error:'),
+				console.log(
+					chalk.red.bold('ES5 syntax error:'),
 					'\n',
-					plugins.util.colors.yellow(err.stack),
+					chalk.yellow(err.stack),
 					'\n'
 				)
 				this.emit('end')

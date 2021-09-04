@@ -1,7 +1,6 @@
 'use strict'
 
-import path from 'path'
-import del from 'del'
+import * as del from 'del'
 
 export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 	let dirs = config.directories

@@ -2,8 +2,7 @@
 
 'use strict'
 
-import path from 'path'
-import gulpif from 'gulp-if'
+import * as gulpif from 'gulp-if'
 
 export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 	let dirs = config.directories

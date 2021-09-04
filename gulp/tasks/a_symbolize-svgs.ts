@@ -1,4 +1,4 @@
-'use strict'
+import * as chalk from 'chalk'
 
 export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 	const dirs = config.directories
@@ -8,15 +8,13 @@ export default function (gulp, plugins, args, config, taskTarget, browserSync) {
 	gulp.task('symbolize-svgs', (done) => {
 		//letting the user know what is going on
 		console.log(`
-${plugins.util.colors.bold('Generated SVG sprite')}
+${chalk.bold('Generated SVG sprite')}
 
-Converted svgs from here: ${plugins.util.colors.yellow(
+Converted svgs from here: ${chalk.yellow(
 			[dirs.source, dirs.images, 'SVGs'].join('/')
 		)}
-Into an svg sprite that can be found here: ${plugins.util.colors.yellow(
-			finalDest
-		)}
-Full SVGs are still available here: ${plugins.util.colors.yellow(
+Into an svg sprite that can be found here: ${chalk.yellow(finalDest)}
+Full SVGs are still available here: ${chalk.yellow(
 			[
 				taskTarget,
 				config.basePath,
@@ -26,7 +24,7 @@ Full SVGs are still available here: ${plugins.util.colors.yellow(
 			].join('/')
 		)}
 
-Use an SVG from the sprite by using ${plugins.util.colors.green(
+Use an SVG from the sprite by using ${chalk.green(
 			'+svg("svg-file-name")'
 		)} in your pug files
 `)
@@ -43,19 +41,6 @@ Use an SVG from the sprite by using ${plugins.util.colors.green(
 					})
 				)
 
-				//minify the svg if in production mode
-				.pipe(
-					plugins.if(
-						args.production,
-						plugins.imagemin({
-							progressive: true,
-							svgoPlugins: [
-								{ removeViewBox: false },
-								{ cleanupIDs: false },
-							],
-						})
-					)
-				)
 				.pipe(gulp.dest(dest))
 		)
 	})
