@@ -6,7 +6,8 @@ The key file in this folder is `main.js` as it is designated as your bootstrappi
 By default, ES6/2015 features are enabled in your scripts by using [Babel](https://babeljs.io)
 
 ## Adding third-party script libraries
-Odds are that you will need to add some third party libraries to your project at some point. 
+
+Odds are that you will need to add some third party libraries to your project at some point.
 To do so, it is strongly recommended that you install them using [NPM](http://npmjs.com/):
 
 ```
@@ -19,17 +20,17 @@ Once installed, you can access scripts within your JavaScript files like so:
 // Example using jquery
 
 // ES5
-var $ = require('jquery');
+var $ = require("jquery");
 
-$(function() {
-  console.log('Hello');
+$(function () {
+  console.log("Hello");
 });
 
 // ES6
-import $ from 'jquery';
+import $ from "jquery";
 
 $(() => {
-  console.log('Hello');
+  console.log("Hello");
 });
 ```
 
@@ -38,15 +39,15 @@ $(() => {
 Sometimes you need to use libraries that attach themselves to the window object and don't work with browserify very well.
 In this case, you can use a transform called [browserify-shim](https://github.com/thlorenz/browserify-shim).
 
-***Step 1: Install browserify-shim transform for browserify***
+**_Step 1: Install browserify-shim transform for browserify_**
 
-Browserify doesn't support Non-CommonJS scripts out of the box (jQuery plugins, window.* libs, etc), but you can install a transform called 'browserify-shim' to remedy that:
+Browserify doesn't support Non-CommonJS scripts out of the box (jQuery plugins, window.\* libs, etc), but you can install a transform called 'browserify-shim' to remedy that:
 
 ```
 npm install --save-dev browserify-shim
 ```
 
-***Step 2: Install desired npm package***
+**_Step 2: Install desired npm package_**
 
 Now you can install your desired npm package:
 
@@ -56,7 +57,7 @@ Now you can install your desired npm package:
 npm install --save slick-carousel
 ```
 
-***Step 3: Setup browserify-shim***
+**_Step 3: Setup browserify-shim_**
 
 Add the following to your `package.json` file:
 
@@ -74,9 +75,10 @@ Add the following to your `package.json` file:
   }
 },
 ```
+
 > Note: [slick-carousel](http://kenwheeler.github.io/slick/) requires jQuery, hence the `"depends": "jquery:$"`
 
-***Step 4: Import file to your project***
+**_Step 4: Import file to your project_**
 
 Now you can include your desired module/lib within your `src/_scripts/main.js` file:
 

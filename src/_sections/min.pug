@@ -1,5 +1,5 @@
 +m-revealer('mq.min')
-  :marked
+  :markdown
     In the following example, the button will only turn green if you click it when the browser window is at a minimum width of 981px wide (ie. above the "medium" breakpoint).
 
   +o-demo({
@@ -48,7 +48,7 @@ document.querySelector('.btn.-min').onclick = function(e){
 })`},
     })
 
-  :marked
+  :markdown
     You might be wondering why 981px instead of 980px. While `mq.max` is _**inclusive**_ of the breakpoint value, `mq.min` is _**exclusive**_ of the breakpoint value. This serves two important purposes:
 
     1. It prevents bugs from occurring in that 1px sweet spot where both would otherwise return true.

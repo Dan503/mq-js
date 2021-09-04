@@ -1,4 +1,3 @@
-
 .m-logo {
 	position: relative;
 	padding-top: 50px;
@@ -17,7 +16,7 @@
 		@supports (display: grid) {
 			display: grid;
 			grid-template-columns: 1fr auto auto 1fr;
-			grid-template-areas: ".. mq js ..";
+			grid-template-areas: '.. mq js ..';
 		}
 	}
 
@@ -34,11 +33,12 @@
 			/* autoprefixer: off */
 			display: grid;
 			grid-template-columns: 1fr auto auto 1fr;
-			grid-template-areas: ".. mq js ..";
+			grid-template-areas: '.. mq js ..';
 		}
 	}
 
-	&__mq, &__js {
+	&__mq,
+	&__js {
 		margin-top: -7%;
 		align-self: center;
 	}

@@ -1,4 +1,3 @@
-
 @include mq(outside-height, $bp-small, $bp-large) {
 	&.outsideHeight {
 		@include active();

@@ -1,19 +1,26 @@
-
 ///*******************\
 //	PURE CSS SEARCH ICON
 //*******************/
 //I'm going to publish this into npm soon. It's one of my coolest inventions :) - Dan
-@mixin searchIcon($color: #000, $glassDiameter: 20px, $lineWidth: 2px, $handleLength: if($color == 'toCross', false, round($glassDiameter * 0.45)), $handleWidth: $lineWidth, $speed: 0.25s, $pos: relative){
-
-	$invalidString: type-of($color) == 'string' and $color != 'cross' and $color != 'eye';
+@mixin searchIcon(
+	$color: #000,
+	$glassDiameter: 20px,
+	$lineWidth: 2px,
+	$handleLength: if($color == 'toCross', false, round($glassDiameter * 0.45)),
+	$handleWidth: $lineWidth,
+	$speed: 0.25s,
+	$pos: relative
+) {
+	$invalidString: type-of($color) == 'string' and $color != 'cross' and $color
+		!= 'eye';
 	$notColor: type-of($color) != 'color' and type-of($color) != 'string';
 
-	@if ($invalidString or $notColor){
+	@if ($invalidString or $notColor) {
 		@error 'The first parameter "#{$color}" must either be either a color or one of these strings: "toCross", "toEye"';
 	}
 
 	//main functionality for creating the icon
-	@if (type-of($color) == 'color'){
+	@if (type-of($color) == 'color') {
 		$iconSize: ceil(($glassDiameter + $handleLength) * 0.75);
 
 		$transition: all $speed ease-in-out, background 0.2s ease-in-out;
@@ -24,7 +31,8 @@
 		transition: $transition;
 		position: $pos;
 
-		&:before, &:after {
+		&:before,
+		&:after {
 			display: block;
 			content: '';
 			position: absolute;
@@ -41,7 +49,7 @@
 			border-radius: 50%;
 			border: $lineWidth solid $color;
 			transform: rotate(45deg);
-			box-shadow: 0 0 0 transparent;//needed for hover
+			box-shadow: 0 0 0 transparent; //needed for hover
 		}
 
 		//handle
@@ -59,10 +67,9 @@
 	}
 
 	//turns the search icon into a cross icon
-	@if ($color == 'cross'){
-
+	@if ($color == 'cross') {
 		//$glassDiameter turns into a colour setting variable
-		@if(type-of($glassDiameter) == number){
+		@if (type-of($glassDiameter) == number) {
 			$glassDiameter: #000;
 		}
 		$crossColor: $glassDiameter;
@@ -92,7 +99,7 @@
 		}
 	}
 
-	@if ($color == 'eye'){
+	@if ($color == 'eye') {
 		transform: rotate(90deg);
 		//glass
 		&:before {
@@ -112,5 +119,4 @@
 			border-radius: 50%;
 		}
 	}
-
-};
+} ;

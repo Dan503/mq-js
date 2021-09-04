@@ -1,5 +1,5 @@
 +m-revealer('Using pure pixel values')
-  :marked
+  :markdown
     Just because you have access to the breakpoint values, it doesn't mean that you have to use them. mq-js still works if you just parse solid numbers into it.
 
   +o-demo({
@@ -47,7 +47,7 @@ document.querySelector('.btn.-pxVal').onclick = function(e){
 })`},
     })
 
-  :marked
+  :markdown
     Remember that if you use `mq.min` it will be like adding 1 pixel to the value that you provide.
 
   +o-demo({
@@ -96,7 +96,7 @@ document.querySelector('.btn.-pxValMin').onclick = function(e){
 })`},
     })
 
-  :marked
+  :markdown
     What if you only want to tweak one of the normal breakpoint values so that it is just a few pixels larger than the base break point? That is when it is useful to import the `breakpoint` variable.
 
     In the following example, I'm importing the breakpoints variable and using it to add 30px to the `"medium"` breakpoint.

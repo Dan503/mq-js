@@ -13,20 +13,23 @@ If you have two data files in this data folder with the following contents:
     └── menu.json
 ```
 
-***global.yml***
+**_global.yml_**
 
 ```yml
 siteName: Sample
 ```
 
-***menu.json***
+**_menu.json_**
 
 ```json
-[{
-  "name": "Home"
-},{
-  "name": "About"
-}]
+[
+  {
+    "name": "Home"
+  },
+  {
+    "name": "About"
+  }
+]
 ```
 
 They would be converted to the following object:

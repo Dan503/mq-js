@@ -1,21 +1,20 @@
-
 export default class ResultTracker {
-	constructor(){
+	constructor() {
 		this.results = {
 			pass: 0,
 			fail: 0,
 		}
 	}
 
-	pass(){
+	pass() {
 		this.results.pass++
 	}
 
-	fail(){
+	fail() {
 		this.results.fail++
 	}
 }
 
-const totalsTracker = new ResultTracker();
+const totalsTracker = new ResultTracker()
 
 export { totalsTracker, ResultTracker }

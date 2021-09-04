@@ -1,15 +1,14 @@
+'use strict'
 
-"use strict";
+Object.defineProperty(exports, '__esModule', {
+	value: true,
+})
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var MQ = require('./index')
 
-var MQ = require('./index');
+require('./plugins/height')
+require('./plugins/orientation')
+require('./plugins/ratio')
+require('./plugins/reactTo')
 
-require('./plugins/height');
-require('./plugins/orientation');
-require('./plugins/ratio');
-require('./plugins/reactTo');
-
-module.exports = MQ;
+module.exports = MQ

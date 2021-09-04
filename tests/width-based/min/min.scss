@@ -1,4 +1,3 @@
-
 @include mq(min, $bp-large) {
 	&.min {
 		@include active();

@@ -1,13 +1,12 @@
-﻿
-@import url('https://fonts.googleapis.com/css?family=Audiowide');
+﻿@import url('https://fonts.googleapis.com/css?family=Audiowide');
 
 //font families
 //Don't create variables like $openSans for custom fonts
 //Use generic variable names for better maintainability
 $sans-serif: Arial, sans-serif;
-$serif:      Times New Roman, Times, serif;
-$cursive:    'Audiowide', cursive;
-$code:       "Courier New", Courier, monospace;
+$serif: Times New Roman, Times, serif;
+$cursive: 'Audiowide', cursive;
+$code: 'Courier New', Courier, monospace;
 
 //1 = primary
 //2 = secondary etc
