@@ -150,27 +150,18 @@ function check_second_value(propOne, propTwo, dimension) {
 		}
 
 		throw new Error(
-			'\
-\
-  The ' +
+			'\n\n  The ' +
 				message() +
-				' functions require two breakpoints to be defined.\
-\
-  Currently only the "' +
+				' functions require two breakpoints to be defined.\n\n  Currently only the "' +
 				propOne +
-				'" breakpoint is defined.\
-  The other breakpoint is coming through as "' +
+				'" breakpoint is defined.\n  The other breakpoint is coming through as "' +
 				propTwo +
-				'".\
-\
-  Please use this format:\
-  ' +
+				'".\n\n  Please use this format:\n  ' +
 				message(
 					'\n',
 					'[breakpoint-1], [breakpoint-2], [optional-callback-function]'
 				) +
-				'\
-  '
+				'\n  '
 		)
 	}
 }
