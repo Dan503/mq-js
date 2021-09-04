@@ -1,0 +1,6 @@
+docs
+node_modules
+package.json
+package-lock.json
+auto-imports.*
+readme.md

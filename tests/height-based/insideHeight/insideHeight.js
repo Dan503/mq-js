@@ -1,22 +1,20 @@
+import Test from '../../_helpers/Test'
+import bp from '../../_helpers/breakpoints'
+import mq from '../../_helpers/mq'
+import report_result_summary from '../../_helpers/report_result_summary'
+import sequence from '../../_helpers/sequence'
+import ResultTracker from '../../_helpers/ResultTracker'
+import apply_style from '../../_helpers/apply_style'
 
-import Test from '../../_helpers/Test';
-import bp from '../../_helpers/breakpoints';
-import mq from '../../_helpers/mq';
-import report_result_summary from '../../_helpers/report_result_summary';
-import sequence from '../../_helpers/sequence';
-import ResultTracker from '../../_helpers/ResultTracker';
-import apply_style from '../../_helpers/apply_style';
-
-export default function(){
-
-	let insideHeightResults = new ResultTracker();
+export default function () {
+	let insideHeightResults = new ResultTracker()
 
 	class positiveTest_low extends Test {
-		constructor({ name, test }){
+		constructor({ name, test }) {
 			super({
-				name:`positive low insideHeight ${name}`,
+				name: `positive low insideHeight ${name}`,
 				test,
-				size: [bp.small, bp.small+1],
+				size: [bp.small, bp.small + 1],
 				mqMatch: true,
 				localTracker: insideHeightResults,
 			})
@@ -24,9 +22,9 @@ export default function(){
 	}
 
 	class positiveTest_high extends Test {
-		constructor({ name, test }){
+		constructor({ name, test }) {
 			super({
-				name:`positive high insideHeight ${name}`,
+				name: `positive high insideHeight ${name}`,
 				test,
 				size: [bp.large],
 				mqMatch: true,
@@ -36,9 +34,9 @@ export default function(){
 	}
 
 	class negativeTest_low extends Test {
-		constructor({ name, test }){
+		constructor({ name, test }) {
 			super({
-				name:`negative low insideHeight ${name}`,
+				name: `negative low insideHeight ${name}`,
 				size: [bp.small],
 				mqMatch: false,
 				test: test,
@@ -48,10 +46,10 @@ export default function(){
 	}
 
 	class negativeTest_high extends Test {
-		constructor({ name, test }){
+		constructor({ name, test }) {
 			super({
-				name:`negative high insideHeight ${name}`,
-				size: [bp.large, bp.large+1],
+				name: `negative high insideHeight ${name}`,
+				size: [bp.large, bp.large + 1],
 				mqMatch: false,
 				test: test,
 				localTracker: insideHeightResults,
@@ -62,131 +60,131 @@ export default function(){
 	const positive_tests = [
 		new positiveTest_low({
 			name: `"small" (if)`,
-			test: ()=> mq.insideHeight('small', 'large'),
+			test: () => mq.insideHeight('small', 'large'),
 		}),
 
 		new positiveTest_low({
 			name: `${bp.small} (if)`,
-			test: ()=> mq.insideHeight(bp.large, bp.small),
+			test: () => mq.insideHeight(bp.large, bp.small),
 		}),
 
 		new positiveTest_low({
 			name: `"small" (cb)`,
-			test: ()=> {
-				let result = false;
-				mq.insideHeight('large', 'small', ()=> {
-					result = true;
+			test: () => {
+				let result = false
+				mq.insideHeight('large', 'small', () => {
+					result = true
 				})
-				return result;
+				return result
 			},
 		}),
 
 		new positiveTest_low({
 			name: `${bp.small} (cb)`,
-			test: ()=> {
-				let result = false;
-				mq.insideHeight(bp.small, bp.large, ()=> {
-					result = true;
+			test: () => {
+				let result = false
+				mq.insideHeight(bp.small, bp.large, () => {
+					result = true
 				})
-				return result;
+				return result
 			},
 		}),
 
 		new positiveTest_high({
 			name: `"large" matches (if)`,
-			test: ()=> mq.insideHeight('small', 'large'),
+			test: () => mq.insideHeight('small', 'large'),
 		}),
 
 		new positiveTest_high({
 			name: `${bp.large} matches (if)`,
-			test: ()=> mq.insideHeight(bp.large, bp.small),
+			test: () => mq.insideHeight(bp.large, bp.small),
 		}),
 
 		new positiveTest_high({
 			name: `"large" matches (cb)`,
-			test: ()=> {
-				let result = false;
-				mq.insideHeight('large', 'small', ()=> {
-					result = true;
+			test: () => {
+				let result = false
+				mq.insideHeight('large', 'small', () => {
+					result = true
 				})
-				return result;
+				return result
 			},
 		}),
 
 		new positiveTest_high({
 			name: `${bp.large} matches (cb)`,
-			test: ()=> {
-				let result = false;
-				mq.insideHeight(bp.small, bp.large, ()=> {
-					result = true;
+			test: () => {
+				let result = false
+				mq.insideHeight(bp.small, bp.large, () => {
+					result = true
 				})
-				return result;
+				return result
 			},
 		}),
-	];
+	]
 
 	const negative_tests = [
 		new negativeTest_high({
 			name: `"large" (if)`,
-			test: ()=> mq.insideHeight('large', 'small'),
+			test: () => mq.insideHeight('large', 'small'),
 		}),
 
 		new negativeTest_high({
 			name: `${bp.large} (if)`,
-			test: ()=> mq.insideHeight(bp.small, bp.large),
+			test: () => mq.insideHeight(bp.small, bp.large),
 		}),
 
 		new negativeTest_high({
 			name: `"large" (cb)`,
-			test: ()=> {
-				let result = false;
-				mq.insideHeight('small', 'large', ()=> {
-					result = true;
+			test: () => {
+				let result = false
+				mq.insideHeight('small', 'large', () => {
+					result = true
 				})
-				return result;
+				return result
 			},
 		}),
 
 		new negativeTest_high({
 			name: `${bp.large} (cb)`,
-			test: ()=> {
-				let result = false;
-				mq.insideHeight(bp.large, bp.small, ()=> {
-					result = true;
+			test: () => {
+				let result = false
+				mq.insideHeight(bp.large, bp.small, () => {
+					result = true
 				})
-				return result;
+				return result
 			},
 		}),
 
 		new negativeTest_low({
 			name: `"small" (if)`,
-			test: ()=> mq.insideHeight('large', 'small'),
+			test: () => mq.insideHeight('large', 'small'),
 		}),
 
 		new negativeTest_low({
 			name: `${bp.small} (if)`,
-			test: ()=> mq.insideHeight(bp.small, bp.large),
+			test: () => mq.insideHeight(bp.small, bp.large),
 		}),
 
 		new negativeTest_low({
 			name: `"small" (cb)`,
-			test: ()=> {
-				let result = false;
-				mq.insideHeight('small', 'large', ()=> {
-					result = true;
+			test: () => {
+				let result = false
+				mq.insideHeight('small', 'large', () => {
+					result = true
 				})
-				return result;
+				return result
 			},
 		}),
 
 		new negativeTest_low({
 			name: `${bp.small} (cb)`,
-			test: ()=> {
-				let result = false;
-				mq.insideHeight(bp.large, bp.small, ()=> {
-					result = true;
+			test: () => {
+				let result = false
+				mq.insideHeight(bp.large, bp.small, () => {
+					result = true
 				})
-				return result;
+				return result
 			},
 		}),
 	]
@@ -195,7 +193,6 @@ export default function(){
 		apply_style('insideHeight'),
 		...positive_tests,
 		...negative_tests,
-		report_result_summary('insideHeight', insideHeightResults)
+		report_result_summary('insideHeight', insideHeightResults),
 	])
-
 }

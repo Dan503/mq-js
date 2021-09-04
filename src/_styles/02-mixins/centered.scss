@@ -7,7 +7,6 @@
 //@include MG-centered(h); // only center horizontally
 
 @mixin centered($type: both, $isModern: 'not-modern') {
-
 	position: absolute;
 
 	@if ($isModern == 'modern') {

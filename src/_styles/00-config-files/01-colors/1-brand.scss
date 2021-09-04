@@ -4,46 +4,41 @@ $V-hoverModifier: 60%;
 //lists the primary brand colors of the site.
 //Greys do not belong in this list unless it is a MAJOR brand color
 $brand: (
-	//*Main color*/
-	color: $CB-blue-light,
-
-	//*Most likely hover state color for the main color*/
-	hover: $CB-blue-light--hover,
-
-	/*if set as a background color, the text inside will most likely be this color*/
-	text: #fff,
-),
-
-//*Second most prominent brand color etc. */
-(
-	color: $CB-lime-light,
-	hover: $CB-lime-light--hover,
-	text: #000,
-),
-(
-	color: $CB-yellow-light,
-	hover: $CB-yellow-light--hover,
-	text: #000,
-),
-(
-	color: $CB-green-light,
-	hover: $CB-aqua-light--hover,
-	text: #000,
-),
-(
-	color: $CB-green-dark,
-	hover: $CB-green-dark--hover,
-	text: #fff,
-);
-
+		//*Main color*/ color: $CB-blue-light,
+			//*Most likely hover state color for the main color*/ hover:
+			$CB-blue-light--hover,
+		/*if set as a background color, the text inside will most likely be this color*/
+			text: #fff
+	),
+	//*Second most prominent brand color etc. */
+		(
+			color: $CB-lime-light,
+			hover: $CB-lime-light--hover,
+			text: #000,
+		),
+	(
+		color: $CB-yellow-light,
+		hover: $CB-yellow-light--hover,
+		text: #000,
+	),
+	(
+		color: $CB-green-light,
+		hover: $CB-aqua-light--hover,
+		text: #000,
+	),
+	(
+		color: $CB-green-dark,
+		hover: $CB-green-dark--hover,
+		text: #fff,
+	);
 
 //Get prominent colors easily
 //    usage standard: brand(1);
 //    usage for hover state: brand(1, 'hover')
 //    usage for partner: brand(1, 'partner')
-@function brand($prominance, $type: color){
-	$colorGroup: nth($brand,$prominance);
-	@if (not map-has-key($colorGroup, $type)){
+@function brand($prominance, $type: color) {
+	$colorGroup: nth($brand, $prominance);
+	@if (not map-has-key($colorGroup, $type)) {
 		@warn '"#{$type}" is not a valid color type for "brand(#{$prominance})"';
 		$type: color;
 	}
@@ -53,7 +48,6 @@ $brand: (
 $brand--primary: brand(1);
 $brand--secondary: brand(2);
 // $red--brand: brand(1);
-
 
 /*
 //apply color variations and overrides to specific modules more easily for stronger color application
@@ -81,13 +75,12 @@ etc.
 
 */
 
-@mixin brandColors($rules){
+@mixin brandColors($rules) {
 	@for $i from 1 through length($brand) {
 		.color-#{$i} & {
 			@each $attribute, $colorType in $rules {
-				#{$attribute} : brand($i, $colorType);
+				#{$attribute}: brand($i, $colorType);
 			}
 		}
 	}
 }
-

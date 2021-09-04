@@ -1,10 +1,9 @@
+import MQ from '../../ultimate'
+import bp from './breakpoints'
+import { using_ems } from './mq_style'
 
-import MQ from '../../ultimate';
-import bp from './breakpoints';
-import { using_ems } from './mq_style';
+const mq = using_ems ? new MQ(bp, { ems: true }) : new MQ(bp)
 
-const mq = using_ems ? new MQ(bp, { ems: true }) : new MQ(bp);
+window.mq = mq
 
-window.mq = mq;
-
-export default mq;
+export default mq

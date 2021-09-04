@@ -11,6 +11,7 @@ if (mq.inside(600, 1000)) {
   // Functionality for screens between 600px and 1000px
 }
 ```
+
 ```scss
 // MQ-SCSS
 
@@ -31,7 +32,7 @@ Once that is all set up, install mq-js using npm.
 
 Now, create this simple mq.js file to set up your website breakpoints.
 
-`````````````js
+```js
 ///////////////////
 // "mq.js" file //
 /////////////////
@@ -42,8 +43,8 @@ import MQ from "mq-js";
 const bp = {
   small: 600,
   medium: 980,
-  large: 1200
-}
+  large: 1200,
+};
 
 // Creates the media query functions
 const mq = new MQ(bp);
@@ -52,12 +53,12 @@ const mq = new MQ(bp);
 export default mq;
 
 // Gives easy access to your site breakpoints
-export { mq, bp }
-`````````````
+export { mq, bp };
+```
 
 Now import the `mq` variable into your main/component JavaScript file.
 
-`````js
+```js
 ////////////////////////
 // Component js file //
 //////////////////////
@@ -69,19 +70,19 @@ import mq from "../mq";
 // (Use one line or the other, do not use both import statements)
 import { mq, bp } from "../mq";
 
-document.querySelector('#button').onclick = function(e) {
+document.querySelector("#button").onclick = function (e) {
   e.preventDefault();
 
   // Use your breakpoints by parsing in a string
-  mq.min('medium', screen_size => {
-    this.classList.toggle('-active');
+  mq.min("medium", (screen_size) => {
+    this.classList.toggle("-active");
 
     // Log the screen height, width and ratio at the time the button was clicked
     console.log(screen_size);
-  })
+  });
 
   // Alternatively, use it in an if statement
-  if (mq.max('small')) {
+  if (mq.max("small")) {
     // Do stuff for screens that are up to (and including) the "small" breakpoint width
   }
 
@@ -95,8 +96,8 @@ document.querySelector('#button').onclick = function(e) {
     // Do stuff for screens that are between the "small" breakpoint + 50px
     // and the "medium" breakpoint - 100px
   }
-}
-`````
+};
+```
 
 **Note:** `mq.max` is _inclusive_ of the given screen size and `mq.min` is _exclusive_ of the given screen size. This is to avoid any potential 1px overlap issues where both statements return true at the same time. It is also designed to align with how mq-scss works.
 
@@ -104,12 +105,13 @@ It is also worth noting that you can save your breakpoints into a json file and 
 
 ```json
 {
-  "//" : "breakpoints.json file",
+  "//": "breakpoints.json file",
   "small": 600,
   "medium": 980,
   "large": 1200
 }
 ```
+
 ```js
 ///////////////////
 // "mq.js" file //
@@ -118,7 +120,7 @@ It is also worth noting that you can save your breakpoints into a json file and 
 import MQ from "mq-js";
 
 // Retrieve your site break points
-import bp from './breakpoints.json';
+import bp from "./breakpoints.json";
 
 const mq = new MQ(bp);
 
@@ -126,7 +128,7 @@ const mq = new MQ(bp);
 export default mq;
 
 // Easier access to your site breakpoints
-export { mq, bp }
+export { mq, bp };
 ```
 
 ## Core methods
@@ -142,9 +144,9 @@ export { mq, bp }
 
 ### Height plugin
 
-````js
+```js
 import "mq-js/plugins/height";
-````
+```
 
 The height plugin provides these methods:
 
@@ -155,12 +157,11 @@ The height plugin provides these methods:
 
 [Read the full height plugin documentation.](https://dan503.github.io/mq-js/#height-plugin)
 
-
 ### Orientation plugin
 
-````js
+```js
 import "mq-js/plugins/orientation";
-````
+```
 
 The orientation plugin provides these methods:
 
@@ -168,12 +169,11 @@ The orientation plugin provides these methods:
 
 [Read the full orientation plugin documentation.](https://dan503.github.io/mq-js/#orientation-plugin)
 
-
 ### Ratio plugin
 
-````js
+```js
 import "mq-js/plugins/ratio";
-````
+```
 
 The ratio plugin provides these methods:
 
@@ -185,12 +185,11 @@ The ratio plugin provides these methods:
 
 [Read the full ratio plugin documentation.](https://dan503.github.io/mq-js/#ratio-plugin)
 
-
 ### reactTo plugin
 
-````js
+```js
 import "mq-js/plugins/reactTo";
-````
+```
 
 This gives you access to:
 
@@ -200,15 +199,18 @@ This plugin is a bit different. The primary purpose of this plugin is to fire of
 
 It takes a function that returns an mq-js screen-check result as it's first parameter and a callback function as it's second parameter. It will then call the callback function every time the screen-check result changes from `true` to `false` or `false` to `true`.
 
-````js
-mq.reactTo(()=> mq.inside(800, 1000), (is_active, screen_size) => {
-  // is_active = did "mq.inside(800, 1000)" return true?
-  // screen_size = an object holding the screen height, width,
-  //   and ratio (ratio in both string and number format) at the
-  //   point when the screen crossed an mq boundary
-  console.log(is_active, screen_size);
-});
-````
+```js
+mq.reactTo(
+  () => mq.inside(800, 1000),
+  (is_active, screen_size) => {
+    // is_active = did "mq.inside(800, 1000)" return true?
+    // screen_size = an object holding the screen height, width,
+    //   and ratio (ratio in both string and number format) at the
+    //   point when the screen crossed an mq boundary
+    console.log(is_active, screen_size);
+  }
+);
+```
 
 [See a reactTo plugin demo in the full documentation.](https://dan503.github.io/mq-js/#reactto-plugin)
 

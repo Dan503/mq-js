@@ -1,43 +1,51 @@
+import Test from './_helpers/Test'
+import bp from './_helpers/breakpoints'
+import mq from './_helpers/mq'
+import report_result_summary from './_helpers/report_result_summary'
+import sequence from './_helpers/sequence'
+import ResultTracker from './_helpers/ResultTracker'
+import { screenSize } from '../_common'
 
-import Test from './_helpers/Test';
-import bp from './_helpers/breakpoints';
-import mq from './_helpers/mq';
-import report_result_summary from './_helpers/report_result_summary';
-import sequence from './_helpers/sequence';
-import ResultTracker from './_helpers/ResultTracker';
-import { screenSize } from '../_common';
+import resize from './_helpers/windowResize'
 
-import resize from './_helpers/windowResize';
+export default function () {
+	let reactValue = {
+		isActive: false,
+		isEqual: () => false,
+		screen_size: () => undefined,
+	}
+	let hasReacted = false
+	let allowReactions = false
 
-export default function(){
-
-	let reactValue = { isActive: false, isEqual: ()=> false, screen_size: ()=> undefined };
-	let hasReacted = false;
-	let allowReactions = false;
-
-	mq.reactTo(()=> mq.max(bp.large), (isActive, screen_size)=> {
-		if (allowReactions) {
-			hasReacted = true;
-			reactValue = {
-				isActive,
-				isEqual: ()=> isActive === mq.max(bp.large),
-				screen_size: ()=> JSON.stringify(screenSize()) === JSON.stringify(screen_size)
+	mq.reactTo(
+		() => mq.max(bp.large),
+		(isActive, screen_size) => {
+			if (allowReactions) {
+				hasReacted = true
+				reactValue = {
+					isActive,
+					isEqual: () => isActive === mq.max(bp.large),
+					screen_size: () =>
+						JSON.stringify(screenSize()) === JSON.stringify(screen_size),
+				}
 			}
 		}
-	});
+	)
 
-	const initialState = ()=> new Promise((resolve)=> {
-		resize(bp.large + 1);
-		allowReactions = true;
-		resolve();
-	});
+	const initialState = () =>
+		new Promise((resolve) => {
+			resize(bp.large + 1)
+			allowReactions = true
+			resolve()
+		})
 
-	const delay = (timer = 100) => new Promise(resolve => setTimeout(resolve, timer));
+	const delay = (timer = 100) =>
+		new Promise((resolve) => setTimeout(resolve, timer))
 
-	let reactResults = new ResultTracker();
+	let reactResults = new ResultTracker()
 
 	class positiveTest extends Test {
-		constructor({name, test}){
+		constructor({ name, test }) {
 			super({
 				name: `positive reactTo ${name}`,
 				test,
@@ -49,11 +57,11 @@ export default function(){
 	}
 
 	class negativeTest extends Test {
-		constructor({name, test}){
+		constructor({ name, test }) {
 			super({
-				name:`negative reactTo ${name}`,
+				name: `negative reactTo ${name}`,
 				test,
-				size: [bp.large+1],
+				size: [bp.large + 1],
 				mqMatch: 'ignore',
 				localTracker: reactResults,
 			})
@@ -62,38 +70,39 @@ export default function(){
 
 	const positiveTests = [
 		new positiveTest({
-			name:`activation`,
-			test: ()=> reactValue.isActive,
+			name: `activation`,
+			test: () => reactValue.isActive,
 		}),
 		new positiveTest({
-			name:`match`,
-			test: ()=> reactValue.isEqual(),
+			name: `match`,
+			test: () => reactValue.isEqual(),
 		}),
 		new positiveTest({
-			name:`screen-size`,
-			test: ()=> reactValue.screen_size(),
+			name: `screen-size`,
+			test: () => reactValue.screen_size(),
 		}),
 		new positiveTest({
-			name:`screen-size format regex`,
-			test: ()=> {
-				const size = screenSize();
-				const string = JSON.stringify(size);
-				const regex = /{"width":([0-9]*),"height":([0-9]*),"orientation":"(portrait|landscape)","ratio":{"number":([0-9]),"string":"([0-9]) \/ ([0-9])"}}/;
-				return regex.test(string);
+			name: `screen-size format regex`,
+			test: () => {
+				const size = screenSize()
+				const string = JSON.stringify(size)
+				const regex =
+					/{"width":([0-9]*),"height":([0-9]*),"orientation":"(portrait|landscape)","ratio":{"number":([0-9]),"string":"([0-9]) \/ ([0-9])"}}/
+				return regex.test(string)
 			},
 		}),
-	];
+	]
 
 	const negativeTests = [
 		new negativeTest({
-			name:`activation`,
-			test: ()=> !reactValue.isActive && hasReacted,
+			name: `activation`,
+			test: () => !reactValue.isActive && hasReacted,
 		}),
 		new negativeTest({
-			name:`match`,
-			test: ()=> reactValue.isEqual() && hasReacted,
+			name: `match`,
+			test: () => reactValue.isEqual() && hasReacted,
 		}),
-	];
+	]
 
 	return sequence([
 		initialState,
@@ -101,7 +110,6 @@ export default function(){
 		...positiveTests,
 		...negativeTests,
 		report_result_summary('reactTo', reactResults),
-		()=> Promise.resolve(()=> allowReactions = false),
+		() => Promise.resolve(() => (allowReactions = false)),
 	])
-
 }

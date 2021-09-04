@@ -1,5 +1,4 @@
-
 {
-  "presets": ["es2015"],
-  "plugins": ["add-module-exports", "async-to-promises"]
+	"presets": ["es2015"],
+	"plugins": ["add-module-exports", "async-to-promises"]
 }
