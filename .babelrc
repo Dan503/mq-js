@@ -1,4 +1,4 @@
 {
 	"presets": ["@babel/preset-env"],
-	"plugins": ["add-module-exports", "async-to-promises"]
+	"plugins": ["@babel/plugin-transform-runtime", "async-to-promises"]
 }
